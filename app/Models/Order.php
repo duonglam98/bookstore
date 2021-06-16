@@ -17,12 +17,8 @@ class Order extends Model
         'status',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_orders');
+    }
 }

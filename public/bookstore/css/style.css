@@ -590,9 +590,9 @@
          border-top: solid 1px #222;
     }
 }
- .arrow::before{
+ /* .arrow::before{
      font-family: 'FontAwesome';
-     content: "\f0d7";
+     content: "\f078";
      margin-left: 5px;
      margin-top: 2px;
      border: none;
@@ -601,7 +601,7 @@
      position: absolute;
      right: 10px;
      top: 10px;
-}
+} */
  .dropdown-toggle::after{
      display: none;
 }
@@ -644,9 +644,9 @@
      vertical-align: middle;
      -webkit-transform: perspective(1px) translateZ(0);
      transform: perspective(1px) translateZ(0);
-     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+     box-shadow: 0 0 1px rgba(131, 216, 19, 0);
      position: relative;
-     background: #b0b435;
+     background: #d8daa6;
      -webkit-transition-property: color;
      transition-property: color;
      -webkit-transition-duration: 0.3s;
@@ -662,7 +662,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: #000000;
+	background: #b0b435;
 	border-radius: 100%;
 	-webkit-transform: scale(0);
 	transform: scale(0);
@@ -1502,7 +1502,7 @@
 }
 /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
  .all-title-box{
-     background: url("../images/all-bg-title.jpg") no-repeat center center;
+     background: url("../images/c2cd50b9d25358cf63b10988497100e7.jpg") no-repeat center center;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      -ms-background-size: cover;
@@ -2368,7 +2368,7 @@
 }
  .contact-info-left{
      padding: 20px;
-     background: url(../images/contact-bg.jpg) no-repeat center;
+     background: url(../images/be25ea71c7d2478445f5908263f53fe2.jpg) no-repeat center;
 	 background-size: cover;
 }
  .contact-info-left h2{

@@ -17,12 +17,15 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->string('name');
+            $table->string('author');
+            $table->string('code');
             $table->float('price', 8, 2);
             $table->integer('quantity');
             $table->text('description')->nullable();
             $table->string('images')->nullable();
             $table->integer('rate')->default(5);
             $table->float('weight', 8, 2)->nullable();
+            $table->string('NXB');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

@@ -1,9 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Book;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\UserController;
+use App\http\Controllers\SignController;
+
+use App\Http\Controllers\Admins\AdminController;
+use App\Http\Controllers\Admins\BookController as AdminProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +24,69 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = Auth::user();
+
+    return view('homepage', ['user' => $user]);
+});
+
+Route::get('/', function () {
+    $user = Auth::user();
+    $books = Book::paginate(1);
+    return view('index', ['user' => $user], ['books' => $books]);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    $user = Auth::user();
+    $books = Book::paginate(1);
+    return view('dashboard', ['user' => $user], ['books' => $books]);
 })->name('dashboard');
 
 
-// Route::get('/homepages/index', [BookController::class, 'index']);
+Route::middleware(['auth:sanctum', 'verified', 'checkAdmin'])->group(function () {
+    Route::get('/books/create', [BookController::class, 'create']);
+    Route::post('/books', [BookController::class, 'store']);
+});
 
-// // Route::middleware(['auth', 'checkAdmin'])->group(function () {
-//     Route::get('/users/about', [OrderController::class, 'index']);
+Route::resource('books', BookController::class)->except([
+    'create', 'store'
+]);
 
-// // }
+Route::middleware(['auth'])->group(function () {
+    Route::post('/orders/checkout', [OrderController::class, 'checkout']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.cart');
+    Route::delete('/orders/{book_orders_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::put('/orders/{book_orders_id}', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('/send-markdown-mail', [OrderController::class, 'sendOrderMail'])->name('orders.checkOut');
+    
+});
+
+// Route::middleware(['auth']) -> group(function () {
+//     Route::get('/send-markdown-mail', [MailController::class, 'sendOrderMail'])->name('orders.checkOut');
+// });
+
+Route::middleware(['auth', 'checkAdmin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/books', [AdminProductController::class, 'index'])->name('admin.books.index');
+    Route::get('/admin/books/create', [AdminProductController::class, 'create'])->name('admin.books.create');
+    Route::post('/admin/books', [AdminProductController::class, 'store'])->name('admin.books');
+    Route::get('/admin/categories', [AdminProductController::class, 'index'])->name('admin.books.index');
+
+});
+
+
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users/myAccount', [UserController::class, 'index'])->name('users.index');
+
+});
+
+Route::get('/users/contactUs', [UserController::class, 'contactUs'])->name('users.contact');
+Route::get('/users/about', [UserController::class, 'aboutUs'])->name('users.about');
+
+Route::get('/categories/newbook', function() {
+    $user = Auth::user();
+    return view('categories.newbook', ['user' => $user]);
+}) ->name('categories.newbook');
+

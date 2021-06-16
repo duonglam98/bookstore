@@ -1,3 +1,101 @@
+   <!-- Start Main Top -->
+   <div class="main-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                {{-- <div class="custom-select-box">
+                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                        <option>¥ JPY</option>
+                        <option>$ USD</option>
+                        <option>€ EUR</option>
+                    </select>
+                </div> --}}
+                <div class="right-phone-box">
+                    <p>Call US :- <a href="#"> +84 033 969 8977</a></p>
+                </div>
+                <div class="our-link">
+                    <ul>
+
+                        @auth
+                        @if ($user->name != 'Admin')
+                        <a href="{{ route('users.index') }}" class="acc"><i class="fa fa-user"></i>
+                            {{ $user->name }}
+                        </a>
+                           
+                        @else 
+                        <a href="{{ route('admin.index') }}" class="acc"><i class="fa fa-user"></i>
+                            {{ $user->name }}
+                        </a>
+
+                        @endif
+                        @endauth
+
+                        @guest
+                        <li><a href="#"><i class="fa fa-user s_color"></i> Tài khoản</a></li>
+                        @endguest
+                        {{-- <li><a href="#"><i class="fas fa-location-arrow"></i> Our location</a></li> --}}
+                        <li><a href="{{ route('users.contact') }}"><i class="fas fa-headset"></i> Tư vấn</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                @if (auth()->id())
+                {{-- <div class="login-box" hidden>
+                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
+                        <option>Đăng Ký</option>
+                        
+                        <option>Đăng Nhập</option>
+                        
+                    </select>
+                </div> --}}
+
+                <div class="login-box">
+                    
+                    <button id="basic" class="selectpicker form-control"  data-placeholder="Log out" style="background-color: #b0b435 ">
+                        <span><a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                             {{ __('Đăng xuất') }}
+                             </a>
+
+                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                             @csrf
+                         </form></span>                        
+                    </button>
+                </div>
+                    
+                @else
+                <div class="login-box" >
+                   
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Đăng Nhập
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Đăng nhập') }}</a>
+                          @if (Route::has('register'))
+                          <a class="dropdown-item" href="{{ route('register') }}">{{ __('Đăng ký') }}</a>
+                          @endif
+                        </div>
+                      </div>
+                   
+                </div>
+
+               
+                
+                @endif
+               
+            </div>
+            
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Top -->
+ 
+ 
  <!-- Start Main Top -->
  <header class="main-header">
         <!-- Start Navigation -->
@@ -8,28 +106,28 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="index.html"><img src="/bookstore/images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="{{ route('books.index') }}"><img src="/bookstore/images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        {{-- <li class="nav-item active"><a class="nav-link" href="index.html"></a></li> --}}
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.about') }}">Giới Thiệu</a></li>
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
-                            <ul class="dropdown-menu">
-								<li><a href="shop.html">Sidebar Shop</a></li>
-								<li><a href="shop-detail.html">Shop Detail</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
+                            <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> DANH MỤC <i class="fas fa-caret-down"></i></a> 
+                            <ul class="dropdown-menu ">
+								<li><a href="{{ route('categories.newbook') }}">Sách Mới Nhất</a></li>
+                                <li><a href="#">Sách Giáo Khoa</a></li>
+								<li><a href="#">Văn Học Trong Nước</a></li>
+                                <li><a href="#">Văn Học Nước Ngoài</a></li>
+                                <li><a href="#">Kinh Tế</a></li>
+                                <li><a href="#">Ngoại Ngữ</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.contact') }}">Liên Hệ</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -39,9 +137,9 @@
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="side-menu">
-							<a href="#">
+							<a href="{{ route('orders.cart') }}">
 								<i class="fa fa-shopping-bag"></i>
-								<span class="badge">3</span>
+								<span class="badge" id="cart-number">{{ showCartNumber() }}</span>
 								<p>My Cart</p>
 							</a>
 						</li>
@@ -81,3 +179,13 @@
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
+
+    <style>
+        .acc {
+            color: rgb(255, 255, 255);
+        }
+
+        .acc:hover {
+            color: #b0b435;
+        }
+    </style>

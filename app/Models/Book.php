@@ -13,22 +13,20 @@ class Book extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'author',
         'code',
         'price',
         'quantity',
         'description',
         'images',
         'rate',
-        'size',
+        'weight',
+        'NXB',
         'status',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'book_orders');
+    }
 }
