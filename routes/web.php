@@ -53,6 +53,8 @@ Route::resource('books', BookController::class)->except([
 ]);
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+
 // end books
 
 //-------------------------------------------------------------------------------------------------------------------

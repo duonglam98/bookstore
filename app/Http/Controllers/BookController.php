@@ -102,6 +102,7 @@ class BookController extends Controller
         // $this->viewData['cartNumber'] = $cartNumber;
 
         return view('books.shopDetail', $this->viewData);
+        return view('categories.dictionary', $this->viewData);
     }
 
     /**

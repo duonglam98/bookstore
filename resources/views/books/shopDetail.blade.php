@@ -123,13 +123,14 @@
                 </div>
             </div>
 			
-			<div class="row my-5">
-				<div class="card card-outline-secondary my-4">
+			<div class="row my-5" >
+				<div class="card card-outline-secondary my-4" style="width:100%" >
 					<div class="card-header">
-						<h2>Đánh giá sách</h2>
+						<h2 style="font-size: 30px;
+                        text-align: center;">Đánh giá sách</h2>
 					</div>
 					<div class="card-body">
-						<div class="media mb-3">
+						{{-- <div class="media mb-3">
 							<div class="mr-2"> 
 								<img class="rounded-circle border p-1" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160c142c97c%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160c142c97c%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2213.5546875%22%20y%3D%2236.5%22%3E64x64%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Generic placeholder image">
 							</div>
@@ -162,14 +163,58 @@
 
 								<small class="text-muted">Ngày bình luận: </small>
 							</div>
-						</div>
+						</div> --}}
 						<hr>
-                        
+                        {{-- @livewireStyles --}}
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Nhập đánh giá của bạn</label>
+                            {{-- <div class="relative flex justify-center min-h-screen bg-gray-100 items-top dark:bg-gray-700 sm:items-center sm:pt-0">
+
+                                <div class="mt-8 overflow-hidden bg-white shadow dark:bg-gray-200 sm:rounded-lg">
+                                    <div class="fixed inset-0 z-10 overflow-y-auto bg-white">
+                                        <div class="flex items-center justify-center min-h-screen text-center">
+                                            <div class="inline-block px-2 py-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg w-full"
+                                                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                                                <div class="pb-2 bg-white">
+                                                    <div class="flex-col items-center sm:flex">
+                                                        <div
+                                                            class="flex items-center justify-center flex-shrink-0 w-12 h-12 p-4 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-16 sm:w-16">
+                                                            <svg class="w-full h-full text-red-600" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round">
+                                                                <line x1="19" y1="5" x2="5" y2="19"></line>
+                                                                <circle cx="6.5" cy="6.5" r="2.5"></circle>
+                                                                <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                                                            </svg>
+                                                        </div>
+                                                      <div class="mt-3 mb-1 text-center sm:ml-4 sm:text-left">
+                                                            <h3 class="pt-1 text-3xl font-black leading-6 text-gray-900" id="modal-headline">
+                                                                {{ $book->name }} 
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <div class="w-full text-base text-center text-gray-600">
+                                                    {{ $book->description }}
+                                                </div> 
+
+                                                <div
+                                                    class="justify-center w-full px-4 mt-2 font-sans text-xs leading-6 text-center text-gray-500">
+                                                    <a href="#_">Điều khoản và điều kiện áp dụng</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> --}}
+                            </div>
+                            @livewire('book-reviews', ['book' => $book], key($book->id))
+                            @livewireScripts
+                            {{-- <label for="exampleFormControlTextarea1">Nhập đánh giá của bạn</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                           </div>
-						<a href="#" class="btn hvr-hover">Đánh giá sản phẩm</a>
+						<a href="#" class="btn hvr-hover">Đánh giá sản phẩm</a> --}}
 					</div>
 				  </div>
 			</div>
