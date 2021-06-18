@@ -66,7 +66,7 @@
                                         <p>${{ $bookOrder->price }}</p>
                                     </td>
                                     <td class="quantity-box quantity">
-                                        <input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}"></td>
+                                        <input type="number" size="4" min="1" step="1" class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}"></td>
                                     <td class="total-pr total-product-price">
                                         <p>${{ $bookOrder->price * $bookOrder->quantity }}</p>
                                     </td>
@@ -134,7 +134,7 @@
                         </div>
                         <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box t"><a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Thanh Toán</a> </div>
+                <div class="col-12 d-flex shopping-box t"><a href="{{ route('orders.sendMail') }}" class="ml-auto btn hvr-hover cart-checkout">Thanh Toán</a> </div>
             </div>
 
         </div>

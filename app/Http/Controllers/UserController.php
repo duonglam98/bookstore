@@ -98,6 +98,7 @@ class UserController extends Controller
             'quantity',
             'description',
             'images',
+            'reviews',
             'weight',
             'NXB',
 

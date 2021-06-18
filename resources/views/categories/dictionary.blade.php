@@ -1,6 +1,6 @@
 @extends('layouts.myapp')
 
-@section('title', 'Sách mới nhất')
+@section('title', 'Từ Điển')
 
 @section('content')
     <!-- Start All Title Box -->
@@ -8,10 +8,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Sách mới nhất</h2>
+                    <h2>Từ điển</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Books</a></li>
-                        <li class="breadcrumb-item active">Sách mới nhất</li>
+                        <li class="breadcrumb-item active">Từ điển</li>
                     </ul>
                 </div>
             </div>
@@ -69,6 +69,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -91,6 +92,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -113,6 +115,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -135,6 +138,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -157,6 +161,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -179,6 +184,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -201,6 +207,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -223,6 +230,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -245,6 +253,7 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                                     </div>
                                                 </div>
                                                 <div class="why-text">

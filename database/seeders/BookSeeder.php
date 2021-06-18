@@ -20,11 +20,11 @@ class BookSeeder extends Seeder
             'user_id' => 1,
             'name' => 'Harry Porter',
             'author' => 'J. K. Rowling',
-            'code' => 'b1',
+            'code' => '0001',
             'price' => 500,
             'quantity' => 100,
             'description' => 'Horror',
-            'images' => 'https://static.wikia.nocookie.net/harrypottervn/images/1/14/Harry_Potter_and_the_Cursed_Child_Script_Book_Cover.jpg/revision/latest?cb=20170313154642&path-prefix=vi',
+            'images' => '',
             'weight' => '1.5',
             'NXB'=> 'Bloomsbury',
         ]);

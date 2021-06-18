@@ -19,7 +19,7 @@ class Book extends Model
         'quantity',
         'description',
         'images',
-        'rate',
+        'reviews',
         'weight',
         'NXB',
         'status',

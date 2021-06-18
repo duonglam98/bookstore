@@ -1,6 +1,6 @@
 @extends('layouts.myapp')
 
-@section('title', 'Sách mới nhất')
+@section('title', 'Sách giáo khoa')
 
 @section('content')
     <!-- Start All Title Box -->
@@ -8,10 +8,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Sách mới nhất</h2>
+                    <h2>Sách giáo khoa</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Books</a></li>
-                        <li class="breadcrumb-item active">Sách mới nhất</li>
+                        <li class="breadcrumb-item active">Sách giáo khoa</li>
                     </ul>
                 </div>
             </div>

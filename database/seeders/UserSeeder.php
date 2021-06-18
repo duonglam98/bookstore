@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
             "name" => "Admin",
             "email" => "admin@gmail.com",
             "email_verified_at" => null,
+            'phone' => null,
+            'address' => null,
             "current_team_id" => 1,
             "profile_photo_path" => null,
             "is_admin" => 1,

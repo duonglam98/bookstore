@@ -69,7 +69,7 @@
                 <div class="login-box" >
                    
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Đăng Nhập
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -119,11 +119,11 @@
                             <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> DANH MỤC <i class="fas fa-caret-down"></i></a> 
                             <ul class="dropdown-menu ">
 								<li><a href="{{ route('categories.newbook') }}">Sách Mới Nhất</a></li>
-                                <li><a href="#">Sách Giáo Khoa</a></li>
-								<li><a href="#">Văn Học Trong Nước</a></li>
-                                <li><a href="#">Văn Học Nước Ngoài</a></li>
-                                <li><a href="#">Kinh Tế</a></li>
-                                <li><a href="#">Ngoại Ngữ</a></li>
+                                <li><a href="{{ route('categories.textbook') }}">Sách Giáo Khoa</a></li>
+								<li><a href="{{ route('categories.domestic') }}">Văn Học Trong Nước</a></li>
+                                <li><a href="{{ route('categories.foreign') }}">Văn Học Nước Ngoài</a></li>
+                                <li><a href="{{ route('categories.economy') }}">Kinh Tế</a></li>
+                                <li><a href="{{ route('categories.dictionary') }}">Từ Điển</a></li>
                             </ul>
                         </li>
                         
@@ -135,7 +135,44 @@
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="search"><a href="#">
+                            <div class="dropdown">
+                               <i class="fa fa-search" onclick="myFunction()" class="dropbtn" style="position: absolute;
+                               top: -41px; "></i>
+                                <div id="myDropdown" class="dropdown-content">
+                                  <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                                  <a href="#">Tìm tên sách</a>
+                                  <a href="#">Tìm tên tác giả</a>
+                                  <a href="#">Tìm tên Nhà xuất bản</a>
+                                  
+                                </div>
+                              </div></a>
+                        </li>
+                        <script>
+                            /* When the user clicks on the button,
+                            toggle between hiding and showing the dropdown content */
+                            function myFunction() {
+                              document.getElementById("myDropdown").classList.toggle("show");
+                            }
+                            
+                            function filterFunction() {
+                              var input, filter, ul, li, a, i;
+                              input = document.getElementById("myInput");
+                              filter = input.value.toUpperCase();
+                              div = document.getElementById("myDropdown");
+                              a = div.getElementsByTagName("a");
+                              for (i = 0; i < a.length; i++) {
+                                txtValue = a[i].textContent || a[i].innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                  a[i].style.display = "";
+                                } else {
+                                  a[i].style.display = "none";
+                                }
+                              }
+                            }
+                            </script>
+
+
                         <li class="side-menu">
 							<a href="{{ route('orders.cart') }}">
 								<i class="fa fa-shopping-bag"></i>
@@ -180,6 +217,19 @@
     </header>
     <!-- End Main Top -->
 
+     <!-- Start Top Search -->
+     <div class="top-search" >
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
+    
     <style>
         .acc {
             color: rgb(255, 255, 255);

@@ -78,19 +78,19 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/bookstore/images/nhung-tac-pham-van-hoc-viet-nam-hay-1.jpg" alt="nhung-tac-pham-van-hoc-viet-nam-hay-1.jpg" />
-                        <a class="btn hvr-hover" href="#">Văn học trong nước</a>
+                        <a class="btn hvr-hover" href="{{ route('categories.domestic') }}">Văn học trong nước</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/bookstore/images/944d306e21cb271e83f18648a8a21aa9.jpg" alt="944d306e21cb271e83f18648a8a21aa9.jpg" />
-                        <a class="btn hvr-hover" href="#">Văn học nước ngoài</a>
+                        <a class="btn hvr-hover" href="{{ route('categories.foreign') }}">Văn học nước ngoài</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/bookstore/images/548f6d82cfef32b288e1dfb8fb7dd562.jpg" alt="548f6d82cfef32b288e1dfb8fb7dd562.jpg" />
-                        <a class="btn hvr-hover" href="#">Ngoại ngữ</a>
+                        <a class="btn hvr-hover" href="{{ route('categories.dictionary') }}">Từ điển</a>
                     </div>
                 </div>
             </div>
@@ -146,98 +146,100 @@
 
             <div class="row special-list">
                 @foreach ($books as $book)
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <div class="type-lb">
-                                    <p class="sale">Sale</p>
-                                </div>
-                                {{-- <a href="#">{{ $book->images }}</a> --}}
-                                <img src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" class="img-fluid" alt="277fa65c176e3551a6bd0ffd05083265.jpg">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
-                                </div>
+                <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">Sale</p>
                             </div>
-                            <div class="why-text">
-                                <h4><a href="#">{{ $book->name }}</a></h4>
-                                <h5> {{ $book->price }} vnđ</h5>
-                            </div>
-                        </div>
-                    </div>
+                            {{-- <a href="#">{{ $book->images }}</a> --}}
+                            <img src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" class="img-fluid" alt="277fa65c176e3551a6bd0ffd05083265.jpg">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
 
-                    <div class="col-lg-3 col-md-6 special-grid top-featured">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <div class="type-lb">
-                                    <p class="new">New</p>
-                                </div>
-                                <img src="/bookstore/images/50c2bb142857c1099846.jpg" class="img-fluid" alt="50c2bb142857c1099846.jpg">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4><a href="#">{{ $book->name }}</a></h4>
-                                <h5> {{ $book->price }} vnđ</h5>
                             </div>
                         </div>
+                        <div class="why-text">
+                            <h4><a href="#">{{ $book->name }}</a></h4>
+                            <h5> {{ $book->price }} vnđ</h5>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="col-lg-3 col-md-6 special-grid top-featured">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <div class="type-lb">
-                                    <p class="sale">Sale</p>
-                                </div>
-                                <img src="/bookstore/images/dac-nhan-tam-kho-lon-360-01.jpg" class="img-fluid" alt="dac-nhan-tam-kho-lon-360-01.jpg">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
-                                </div>
+                <div class="col-lg-3 col-md-6 special-grid top-featured">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">New</p>
                             </div>
-                            <div class="why-text">
-                                <h4><a href="#">{{ $book->name }}</a></h4>
-                                <h5> {{ $book->price }} vnđ</h5>
-                            </div>
-                        </div>
-                    </div>
+                            <img src="/bookstore/images/50c2bb142857c1099846.jpg" class="img-fluid" alt="50c2bb142857c1099846.jpg">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
 
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <div class="type-lb">
-                                    <p class="sale">Sale</p>
-                                </div>
-                                <img src="/bookstore/images/cay-cam-ngot-cua-toi.jpg" class="img-fluid" alt="cay-cam-ngot-cua-toi.jpg">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4><a href="#">{{ $book->name }}</a></h4>
-                                <h5> {{ $book->price }} vnđ</h5>
                             </div>
                         </div>
+                        <div class="why-text">
+                            <h4><a href="#">{{ $book->name }}</a></h4>
+                            <h5> {{ $book->price }} vnđ</h5>
+                        </div>
                     </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 special-grid top-featured">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">Sale</p>
+                            </div>
+                            <img src="/bookstore/images/dac-nhan-tam-kho-lon-360-01.jpg" class="img-fluid" alt="dac-nhan-tam-kho-lon-360-01.jpg">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4><a href="#">{{ $book->name }}</a></h4>
+                            <h5> {{ $book->price }} vnđ</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">Sale</p>
+                            </div>
+                            <img src="/bookstore/images/cay-cam-ngot-cua-toi.jpg" class="img-fluid" alt="cay-cam-ngot-cua-toi.jpg">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4><a href="#">{{ $book->name }}</a></h4>
+                            <h5> {{ $book->price }} vnđ</h5>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
 
@@ -257,7 +259,8 @@
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
+                                    <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                 </div>
                             </div>
                             <div class="why-text">
@@ -280,7 +283,8 @@
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
+                                    <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+
                                 </div>
                             </div>
                             <div class="why-text">
@@ -303,7 +307,7 @@
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
+                                    <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
                                 </div>
                             </div>
                             <div class="why-text">
@@ -326,7 +330,7 @@
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
+                                    <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
                                 </div>
                             </div>
                             <div class="why-text">
