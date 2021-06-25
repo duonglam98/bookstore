@@ -15,15 +15,16 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->default(1);
             $table->string('name');
             $table->string('author');
             $table->string('code');
+            $table->string('category');
             $table->float('price', 8, 2);
             $table->integer('quantity');
             $table->text('description')->nullable();
-            $table->string('images')->nullable();
-            $table->integer('rate')->default(5);
+            $table->string('image');
+            $table->integer('reviews')->default(5);
             $table->float('weight', 8, 2)->nullable();
             $table->string('NXB');
             $table->tinyInteger('status')->default(1);

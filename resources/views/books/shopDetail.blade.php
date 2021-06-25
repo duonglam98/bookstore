@@ -87,9 +87,11 @@
 						<div class="price-box-bar">
 							<div class="cart-and-bay-btn">
 								{{-- <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a> --}}
-								<a class="btn hvr-hover add-to-card" data-fancybox-close="" href="#" data-book_id="{{ $book->id }}"> Thêm vào giỏ hàng </a>
+								<a class="btn hvr-hover add-to-card" data-fancybox-close=""  data-book_id="{{ $book->id }}"> Thêm vào giỏ hàng </a>
+                               
+                                
                          
-                        @if(auth()->id() == $book->user_id)
+                        {{-- @if(auth()->id() == $book->user_id)
                         <p>
                             <button><a href="{{ route('books.edit', ['book' => $book->id]) }}" class="primary-btn">Edit</a></button>
                         </p>
@@ -102,7 +104,7 @@
                             </form>
 
                         </p>
-                        @endif
+                        @endif --}}
 							</div>
 						</div>
 
@@ -211,10 +213,7 @@
                             </div>
                             @livewire('book-reviews', ['book' => $book], key($book->id))
                             @livewireScripts
-                            {{-- <label for="exampleFormControlTextarea1">Nhập đánh giá của bạn</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                          </div>
-						<a href="#" class="btn hvr-hover">Đánh giá sản phẩm</a> --}}
+                            
 					</div>
 				  </div>
 			</div>
@@ -402,7 +401,6 @@
 
         $('.add-to-card').click(function(event) {
             event.preventDefault();
-
             var book_id = $(this).data('book_id'); // data-book_id="value"
             var quantity = $('.book-quantity').val();
 

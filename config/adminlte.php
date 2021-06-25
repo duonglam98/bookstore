@@ -248,7 +248,7 @@ return [
         ],
         [
             'text'        => 'Đi tới trang web',
-            'url'         => 'admin/books',
+            'url'         => '/books',
             'icon'        => 'far fa-fw fa-file',
             
         ],
@@ -274,40 +274,10 @@ return [
                     'url'  => '#',
                 ],
                 [
-                    'text'    => 'DM Sách',
+                    'text'    => 'DM Thể Loại',
                     'icon'    => 'fas fa-circle ',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Sách mới nhất',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Sách giáo khoa',
-                            'url'     => '#',
-                            
-                        ],
-                        [
-                            'text'    => 'Văn học trong nước',
-                            'url'     => '#',
-                            
-                        ],
-                        [
-                            'text'    => 'Văn học nước ngoài',
-                            'url'     => '#',
-                            
-                        ],
-                        [
-                            'text'    => 'Kinh tế',
-                            'url'     => '#',
-                            
-                        ],
-                        [
-                            'text'    => 'Ngoại ngữ',
-                            'url'     => '#',
-                            
-                        ],
-                    ],
+                    'url'     => 'admin/categories',
+                    
                 ],
                 
             ],
@@ -316,20 +286,14 @@ return [
         [
             'text'    => 'Quản lý sách',
             'icon'    => 'fas fa-book  ', 
-            'submenu' => [
-                
-                [
-                    'text'    => 'Tạo sản phẩm',
-                    'icon'    => 'fas fa-circle ',
-                    'url'     => 'admin/books/create',
-                   
-                ],
-                [
-                    'text' => 'Chỉnh sửa sách',
-                    'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
-                ],
-            ],
+            'url'     => 'admin/books',
+        ],
+        
+        [
+            'text' => 'Quản lý đơn hàng',
+            'url'  => '/users/myAccount',
+            'icon' => 'fas fa-shopping-basket',
+            
         ],
 
         [

@@ -1,145 +1,122 @@
 @extends('adminlte::page')
 
-@section('title', 'Tạo Sản Phẩm')
+@section('title', 'Chỉnh sửa sách')
 
 @section('content_header')
-    <h1>Tạo Sản Phẩm</h1>
+    <h1>Chỉnh sửa sách</h1>
 @stop
 
 @section('content')
-    <p>Chào mừng đến trang tạo sản phẩm dành cho Admin</p>
-    <!-- Start Cart  -->
-<div class="cart-box-main">
-    <div class="container">
-        <div class="row new-account-login">
-            {{-- <div class="col-sm-6 col-lg-6 mb-3">
-                <div class="title-left">
-                    <h3>Account Login</h3>
-                </div>
-                <h5><a data-toggle="collapse" href="#formLogin" role="button" aria-expanded="false">Click here to Login</a></h5>
-                <form class="mt-3 collapse review-form-box" id="formLogin">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="InputEmail" class="mb-0">Email Address</label>
-                            <input type="email" class="form-control" id="InputEmail" placeholder="Enter Email"> </div>
-                        <div class="form-group col-md-6">
-                            <label for="InputPassword" class="mb-0">Password</label>
-                            <input type="password" class="form-control" id="InputPassword" placeholder="Password"> </div>
-                    </div>
-                    <button type="submit" class="btn hvr-hover">Login</button>
-                </form>
-            </div> --}}
-            {{-- <div class="col-sm-6 col-lg-6 mb-3">
-                <div class="title-left">
-                    <h3>Create New Account</h3>
-                </div>
-                <h5><a data-toggle="collapse" href="#formRegister" role="button" aria-expanded="false">Click here to Register</a></h5>
-                <form class="mt-3 collapse review-form-box" id="formRegister">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="InputName" class="mb-0">First Name</label>
-                            <input type="text" class="form-control" id="InputName" placeholder="First Name"> </div>
-                        <div class="form-group col-md-6">
-                            <label for="InputLastname" class="mb-0">Last Name</label>
-                            <input type="text" class="form-control" id="InputLastname" placeholder="Last Name"> </div>
-                        <div class="form-group col-md-6">
-                            <label for="InputEmail1" class="mb-0">Email Address</label>
-                            <input type="email" class="form-control" id="InputEmail1" placeholder="Enter Email"> </div>
-                        <div class="form-group col-md-6">
-                            <label for="InputPassword1" class="mb-0">Password</label>
-                            <input type="password" class="form-control" id="InputPassword1" placeholder="Password"> </div>
-                    </div>
-                    <button type="submit" class="btn hvr-hover">Register</button>
-                </form>
-            </div> --}}
-        </div>
-        <form action="/books" method="POST">
-                   
-            @csrf
-        <div class="row">
-            <div class="col-sm-6 col-lg-6 col-12">
-                <div class="checkout-address">
-                    <div class="title-left">
-                        <h3>Tạo sản phẩm</h3>
-                    </div>
-                    @if (session('status'))
-                    <div class="alert alert-danger">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="name">Tên Sách *</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="" value=" {{ old('name') }} " required>
-                            </div>                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="code">Mã Sách *</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="code" name="code" placeholder="" value="{{ old('code') }}" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="author">Tác Giả *</label>
-                            <input type="text" class="form-control" id="author" name="author" placeholder="" value="{{ old('author') }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="price">Giá Tiền *</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="" value="{{ old('price') }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="quantity">Số Lượng *</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="" value="{{ old('quantity') }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description">Mô Tả *</label><br>
-                            <textarea placeholder="Product detail" name="description">{{ old('description') }}</textarea> 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="images">Ảnh Bìa Sách *</label>
-                                <form action="/action_page.php">
-                                    <input type="file" id="myFile" name="images" value="{{ old('images') }}">                                 
-                                </form>
-                                <div class="invalid-feedback"> Vui lòng chọn file tải lên. </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="weight">Trọng lượng Sách *</label>
-                                <input type="text" class="form-control" id="weight" name="weight" placeholder="" value="{{ old('weight') }}" required>                             
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="NXB">Tên NXB *</label>
-                                <input type="text" class="form-control" id="NXB" name="NXB" placeholder="" value=" {{ old('NXB') }} " required>
-                            </div>
-                        </div>
-                    
-                        <div class="checkout__input text-center">
-                            <button type="submit" class="site-btn hvr-hover">Create</button>
-                        </div>
-              
+    
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+           
+            <div class="pull-right">
+                <a class="btn btn-primary" style="background-color: #b0b435" href="{{ route('admin.books.index') }}"> Back</a>
             </div>
-        </form> 
         </div>
     </div>
-</div>
-<!-- End Cart -->
-@stop
+     
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Lỗi!</strong> Có vấn đề xảy ra với dữ liệu nhập vào.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    
+    <form action="{{ route('admin.books.update',$book->id) }}" method="POST" enctype="multipart/form-data"> 
+        @csrf
+        @method('PUT')
+    
+     <div class="row">
+        
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Tên sách:</strong>
+                <input type="text" name="name" class="form-control" placeholder="Tên sách" value="{{ $book->name }}">
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Tác giả:</strong>
+                <input type="text" name="author" class="form-control" placeholder="Nhập tên tác giả" value="{{ $book->author }}">
+            </div>
+        </div>
+
+        
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <label for="title" class="control-block">Thể loại:</label>
+                <select class="form-control" name="category">
+                    @foreach($category as $cate)
+                    <option value="{{ $cate->name }}">{{ $cate->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Mã sách:</strong>
+                <input type="text" name="code" class="form-control" placeholder="Mã sách" value="{{ $book->code }}">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Giá sách:</strong>
+                <input type="number" name="price" class="form-control" placeholder="Nhập giá sách" value="{{ $book->price }}">
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Số lượng:</strong>
+                <input type="number" name="quantity" class="form-control" placeholder="Nhập số lượng sách" value="{{ $book->quantity }}">
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Mô tả:</strong>
+                <textarea class="form-control" style="height:150px" name="description" placeholder="Mô tả sách" value="{{ $book->description }}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Hình ảnh:</strong>
+                <input type="file" name="image" class="form-control" placeholder="image" value="{{ $book->image }}">
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Trọng lượng:</strong>
+                <textarea class="form-control" name="weight" placeholder="Nhập trọng lượng sách" value="{{ $book->weight }}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Nhà xuất bản:</strong>
+                <textarea class="form-control" name="NXB" placeholder="Nhập tên nhà xuất bản" value="{{ $book->NXB }}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="height: 50px">
+                <button type="submit" class="btn btn-primary" style="background-color: #b0b435">Cập nhật sách</button>
+        </div>
+    </div>
+     
+</form>
+@endsection
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
 
 @section('js')
     <script> console.log('Hi!'); </script>
-@stop

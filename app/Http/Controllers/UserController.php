@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 
@@ -24,10 +25,12 @@ class UserController extends Controller
      */
     public function index()
     {
+        $category = Category::get();
         $books = Book::paginate(1);
         $data = [
             'user' => auth()->user(),
             'books' => $books,
+            'category' => $category,
         ];
 
         return view('users.myAccount', $data);
@@ -40,10 +43,12 @@ class UserController extends Controller
      */
     public function contactUs()
     {
+        $category = Category::get();
         $books = Book::paginate(1);
         $data = [
             'user' => auth()->user(),
             'books' => $books,
+            'category' => $category,
         ];
 
         return view('users.contactUs', $data);
@@ -56,10 +61,12 @@ class UserController extends Controller
      */
     public function aboutUs()
     {
+        $category = Category::get();
         $books = Book::paginate(1);
         $data = [
             'user' => auth()->user(),
             'books' => $books,
+            'category' => $category,
         ];
 
         return view('users.about', $data);

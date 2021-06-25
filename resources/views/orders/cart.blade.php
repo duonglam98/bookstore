@@ -134,7 +134,7 @@
                         </div>
                         <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box t"><a href="{{ route('orders.sendMail') }}" class="ml-auto btn hvr-hover cart-checkout">Thanh Toán</a> </div>
+                <div class="col-12 d-flex shopping-box t"><a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Xác nhận giỏ hàng</a> </div>
             </div>
 
         </div>

@@ -10,6 +10,20 @@ class Category extends Model
     use HasFactory;
     protected $table = 'categories';
     protected $fillable = [
+        
         'name',
     ];
+
+    public function book()
+    {
+        return $this->belongsTo('App\Models\Book');
+    }
+
+    public function books()
+   {
+       return $this->hasMany('App\Models\Book');
+
+   }
+
+   
 }

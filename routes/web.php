@@ -2,15 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Book;
+use App\Models\Category;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
-use App\http\Controllers\SignController;
+use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\Admins\AdminController;
-use App\Http\Controllers\Admins\BookController as AdminProductController;
+use App\Http\Controllers\Admins\AdminBookController;
+use App\Http\Controllers\Admins\AdminCategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,60 +28,71 @@ use App\Http\Controllers\Admins\BookController as AdminProductController;
 
 Route::get('/', function () {
     $user = Auth::user();
-
-    return view('homepage', ['user' => $user]);
+    // $user = auth()->user();
+    $books = Book::paginate(1);
+    $category = Category::get();
+    $data = [
+        'user' => $user,
+        'books' => $books,
+        'category' => $category,
+    ];
+    return view('/books/index', $data);
 });
 
-Route::get('/', function () {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('index', ['user' => $user], ['books' => $books]);
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('dashboard', ['user' => $user], ['books' => $books]);
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/books/index', [BookController::class, 'index'])->name('books.index');
 
 //-------------------------------------------------------------------------------------------------------------------
-// start books
-Route::middleware(['auth:sanctum', 'verified', 'checkAdmin'])->group(function () {
-    Route::get('/books/create', [BookController::class, 'create']);
-    Route::post('/books', [BookController::class, 'store']);
-});
-
-Route::resource('books', BookController::class)->except([
-    'create', 'store'
-]);
-
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-
+Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail');
 
 // end books
+
+//-------------------------------------------------------------------------------------------------------------------
+//start category
+Route::get('books/categories/{id}', [CategoryController::class, 'show'])->name('books.categories');
+
+//end category
+
 
 //-------------------------------------------------------------------------------------------------------------------
 // start orders
 Route::middleware(['auth'])->group(function () {
     Route::post('/orders/checkout', [OrderController::class, 'checkout']);
+    Route::get('/orders/CheckOut', [OrderController::class, 'checkOutCart'])->name('orders.checkOut');
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.cart');
     Route::delete('/orders/{book_orders_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::put('/orders/{book_orders_id}', [OrderController::class, 'update'])->name('orders.update');
-    Route::get('/send-markdown-mail', [OrderController::class, 'sendOrderMail'])->name('orders.sendMail');
-    
+    Route::get('orders/sendMail', [MailController::class, 'sendMail'])->name('orders.sendMail');    
 });
 // end orders
 
 //-------------------------------------------------------------------------------------------------------------------
 // start admin
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/books', [AdminProductController::class, 'index'])->name('admin.books.index');
-    Route::get('/admin/books/create', [AdminProductController::class, 'create'])->name('admin.books.create');
-    Route::post('/admin/books', [AdminProductController::class, 'store'])->name('admin.books');
-    Route::get('/admin/categories', [AdminProductController::class, 'index'])->name('admin.books.index');
+    //Quản lý sách
+    Route::resource('admin/books', AdminBookController::class)
+    ->names([
+        'index' => 'admin.books.index',
+        'create' => 'admin.books.create',
+        'edit' => 'admin.books.edit',
+        'show' => 'admin.books.show',
+        'store' => 'admin.books.store',
+        'update' => 'admin.books.update'
+    ]);
 
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    //Quản lý thể loại
+    Route::resource('admin/categories', AdminCategoryController::class)
+    ->names([
+        'index' => 'admin.categories.index',
+        'create' => 'admin.categories.create',
+        'edit' => 'admin.categories.edit',
+        'show' => 'admin.categories.show',
+        'store' => 'admin.categories.store',
+        'update' => 'admin.categories.update'
+    ]);
 });
 //end admin
 
@@ -95,40 +109,9 @@ Route::get('/users/contactUs', [UserController::class, 'contactUs'])->name('user
 Route::get('/users/about', [UserController::class, 'aboutUs'])->name('users.about');
 // end Users
 
-//-------------------------------------------------------------------------------------------------------------------
-//start category
-Route::get('/categories/newbook', function() {
-    $user = Auth::user();    
-    return view('categories.newbook', ['user' => $user]);
-}) ->name('categories.newbook');
+//--------------------------------------------------------------------------------------------------------------------
+//file-manager
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
-Route::get('/categories/textbook', function() {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('categories.textbook', ['user' => $user]);
-}) ->name('categories.textbook');
-
-Route::get('/categories/domestic', function() {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('categories.domestic', ['user' => $user]);
-}) ->name('categories.domestic');
-
-Route::get('/categories/foreign', function() {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('categories.foreign', ['user' => $user]);
-}) ->name('categories.foreign');
-
-Route::get('/categories/economy', function() {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('categories.economy', ['user' => $user]);
-}) ->name('categories.economy');
-
-Route::get('/categories/dictionary', function() {
-    $user = Auth::user();
-    $books = Book::paginate(1);
-    return view('categories.dictionary', ['user' => $user]);
-}) ->name('categories.dictionary');
-//end category

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
+use App\Models\Category;
 use App\Mail\OrderMail;
 use Mail;
 
@@ -18,6 +19,27 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $category = Category::get();
+        $currentUserId = auth()->id();
+        $order = Order::where('user_id', $currentUserId)
+            ->where('status', 1)
+            ->first();
+
+        $bookOrders = null;
+
+        if ($order) {
+            $bookOrders = BookOrder::where('order_id', $order->id)->get();
+        }
+
+        $data = [
+            'user' => auth()->user(),
+            'bookOrders' => $bookOrders,
+            'category' => $category,
+        ];
+        return view('orders.cart', $data);
+    }
+
+    public function checkOutCart() {
         $currentUserId = auth()->id();
         $order = Order::where('user_id', $currentUserId)
             ->where('status', 1)
@@ -33,7 +55,7 @@ class OrderController extends Controller
             'user' => auth()->user(),
             'bookOrders' => $bookOrders,
         ];
-        return view('orders.cart', $data);
+        return view ('orders.checkOut', $data);
     }
 
     /*

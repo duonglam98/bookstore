@@ -1,6 +1,6 @@
 @extends('layouts.myapp')
 
-@section('title', 'Home Page')
+@section('title', 'Trang chủ')
 
 @section('content')
 
@@ -165,7 +165,7 @@
                             </div>
                         </div>
                         <div class="why-text">
-                            <h4><a href="#">{{ $book->name }}</a></h4>
+                            <h4><a href="{{ route('books.detail') }}">{{ $book->name }}</a></h4>
                             <h5> {{ $book->price }} vnđ</h5>
                         </div>
                     </div>

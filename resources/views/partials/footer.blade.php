@@ -96,7 +96,7 @@
 						<div class="footer-top-box">
 							<h3>Giờ Hành Chính</h3>
 							<ul class="list-time">
-								<li>Thứ 2 - Thứ 6: 08.00am to 05.00pm</li> <li>Thứ 7: 10.00am to 08.00pm</li> <li>Chủ Nhật: <span>Closed</span></li>
+								<li>Thứ 2 - Thứ 6: 08.00am to 05.00pm</li> <li>Thứ 7: 10.00am to 08.00pm</li> <li>Chủ Nhật: <span>Đóng cửa</span></li>
 							</ul>
 						</div>
 					</div>
@@ -151,13 +151,13 @@
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
+                            <h4>Kết nối với chúng tôi</h4>
                             <ul>
                                 <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Đường Ngô Xuân Quảng, <br> TT Trâu Quỳ <br> Gia Lâm, Hà Nội </p>
+                                    <p><i class="fas fa-map-marker-alt"></i>Địa chỉ: 123 Đại lộ Lê Lợi <br> TP Thanh Hoá <br> Tỉnh Thanh Hoá </p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+84-339698977">+84-339698977</a></p>
+                                    <p><i class="fas fa-phone-square"></i>Điện thoại: <a href="tel:+84-339698977">+84-339698977</a></p>
                                 </li>
                                 <li>
                                     <p><i class="fas fa-envelope"></i>Email: <a href="mailto:duongthixinh@gmail.com">duongthixinh@gmail.com</a></p>

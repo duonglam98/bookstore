@@ -14,11 +14,12 @@ class Book extends Model
         'user_id',
         'name',
         'author',
+        'category',
         'code',
         'price',
         'quantity',
         'description',
-        'images',
+        'image',
         'reviews',
         'weight',
         'NXB',
@@ -29,4 +30,10 @@ class Book extends Model
     {
         return $this->belongsToMany(Order::class, 'book_orders');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
+   
 }

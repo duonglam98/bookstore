@@ -81,10 +81,10 @@
                         <p>Nếu bạn gặp bất kì vấn đề nào với trang web, hãy liên hệ với chúng tôi qua các kênh dưới đây. </p>
                         <ul>
                             <li>
-                                <p><i class="fas fa-map-marker-alt"></i><b>Address: Đường Ngô Xuân Quảng, <br> TT Trâu Quỳ </b></p>
+                                <p><i class="fas fa-map-marker-alt"></i><b>Địa chỉ: 123 Đại lộ Lê Lợi, <br> TP Thanh Hoá </b></p>
                             </li>
                             <li>
-                                <p><i class="fas fa-phone-square"></i><b>Phone: <a href="tel:+84-339698977">+84-339698977</a></b></p>
+                                <p><i class="fas fa-phone-square"></i><b>Điện thoại: <a href="tel:+84-339698977">+84-339698977</a></b></p>
                             </li>
                             <li>
                                 <p><i class="fas fa-envelope"></i><b>Email: <a href="mailto:duongthixinh@gmail.com">duongthixinh@gmail.com</a></b></p>

@@ -1,30 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Mail\OrderMail;
-use App\Models\Order;
-use Mail;
 
+use App\Mail\NSND;
+use Mail;
+use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
-    public function sendOrderMail()
+    public function sendMail()
     {
         $email = 'xinhit98@gmail.com';
-        $currentUserId = auth()->id();
-        $order = Order::where('user_id', $currentUserId)
-            ->where('status', 1)
-            ->first();
-            
-        $order = [
-            'title' => 'Nhà sách Nhân Dân đã nhận đơn hàng',
-            'url' => 'localhost:3000/books'
+   
+        $maildata = [
+            'title' => 'Nhà sách Nhân Dân cảm ơn quý khách đã đặt hàng!',
+            'url' => 'localhost:3000/books/'
         ];
   
-        Mail::to($email)->send(new OrderMail($order));
+        Mail::to($email)->send(new NSND($maildata));
    
-        dd("Mail sent!");
-        // return view('books.index');
+        dd("Đặt hàng thành công!");
     }
 }

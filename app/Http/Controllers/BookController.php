@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 
@@ -24,13 +25,18 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(1);
+        $user = Auth::user();
+        $category = Category::get();
+        $books = Book::latest()->paginate(5);
         $data = [
-            'user' => auth()->user(),
+            // 'user' => auth()->user(),
+            'user' => $user,
             'books' => $books,
+            'category' => $category,
         ];
-
-        return view('books.index', $data);
+    
+        return view('books.index', compact('books'), $data)
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -63,29 +69,23 @@ class BookController extends Controller
             'price',
             'quantity',
             'description',
-            'images',
+            'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'weight',
             'NXB',
 
         ]);
 
-         //converting image into the string
-        //  $image = $request->image;
-
-        //  $image_new_name = time().$image->getClientOriginalName();
- 
-        //  $image->move('uploads/books',$image_new_name);
-
-        // \Log::info($inputData);
-        try {
-            $book = Book::create(array_merge($inputData, [
-                'user_id' => auth()->id()
-            ]));
-
-            return redirect('/books/' . $book->id);
-        } catch (\Throwable $th) {
-            return back()->with('status', 'Tạo sách thất bại!');
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
         }
+    
+        Book::create($input);
+     
+        return redirect()->route('books.index')
+                        ->with('Thành công','Thêm sách thành công!');
 
     }
 
@@ -97,13 +97,19 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $this->viewData['book'] = Book::findOrFail($id);
-        $this->viewData['user'] = auth()->user();
-        // $this->viewData['cartNumber'] = $cartNumber;
-
-        return view('books.shopDetail', $this->viewData);
-        return view('categories.dictionary', $this->viewData);
+        $user = Auth::user();
+        $category = Category::get();
+        
+        $data = [
+            'user' => $user,
+            'category' => $category,
+        ];
+        // $books = Book::find($id);
+        return view('books.shopDetail', ['book' => Book::find($id)], $data);
     }
+
+    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -153,7 +159,7 @@ class BookController extends Controller
 
             return redirect('/books/' . $book->id);
         } catch (\Throwable $th) {
-            return back()->with('status', 'Cập nhật sách thất bại');;
+            return back()->with('status', 'Cập nhật sách thất bại');
         }
     }
 

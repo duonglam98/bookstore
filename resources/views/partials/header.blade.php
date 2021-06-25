@@ -73,10 +73,12 @@
                           Đăng Nhập
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Đăng nhập') }}</a>
+                         
                           @if (Route::has('register'))
                           <a class="dropdown-item" href="{{ route('register') }}">{{ __('Đăng ký') }}</a>
                           @endif
+
+                          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Đăng nhập') }}</a>
                         </div>
                       </div>
                    
@@ -115,15 +117,14 @@
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         {{-- <li class="nav-item active"><a class="nav-link" href="index.html"></a></li> --}}
                         <li class="nav-item"><a class="nav-link" href="{{ route('users.about') }}">Giới Thiệu</a></li>
+
                         <li class="dropdown">
-                            <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> DANH MỤC <i class="fas fa-caret-down"></i></a> 
-                            <ul class="dropdown-menu ">
-								<li><a href="{{ route('categories.newbook') }}">Sách Mới Nhất</a></li>
-                                <li><a href="{{ route('categories.textbook') }}">Sách Giáo Khoa</a></li>
-								<li><a href="{{ route('categories.domestic') }}">Văn Học Trong Nước</a></li>
-                                <li><a href="{{ route('categories.foreign') }}">Văn Học Nước Ngoài</a></li>
-                                <li><a href="{{ route('categories.economy') }}">Kinh Tế</a></li>
-                                <li><a href="{{ route('categories.dictionary') }}">Từ Điển</a></li>
+                            <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> Danh mục <i class="fas fa-caret-down"></i></a> 
+                            <ul class="dropdown-menu " >
+                                @foreach ($category as $cate)
+                                    <li value="{{ $cate->id }}"><a href="{{ route('books.categories' , $cate->id) }}" >{{ $cate->name }}</a></li>
+                                @endforeach
+								
                             </ul>
                         </li>
                         
@@ -139,7 +140,7 @@
                             <div class="dropdown">
                                <i class="fa fa-search" onclick="myFunction()" class="dropbtn" style="position: absolute;
                                top: -41px; "></i>
-                                <div id="myDropdown" class="dropdown-content">
+                                <div id="myDropdown" class="dropdown-content" style=" margin-left: -257px;">
                                   <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                                   <a href="#">Tìm tên sách</a>
                                   <a href="#">Tìm tên tác giả</a>
@@ -177,7 +178,7 @@
 							<a href="{{ route('orders.cart') }}">
 								<i class="fa fa-shopping-bag"></i>
 								<span class="badge" id="cart-number">{{ showCartNumber() }}</span>
-								<p>My Cart</p>
+								<p>Giỏ hàng</p>
 							</a>
 						</li>
                     </ul>
