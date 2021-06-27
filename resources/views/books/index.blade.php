@@ -155,13 +155,13 @@
                                 <p class="sale">Sale</p>
                             </div>
                             {{-- <a href="#">{{ $book->images }}</a> --}}
-                            <img src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" class="img-fluid" alt="277fa65c176e3551a6bd0ffd05083265.jpg">
+                            <img src="/image/{{ $book->image }}" class="img-fluid" height="200px">
                             <div class="mask-icon">
-                                <ul>
+                                {{-- <ul>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul>
+                                </ul> --}}
                                 <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
 
                             </div>
@@ -263,3 +263,42 @@
 @endsection
 
 @section('style')
+@section('script')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.add-to-card').click(function(event) {
+            event.preventDefault();
+            var book_id = $(this).data('book_id'); // data-book_id="value"
+            var quantity = 1;
+            var image = "/image/{{ $book->image }}";
+
+            var url = '/orders';
+
+            $.ajax(url, {
+                type: 'POST',
+                data: {
+                    book_id: book_id,
+                    quantity: quantity,
+                    image: image,
+                },
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    alert(resultObj.msg);
+                    $('#cart-number').text(resultObj.quantity);
+                },
+                error: function () {
+                    alert('Đã xảy ra lỗi!');
+                }
+            });
+        });
+
+    });
+</script>
+@endsection
+

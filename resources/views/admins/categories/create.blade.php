@@ -37,8 +37,16 @@
                 <strong>Tên thể loại:</strong>
                 <input type="text" name="name" class="form-control" placeholder="Nhập tên thể loại">
             </div>
-        </div>
 
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Nhập tên định dạng cho thể loại:</strong>
+                <input type="text" name="subName" class="form-control" placeholder="Nhập tên thể loại">
+                <p style="opacity: 0.5"> Ví dụ: tentheloai</p>
+            </div>
+            
+        </div>
         
         <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="height: 50px">
                 <button type="submit" class="btn btn-primary" style="background-color: #b0b435">Tạo thể loại</button>

@@ -13,6 +13,7 @@ class BookOrder extends Model
     protected $table = 'book_orders';
     protected $fillable = [
         'book_id',
+        'image',
         'order_id',
         'quantity',
         'price',

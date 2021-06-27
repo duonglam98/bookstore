@@ -56,7 +56,7 @@
                                 <tr>
                                     <td class="thumbnail-img">
                                         <a href="#">
-									<img class="img-fluid" src="{{ asset('/bookstore/images/img-pro-01.jpg') }}" alt="" />
+									<img class="img-fluid" src="{{ $bookOrder->image }}" alt="" />
 								</a>
                                     </td>
                                     <td class="name-pr">

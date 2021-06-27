@@ -42,7 +42,9 @@ class AdminCategoryController extends Controller
         $validatedData = $this->validate($request, 
         [ 
             'name' => 'required|min:3|max:255|string', 
+            'sub_name' => 'required',
         ]); 
+        
         Category::create($validatedData); 
         return redirect()->route('admin.categories.index')
                 ->withSuccess('Bạn đã tạo mới một thể loại');
@@ -81,6 +83,7 @@ class AdminCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3|max:255|string', 
+            'sub_name' => 'required'
             
         ]);
   

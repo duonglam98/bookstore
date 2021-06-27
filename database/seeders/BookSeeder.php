@@ -18,9 +18,10 @@ class BookSeeder extends Seeder
 
         Book::create([
             'user_id' => '1',
+            'category_id' => '1',
             'name' => 'Harry Porter',
             'author' => 'J. K. Rowling',
-            'category' => 'Văn học nước ngoài',
+            'category' => 'Sách mới nhất',
             'code' => '0001',
             'price' => 140000,
             'quantity' => 100,

@@ -78,8 +78,16 @@ class OrderController extends Controller
     {
         $inputData = $request->only([
             'book_id',
+            'image',
             'quantity',
         ]);
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
 
         $bookId = $inputData['book_id'];
         $book = Book::find($bookId);
@@ -111,6 +119,7 @@ class OrderController extends Controller
                 $bookOrderData = [
                     'book_id' => $inputData['book_id'],
                     'quantity' => $inputData['quantity'],
+                    'image' => $inputData['image'],
                     'order_id' => $currentOrder->id,
                     'price' => $book->price,
                 ];
@@ -147,6 +156,7 @@ class OrderController extends Controller
                 $bookOrderData = [
                     'book_id' => $inputData['book_id'],
                     'quantity' => $inputData['quantity'],
+                    'image' => $inputData['image'],
                     'order_id' => $currentOrder->id,
                     'price' => $book->price,
                 ];

@@ -32,6 +32,8 @@ class CategoryController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,6 +68,8 @@ class CategoryController extends Controller
         $user = Auth::user();
         $books = Book::latest()->paginate(5);
         $category = Category::get();
+        // $books = Book::where('category_id', $category->id)->where('status', '1')->get();
+
         $data = [
             'user' => $user,
             'books' => $books, 
@@ -74,6 +78,32 @@ class CategoryController extends Controller
 
         return view('books.categories.index',  ['cate' => Category::find($id)], $data);
     }
+
+    public function viewBook($subName)
+    {
+
+        if(Category::where('subName', $subName)->exists())
+        {
+           $user = Auth::user();
+           $category = Category::where('subName', $subName)->first();
+           $books = Book::where('category_id', $category->id)->where('status', '1')->get();
+           $data = [
+            'user' => $user,
+            'books' => $books, 
+            'category' => $category
+        ];
+           return view('books.categories.index', ['cate' => Category::find($subName)], $data);
+        }
+
+        else 
+        {
+            return redirect('/')->with('status', 'SubName không tồn tại!');
+        }
+        // $user = Auth::user();
+        // $books = Book::latest()->paginate(5);
+        // $category = Category::get();
+        // return view('books.categories.index', ['cate' => Category::fin])->withCategory($book);
+    } 
     
 
     /**

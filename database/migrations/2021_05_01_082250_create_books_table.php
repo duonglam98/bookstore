@@ -19,8 +19,12 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('author');
             $table->string('code');
+            // Relationship field
+            // $table->integer('category_id')->unsigned();
+            // $table->foreign('category_id')->references('id')->on('categories');
             $table->string('category');
             $table->float('price', 8, 2);
+            // $table->string('sub_name')->unsigned();
             $table->integer('quantity');
             $table->text('description')->nullable();
             $table->string('image');
@@ -29,6 +33,7 @@ class CreateBooksTable extends Migration
             $table->string('NXB');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+           
         });
     }
 

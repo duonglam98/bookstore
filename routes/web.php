@@ -40,7 +40,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
-->get('/books/index', [BookController::class, 'index'])->name('books.index');
+->get('/books', [BookController::class, 'index'])->name('books.index');
 
 //-------------------------------------------------------------------------------------------------------------------
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail');
@@ -50,7 +50,7 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail')
 //-------------------------------------------------------------------------------------------------------------------
 //start category
 Route::get('books/categories/{id}', [CategoryController::class, 'show'])->name('books.categories');
-
+Route::get('books/categories/{subName}', [CategoryController::class, 'viewBook'])->name('books.categories');
 //end category
 
 

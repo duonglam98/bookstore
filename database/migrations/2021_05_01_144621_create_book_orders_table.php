@@ -17,6 +17,7 @@ class CreateBookOrdersTable extends Migration
             Schema::create('book_orders', function (Blueprint $table) {
                 $table->id();
                 $table->bigInteger('book_id');
+                $table->string('image');
                 $table->bigInteger('order_id');
                 $table->integer('quantity');
                 $table->integer('price');
