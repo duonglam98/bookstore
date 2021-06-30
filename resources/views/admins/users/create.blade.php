@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Cập nhật đơn hàng')
+@section('title', 'Thêm người dùng mới')
 
 @section('content_header')
-    <h1>Cập nhật đơn hàng</h1>
+    <h1>Thêm người dùng mới</h1>
 @stop
 
 @section('content')

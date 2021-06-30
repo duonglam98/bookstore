@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder {
         Category::truncate();
 
         Category::create([
-            'subName' => 'sachmoinhat',
+            'sub_name' => 'sachmoinhat',
             'name' => 'Sách mới nhất',
         ]);
     }

@@ -108,28 +108,7 @@
                     <a class="navbar-brand" href="{{ route('books.index') }}"><img src="/bookstore/images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
-
-
-                <div class="search-product" style="margin-left: 89px; width: 29%;">
-                    <form action="/search" method="GET" role="search>
-                        {{ csrf_field() }}
-                        <select  class="mdb-select md-form" searchable="Search here..">
-                            <option value="" disabled selected>Lựa chọn tìm kiếm</option>
-                            {{-- @foreach ($collection as $item) --}}
-                                <option value="1">USA</option>
-                        
-                            {{-- @endforeach --}}
-                            
-                        </select>
-                    </form>
-                </div> 
-                <script>
-                    $(document).ready(function() {
-                    $('.mdb-select').materialSelect();
-                    });
-                </script>
-
-
+               
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
@@ -140,12 +119,12 @@
                             <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> Danh mục <i class="fas fa-caret-down"></i></a> 
                             <ul class="dropdown-menu " >
                                 @foreach ($category as $cate)
-                                    <li value="{{ $cate->id }}"><a href="{{ route('books.categories' , $cate->id) }}" >{{ $cate->name }}</a></li>                                
+                                    <li value="{{ $cate->id }}"><a href="{{ route('books.index') . '?category=' . $cate->subName  }}" >{{ $cate->name }}</a></li>                                
 								@endforeach
                             </ul>
                         </li>
                         
-                        <li class="nav-item"><a class="nav-link" href="{{ route('users.contact') }}">Liên Hệ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.contact') }}"> Liên Hệ</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -153,43 +132,37 @@
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        {{-- <li class="search"><a href="#">
-                            <div class="dropdown">
-                               <i class="fa fa-search" onclick="myFunction()" class="dropbtn" style="position: absolute;
-                               top: -41px; "></i>
-                                <div id="myDropdown" class="dropdown-content" style=" margin-left: -257px;">
-                                  <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                                  <a href="#">Tìm tên sách</a>
-                                  <a href="#">Tìm tên tác giả</a>
-                                  <a href="#">Tìm tên Nhà xuất bản</a>
-                                  
-                                </div>
-                              </div></a>
-                        </li>
-                        <script> 
-                            /* When the user clicks on the button,
-                            toggle between hiding and showing the dropdown content */
-                            // function myFunction() {
-                            //   document.getElementById("myDropdown").classList.toggle("show");
-                            // }
-                            
-                            // function filterFunction() {
-                            //   var input, filter, ul, li, a, i;
-                            //   input = document.getElementById("myInput");
-                            //   filter = input.value.toUpperCase();
-                            //   div = document.getElementById("myDropdown");
-                            //   a = div.getElementsByTagName("a");
-                            //   for (i = 0; i < a.length; i++) {
-                            //     txtValue = a[i].textContent || a[i].innerText;
-                            //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            //       a[i].style.display = "";
-                            //     } else {
-                            //       a[i].style.display = "none";
-                            //     }
-                            //   }
-                            // }
-                            // </script>--}}
-
+                        <li>
+                        <form class="card-body" action="/search" method="GET" role="search">
+                            {{ csrf_field() }}
+                            <div class="input-group">
+                                <li class="search">
+                                    
+                                    <div class="dropdown">
+                                       <i class="fa fa-search" onclick="myFunction()" class="dropbtn" 
+                                       style="position: absolute; top: -6px; right: 6px; "></i>
+                                        <div id="myDropdown" class="dropdown-content" style=" margin-left: -257px; margin-top:24px">
+                                          <input style="border: 4px solid #b0b435;" type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" name="search">
+                                          <a href="{{ route('books.index') . '?category=' . $cate->subName  }}">Tìm tên tác giả</a>
+                                          <a href="#">Tìm tên Nhà xuất bản</a>
+                                          
+                                        </div>
+                                      </div>
+                                    
+                                </li>
+                                <script> 
+                                    /* When the user clicks on the button,
+                                    toggle between hiding and showing the dropdown content */
+                                    function myFunction() {
+                                      document.getElementById("myDropdown").classList.toggle("show");
+                                    }
+                                    
+                                   
+                                </script>
+                         
+                            </div>
+                        </form>
+                    </li>
 
                         <li class="side-menu">
 							<a href="{{ route('orders.cart') }}">
@@ -256,4 +229,13 @@
         .acc:hover {
             color: #b0b435;
         }
+
+        .select2-container .select2-selection--single{
+    height:34px !important;
+}
+.select2-container--default .select2-selection--single{
+         border: 1px solid #ccc !important; 
+     border-radius: 0px !important; 
+}
+
     </style>

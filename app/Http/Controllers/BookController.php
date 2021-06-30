@@ -23,11 +23,32 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->all());
+        $categorySubName = $request->category;
         $user = Auth::user();
         $category = Category::get();
-        $books = Book::latest()->paginate(5);
+       
+        if ($categorySubName) {
+            $categoryId = $category->where('subName', $categorySubName)->first()->id;
+            // dd($categoryId);
+            $books = Book::where('category_id', $categoryId)->latest()->paginate(5);
+            $data = [
+                'user' => $user,
+                'books' => $books,
+                'category' => $category,
+            ];
+            return view('books.categories.index', compact('category'), $data)
+                ->with('i', (request()->input('page', 1) - 1) * 5);
+        } else {
+            $books = Book::latest()->paginate(5);
+
+        }
+
+
+        // dd($books);
+
         $data = [
             // 'user' => auth()->user(),
             'user' => $user,
@@ -181,5 +202,27 @@ class BookController extends Controller
             return back()->with('status', 'Không thể xóa!');
         }
     }
+
+    public function search(Request $request)
+{
+    $user = Auth::user();
+    $category = Category::get();
+
+    $data = [
+        'user' => $user,
+        'category' => $category,
+    ];
+    $key = trim($request->get('search'));
+
+    $books = Book::query()
+        ->where('name', 'like', "%{$key}%")
+        ->get();
+
+    return view('books.search', [
+        'key' => $key,
+        'books' => $books,
+    ], $data);
+}
+
 }
 

@@ -14,7 +14,7 @@ class AddSubnameToCategories extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('subName')->unique();
+            $table->string('sub_name')->unique();
         });
     }
 
@@ -26,7 +26,7 @@ class AddSubnameToCategories extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('subName');
+            Schema::dropIfExists('sub_name');
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCategoryIdToBooks extends Migration
+class CreateSearchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class AddCategoryIdToBooks extends Migration
      */
     public function up()
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->integer('category_id')->nullable();
-            
+        Schema::create('searches', function (Blueprint $table) {
+            $table->id();
+            $table->string('author');
+            $table->string('NXB');
+            $table->timestamps();
         });
-
     }
 
     /**
@@ -27,8 +28,6 @@ class AddCategoryIdToBooks extends Migration
      */
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('searches');
     }
 }

@@ -29,7 +29,7 @@ use App\Http\Controllers\Admins\AdminCategoryController;
 Route::get('/', function () {
     $user = Auth::user();
     // $user = auth()->user();
-    $books = Book::paginate(1);
+    $books = Book::latest()->paginate(5);
     $category = Category::get();
     $data = [
         'user' => $user,
@@ -39,9 +39,10 @@ Route::get('/', function () {
     return view('/books/index', $data);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])
-->get('/books', [BookController::class, 'index'])->name('books.index');
+// Route::middleware(['auth:sanctum', 'verified'])
+// ->get('/books', [BookController::class, 'index'])->name('books.index');
 
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
 //-------------------------------------------------------------------------------------------------------------------
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail');
 
@@ -49,21 +50,20 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail')
 
 //-------------------------------------------------------------------------------------------------------------------
 //start category
-Route::get('books/categories/{id}', [CategoryController::class, 'show'])->name('books.categories');
-Route::get('books/categories/{subName}', [CategoryController::class, 'viewBook'])->name('books.categories');
+// Route::get('books/categories/{id}', [CategoryController::class, 'show'])->name('books.categories');
+// Route::get('books/categories/{subName}', [CategoryController::class, 'viewBook'])->name('books.categories');
 //end category
-
 
 //-------------------------------------------------------------------------------------------------------------------
 // start orders
 Route::middleware(['auth'])->group(function () {
-    Route::post('/orders/checkout', [OrderController::class, 'checkout']);
+    Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.payment');
     Route::get('/orders/CheckOut', [OrderController::class, 'checkOutCart'])->name('orders.checkOut');
     Route::post('/orders', [OrderController::class, 'store']);
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.cart');
+    Route::get('/orders/cart', [OrderController::class, 'index'])->name('orders.cart');
     Route::delete('/orders/{book_orders_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::put('/orders/{book_orders_id}', [OrderController::class, 'update'])->name('orders.update');
-    Route::get('orders/sendMail', [MailController::class, 'sendMail'])->name('orders.sendMail');    
+    Route::get('orders/sendMail', [OrderController::class, 'sendMail'])->name('orders.sendMail');    
 });
 // end orders
 
@@ -115,3 +115,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
+
+//-------------------------------------------------------------------------------------------------------------------
+//Search
+Route::get('/search', [BookController::class, 'search']);

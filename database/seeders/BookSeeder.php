@@ -22,7 +22,7 @@ class BookSeeder extends Seeder
             'name' => 'Harry Porter',
             'author' => 'J. K. Rowling',
             'category' => 'Sách mới nhất',
-            'code' => '0001',
+            'code' => 'BOOK_1',
             'price' => 140000,
             'quantity' => 100,
             'description' => 'Horror',

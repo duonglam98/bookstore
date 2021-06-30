@@ -4,17 +4,6 @@
 
 @section('content')
 
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
@@ -100,29 +89,6 @@
     </div>
     <!-- End Categories -->
 	
-	{{-- <div class="box-add-products">
-		<div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1>Khuyến mại HOT</h1>
-                    </div>
-                </div>
-            </div>
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="offer-box-products">
-						<img class="img-fluid" src="/bookstore/images/add-img-01.jpg" alt="" />
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="offer-box-products">
-						<img class="img-fluid" src="/bookstore/images/add-img-02.jpg" alt="" />
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --}}
 
     <!-- Start Products  -->
     <div class="products-box">
@@ -134,17 +100,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="row">
-                <div class="col-lg-12">
-                    <div class="special-menu text-center">
-                        <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">All</button>
-                            <button data-filter=".top-featured">Top featured</button>
-                            <button data-filter=".best-seller">Best seller</button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+           
 
             <div class="row special-list">
                 @foreach ($books as $book)
@@ -155,13 +111,9 @@
                                 <p class="sale">Sale</p>
                             </div>
                             {{-- <a href="#">{{ $book->images }}</a> --}}
-                            <img src="/image/{{ $book->image }}" class="img-fluid" height="200px">
+                            <img src="/image/{{ $book->image }}" class="img-fluid" style="height: 350px !important">
                             <div class="mask-icon">
-                                {{-- <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul> --}}
+                               
                                 <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
 
                             </div>
@@ -293,7 +245,7 @@
                     $('#cart-number').text(resultObj.quantity);
                 },
                 error: function () {
-                    alert('Đã xảy ra lỗi!');
+                    alert('Vui lòng đăng nhập để thêm giỏ hàng!');
                 }
             });
         });

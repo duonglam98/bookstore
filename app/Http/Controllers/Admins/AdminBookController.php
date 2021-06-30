@@ -54,7 +54,7 @@ class AdminBookController extends Controller
             
             'name' => 'required',
             'author' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'code' => 'required',
             'price' => 'required',
             'quantity' => 'required',
@@ -65,7 +65,12 @@ class AdminBookController extends Controller
         ]);
   
         $input = $request->all();
-  
+        // dd($input);
+        $categoryName = Category::find($input['category_id'])->name;
+
+        // dd($categoryName);
+        $input['category'] = $categoryName;
+        
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();

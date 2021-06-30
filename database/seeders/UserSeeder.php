@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
 
         User::create([
             "name" => "Admin",
-            "email" => "admin@gmail.com",
+            "email" => "xinhit98@gmail.com",
             "email_verified_at" => null,
-            'phone' => null,
-            'address' => null,
+            'phone' => '0339698977',
+            'address' => '123 Đại lộ Lê Lợi, TP Thanh Hoá, Tỉnh Thanh Hoá',
             "current_team_id" => 1,
             "profile_photo_path" => null,
             "is_admin" => 1,

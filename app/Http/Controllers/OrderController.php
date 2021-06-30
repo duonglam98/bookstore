@@ -7,7 +7,8 @@ use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
 use App\Models\Category;
-use App\Mail\OrderMail;
+use App\Mail\OrderShipped;
+
 use Mail;
 
 class OrderController extends Controller
@@ -51,7 +52,9 @@ class OrderController extends Controller
             $bookOrders = BookOrder::where('order_id', $order->id)->get();
         }
 
+        $categories = Category::get();
         $data = [
+            'category' => $categories,
             'user' => auth()->user(),
             'bookOrders' => $bookOrders,
         ];
@@ -80,7 +83,24 @@ class OrderController extends Controller
             'book_id',
             'image',
             'quantity',
+            // 'user_name' => 'required',
+            // 'phone' => 'required',
+            // 'address' => 'required',
         ]);
+
+        // $input = $request->all();
+
+        // $userName = User::find($input['name'])->name;
+        // $phone = User::find($input['phone'])->phone;
+        // $address = User::find($input['address'])->address;
+        // // dd($userName);
+
+        // $input['user_name'] = $userName;
+        // $input['phone'] = $phone;
+        // $input['address'] = $address;
+
+
+        // Order::create($input);
 
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
@@ -99,14 +119,14 @@ class OrderController extends Controller
             ]);
         }
 
-        // Create order
+        // Tạo order
         $currentUserId = auth()->id();
         $orderData = [
             'code' => 'BOOK_' . now()->format('Ymd_His') . '_' . $currentUserId,
             'user_id' => $currentUserId,
         ];
 
-        // Check current user has new order
+        // kiểm tra người dùng hiện thời có đơn hàng mới
         $currentOrder = Order::where('user_id', $currentUserId)
             ->where('status', 1)
             ->first();
@@ -115,7 +135,7 @@ class OrderController extends Controller
             try {
                 $currentOrder = Order::create($orderData);
 
-                // Create book_order
+                // Tạo book_order
                 $bookOrderData = [
                     'book_id' => $inputData['book_id'],
                     'quantity' => $inputData['quantity'],
@@ -170,7 +190,7 @@ class OrderController extends Controller
 
             return json_encode([
                 'status' => false,
-                'msg' => 'Có lỗi ở đây!',
+                'msg' => 'Có lỗi ở store!',
             ]);
         }
 
@@ -244,24 +264,23 @@ class OrderController extends Controller
     {
         $currentUser = auth()->user();
         $order = $currentUser->orders()->where('status', 1)->first();
-       
+
         try {
-            $order->status = 2;
-            $order->save();
+            // $order->status = 2;
+            // $order->save();
 
             // Send mail to user
-            \Mail::to($user->email)->send(new \App\Mail\OrderShipped($order));
-            
+            \Mail::to($currentUser->email)->send(new \App\Mail\OrderShipped($order));
+
             $result =[
                 'status' => true,
-                'msg' => 'Đặt hàng thành công, cảm ơn bạn!',
+                'msg' => 'Order Success! Thankyou!',
             ];
         } catch (\Throwable $th) {
             \Log::error($th);
-            \Log::info($order);
             $result = [
                 'status' => false,
-                'msg' => 'Lỗi gửi email!',
+                'msg' => 'Something wrent wrong!',
             ];
         }
 
@@ -300,17 +319,5 @@ class OrderController extends Controller
     }
 
 
-    public function sendOrderMail()
-    {
-        $email = 'xinhit98@gmail.com';
-        $order = [
-            'title' => 'Nhà sách Nhân Dân đã nhận đơn hàng',
-            'url' => 'localhost:3000/books'
-        ];
   
-        Mail::to($email)->send(new OrderMail($order));
-   
-        dd("Mail sent!");
-        // return view('books.index');
-    }
 }

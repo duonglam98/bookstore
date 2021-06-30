@@ -15,7 +15,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Book store | @yield('title')</title>
+    <title>NSND | @yield('title')</title>
 
     <base href="{{ asset('') }}">
     <!-- Site Icons -->

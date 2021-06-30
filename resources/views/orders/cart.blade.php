@@ -63,12 +63,12 @@
                                         <h5>{{ $bookOrder->book->name }}</h5>
                                     </td>
                                     <td class="price-pr">
-                                        <p>${{ $bookOrder->price }}</p>
+                                        <p>{{ $bookOrder->price }}</p>
                                     </td>
-                                    <td class="quantity-box quantity">
-                                        <input type="number" size="4" min="1" step="1" class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}"></td>
+                                    <td class="quantity-box quantity" >
+                                        <input type="number"  min="1"  class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}" style="width:20%"></td>
                                     <td class="total-pr total-product-price">
-                                        <p>${{ $bookOrder->price * $bookOrder->quantity }}</p>
+                                        <p>{{ $bookOrder->price * $bookOrder->quantity }}</p>
                                     </td>
                                     <td class="remove-pr ">
                                         
@@ -114,14 +114,14 @@
                         <h3>Tổng hóa đơn</h3>
                         <div class="d-flex">
                             <h4>Tạm Tính</h4>
-                            <div class="ml-auto font-weight-bold total-price"> $ 130 </div>
+                            <div class="ml-auto font-weight-bold total-price">  </div>
                         </div>
                         
                         <hr class="my-1">
-                        <div class="d-flex">
+                        {{-- <div class="d-flex">
                             <h4>Phiếu giảm giá</h4>
                             <div class="ml-auto font-weight-bold"> $ 10 </div>
-                        </div>
+                        </div> --}}
                        
                         <div class="d-flex">
                             <h4>Phí Ship</h4>
@@ -130,7 +130,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Tổng Tiền</h5>
-                            <div class="ml-auto h5 total-price"> $ 388 </div>
+                            <div class="ml-auto h5 total-price">  </div>
                         </div>
                         <hr> </div>
                 </div>
@@ -153,21 +153,15 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         $('.delete-product').click(function(event) {
             event.preventDefault();
-
             var bookElement = $(this).parent().parent();
-
             var bookOrderId = $(this).data('book_order_id');
-
             var url = '/orders/' + bookOrderId;
-
             $.ajax(url, {
                 type: 'DELETE',
                 success: function (result) {
                     var resultObj = JSON.parse(result);
-
                     if (resultObj.status) {
                         alert(resultObj.msg);
                         bookElement.remove();
@@ -177,57 +171,44 @@
                     }
                 },
                 error: function () {
-                    alert('Có lỗi xảy ra!');
+                    alert('Có lỗi ở nút xoá!');
                 }
             });
         });
-
         $('.qty').addClass('update-quantity');
-
         $('.update-quantity').click(function(event) {
+            // console.log('ok')
             event.preventDefault();
-
             var quantity = parseInt($(this).parent().find('input').val());
-
             var totalBookPrice = $(this).closest('tr').find('.total-product-price');
-
             var bookOrderId = $(this).closest('tr').find('.delete-product').data('book_order_id');
-
-            var url = '/orders/' + bookOrderId;
-
+            var url = 'orders/' + bookOrderId;
             $.ajax(url, {
                 type: 'PUT',
                 data: {
-                    quantity: quantity
+                    quantity: quantity,
                 },
                 success: function (result) {
                     var resultObj = JSON.parse(result);
-
                     if (!resultObj.status) {
                         alert(resultObj.msg);
                         location.reload();
                     }
-
-                    totalBookPrice.text('$' + resultObj.price);
-
+                    totalBookPrice.text(resultObj.price);
                     calculatePrice();
                 },
                 error: function () {
-                    alert('Có lỗi xảy ra!');
+                    alert('Lỗi cập nhật số lượng sách!');
                 }
             });
         });
-
         // $('.cart-checkout').click(function(event) {
         //     event.preventDefault();
-
         //     var url = '/orders/checkout';
-
         //     $.ajax(url, {
         //         type: 'POST',
         //         success: function (result) {
         //             var resultObj = JSON.parse(result);
-
         //             alert(resultObj.msg);
         //             location.reload();
         //         },
@@ -236,25 +217,19 @@
         //         }
         //     });
         // });
-
         calculatePrice();
-
         function calculatePrice()
         {
             var totalPrice = 0;
-
             $('.total-product-price').each(function() {
                 var price = parseInt($(this).text().replace('$', ''));
                 totalPrice += price;
             });
-
-            $('.total-price').text('$' + totalPrice);
-
+            $('.total-price').text(totalPrice);
             var totalQuantity = 0;
             $('.book-quantity').each(function() {
                 totalQuantity += parseInt($(this).val());
             });
-
             $('#cart-number').text(totalQuantity);
         }
     });

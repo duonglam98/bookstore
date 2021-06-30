@@ -42,7 +42,7 @@
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 <strong>Nhập tên định dạng cho thể loại:</strong>
-                <input type="text" name="subName" class="form-control" placeholder="Nhập tên thể loại">
+                <input type="text" name="sub_name" class="form-control" placeholder="Nhập tên thể loại">
                 <p style="opacity: 0.5"> Ví dụ: tentheloai</p>
             </div>
             

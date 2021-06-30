@@ -37,11 +37,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-6">
-                    {{-- <img class="product__details__pic__item--large"
-                                src="@if($book->images) {{ asset('storage/books/' . $book->images) }} 
-                                @else /bookstore/imgages/gallery-img-02.jpg 
-                                @endif" alt="{{ $book->name }}"> --}}
-                    <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
+                    <img class="product__details__pic__item--large"
+                                src="/image/{{ $book->image }}">
+                    {{-- <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active"> <img class="d-block w-100" src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" alt="First slide"> </div>
                             <div class="carousel-item"> <img class="d-block w-100" src="/bookstore/images/55f46f20ec12c97447e6da109faf68f7.jpg" alt="Second slide"> </div>
@@ -50,11 +48,11 @@
                         <a class="carousel-control-prev" href="#carousel-example-1" role="button" data-slide="prev"> 
 						<i class="fa fa-angle-left" aria-hidden="true"></i>
 						<span class="sr-only">Previous</span> 
-					</a>
+					    </a>
                         <a class="carousel-control-next" href="#carousel-example-1" role="button" data-slide="next"> 
 						<i class="fa fa-angle-right" aria-hidden="true"></i> 
 						<span class="sr-only">Next</span> 
-					</a>
+					    </a>
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-1" data-slide-to="0" class="active">
                                 <img class="d-block w-100 img-fluid" src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" alt="" />
@@ -66,7 +64,7 @@
                                 <img class="d-block w-100 img-fluid" src="/bookstore/images/c3fa989449f2afaf2dccea7daa0e8311.jpg" alt="" />
                             </li>
                         </ol>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-xl-7 col-lg-7 col-md-6">
                     <div class="single-product-details">
@@ -79,7 +77,7 @@
 							<li>
 								<div class="form-group quantity-box">
 									<label class="control-label">Số lượng</label>
-									<input class="form-control book-quantity" value="1" min="1" max="20" type="number">
+									<input class="form-control book-quantity"  min="1" max="{{ $book->quantity }}" type="number">
 								</div>
 							</li>
 						</ul>
@@ -403,7 +401,7 @@
             event.preventDefault();
             var book_id = $(this).data('book_id'); // data-book_id="value"
             var quantity = $('.book-quantity').val();
-
+            var image = "/image/{{ $book->image }}";
             var url = '/orders';
 
             $.ajax(url, {
@@ -411,6 +409,7 @@
                 data: {
                     book_id: book_id,
                     quantity: quantity,
+                    image: image,
                 },
                 success: function (result) {
                     var resultObj = JSON.parse(result);
@@ -418,7 +417,7 @@
                     $('#cart-number').text(resultObj.quantity);
                 },
                 error: function () {
-                    alert('Đã xảy ra lỗi!');
+                    alert('Vui lòng đăng nhập để thêm giỏ hàng!');
                 }
             });
         });

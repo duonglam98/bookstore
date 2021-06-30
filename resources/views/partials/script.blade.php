@@ -14,4 +14,6 @@
 <script src="/bookstore/js/form-validator.min.js"></script>
 <script src="/bookstore/js/contact-form-script.js"></script>
 <script src="/bookstore/js/custom.js"></script>
+
+
 @yield('script')

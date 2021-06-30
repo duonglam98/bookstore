@@ -252,18 +252,26 @@ return [
             'icon'        => 'far fa-fw fa-file',
             
         ],
-        ['header' => 'Cài đặt tài khoản'],
         [
-            'text' => 'Hồ sơ',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Cài đặt tài khoản',
+            'url'   => 'admin/settings',
+            'icon'  => 'fas fa-cog',
+            'submenu' => [
+                [
+                    'text' => 'Hồ sơ',
+                    'url'  => '',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Đổi mật khẩu',
+                    'url'  => 'admin/settings',
+                    'icon' => 'fas fa-fw fa-lock',
+                ],
+        
+            ]
+    
         ],
-        [
-            'text' => 'Đổi mật khẩu',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-
+        
         [
             'text'    => 'Danh Mục',
             'icon'    => 'fa fa-list-alt ',

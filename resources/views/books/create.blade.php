@@ -85,7 +85,7 @@
                     <div class="title-left">
                         <h3>Tạo sản phẩm</h3>
                     </div>
-                    @if (session('status'))
+                @if (session('status'))
                     <div class="alert alert-danger">
                         {{ session('status') }}
                     </div>
