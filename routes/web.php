@@ -13,8 +13,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admins\AdminController;
 use App\Http\Controllers\Admins\AdminBookController;
 use App\Http\Controllers\Admins\AdminCategoryController;
+use App\Http\Controllers\Admins\AdminUserController;
+use App\Http\Controllers\Admins\AdminOrderController;
+use App\Http\Controllers\Admins\AdminStatisticController;
 
 
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +46,10 @@ Route::get('/', function () {
     ];
     return view('/books/index', $data);
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 // Route::middleware(['auth:sanctum', 'verified'])
 // ->get('/books', [BookController::class, 'index'])->name('books.index');
@@ -93,6 +105,34 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'store' => 'admin.categories.store',
         'update' => 'admin.categories.update'
     ]);
+
+    Route::resource('/admin/users', AdminUserController::class)->names([
+        'index' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'edit' => 'admin.users.edit',
+        'show' => 'admin.users.show',
+        'store' => 'admin.users.store',
+        'update' => 'admin.users.update'
+    ]);
+
+    Route::resource('/admin/orders', AdminOrderController::class)->names([
+        'index' => 'admin.orders.index',
+        'create' => 'admin.orders.create',
+        'edit' => 'admin.orders.edit',
+        'show' => 'admin.orders.show',
+        'store' => 'admin.orders.store',
+        'update' => 'admin.orders.update',
+        // 'destroy' => 'admin.orders.destroy',
+    ]);
+
+    Route::resource('/admin/statistics/data', AdminStatisticController::class)->names([
+        'index' => 'admin.statistics.index',
+        
+    ]);
+
+
+
+
 });
 //end admin
 
@@ -101,10 +141,18 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
 //-------------------------------------------------------------------------------------------------------------------
 // start Users
 Route::middleware(['auth'])->group(function () {
-    Route::get('/users/myAccount', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/accounts/myAccount', [UserController::class, 'index'])->name('users.accounts.index');
+    Route::get('/users/accounts/yourOrder', [UserController::class, 'yourOrder'])->name('users.accounts.yourOrder');
+    Route::get('/users/accounts/myWishList', [UserController::class, 'wishList'])->name('users.accounts.wishList');
+
+    Route::resource('/users/accounts/', UserController::class)->names([
+        'edit' => 'users.accounts.profile',
+        'update' => 'users.accounts.update',
+    ]);
+    // Route::get('/users/accounts/profile', [UserController::class, 'profile'])->name('users.accounts.profile');
+    // Route::post('/users/accounts/profile/{id}', [UserController::class, 'update'])->name('users.accounts.update');
 
 });
-
 Route::get('/users/contactUs', [UserController::class, 'contactUs'])->name('users.contact');
 Route::get('/users/about', [UserController::class, 'aboutUs'])->name('users.about');
 // end Users
@@ -119,3 +167,8 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 //-------------------------------------------------------------------------------------------------------------------
 //Search
 Route::get('/search', [BookController::class, 'search']);
+
+
+
+
+

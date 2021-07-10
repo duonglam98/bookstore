@@ -68,8 +68,7 @@ class CategoryController extends Controller
         $user = Auth::user();
         $books = Book::latest()->paginate(5);
         $category = Category::get();
-        // $books = Book::where('category_id', $category->id)->where('status', '1')->get();
-
+        
         $data = [
             'user' => $user,
             'books' => $books, 

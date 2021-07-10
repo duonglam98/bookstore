@@ -37,8 +37,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-6">
-                    <img class="product__details__pic__item--large"
-                                src="/image/{{ $book->image }}">
+                    <img class="product__details__pic__item--large" src="/image/{{ $book->image }}">
                     {{-- <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active"> <img class="d-block w-100" src="/bookstore/images/277fa65c176e3551a6bd0ffd05083265.jpg" alt="First slide"> </div>
@@ -73,11 +72,13 @@
                         {{-- <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span><p> --}}
 						<h4>Tác giả:</h4>
 						<p>{{ $book->author }}</p>
+
+                       
 						<ul>
 							<li>
 								<div class="form-group quantity-box">
 									<label class="control-label">Số lượng</label>
-									<input class="form-control book-quantity"  min="1" max="{{ $book->quantity }}" type="number">
+									<input class="form-control book-quantity" value="1"  min="1" max="{{ $book->quantity }}" type="number">
 								</div>
 							</li>
 						</ul>
@@ -123,11 +124,19 @@
                 </div>
             </div>
 			
+            <div class="row my-5">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <h3><b>Mô tả ngắn: </b></h3>
+                    <p>{{ $book->description }}</p>
+                </div>
+            </div>
 			<div class="row my-5" >
+               
 				<div class="card card-outline-secondary my-4" style="width:100%" >
 					<div class="card-header">
 						<h2 style="font-size: 30px;
-                        text-align: center;">Đánh giá sách</h2>
+                        text-align: center;">Đánh giá cuốn sách {{ $book->name }}</h2>
 					</div>
 					<div class="card-body">
 						{{-- <div class="media mb-3">

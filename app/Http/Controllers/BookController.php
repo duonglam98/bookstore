@@ -31,7 +31,7 @@ class BookController extends Controller
         $category = Category::get();
        
         if ($categorySubName) {
-            $categoryId = $category->where('subName', $categorySubName)->first()->id;
+            $categoryId = $category->where('sub_name', $categorySubName)->first()->id;
             // dd($categoryId);
             $books = Book::where('category_id', $categoryId)->latest()->paginate(5);
             $data = [
@@ -120,13 +120,13 @@ class BookController extends Controller
     {
         $user = Auth::user();
         $category = Category::get();
-        
+        $book = Book::find($id);
         $data = [
             'user' => $user,
             'category' => $category,
         ];
         // $books = Book::find($id);
-        return view('books.shopDetail', ['book' => Book::find($id)], $data);
+        return view('books.shopDetail', ['book' => $book], $data);
     }
 
     
@@ -216,11 +216,14 @@ class BookController extends Controller
 
     $books = Book::query()
         ->where('name', 'like', "%{$key}%")
+        ->orWhere('author', 'like', "%{$key}%")
+        ->orWhere('NXB', 'like', "%{$key}%")
         ->get();
 
     return view('books.search', [
         'key' => $key,
         'books' => $books,
+        
     ], $data);
 }
 

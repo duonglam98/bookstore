@@ -10,7 +10,7 @@
                             @auth
                                 <div class="w-full space-y-5">
                                     <p class="font-medium text-blue-500 uppercase">
-                                        Bình chọn sản phẩm này
+                                        Chọn cấp độ sao:
                                     </p>
                                 </div>
                                 @if (session()->has('message'))
@@ -51,10 +51,10 @@
                                             </div>
                                         </div>
                                         <div class="block">
-                                            <button type="submit" class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">Rate</button>
+                                            <button type="submit" class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">Tất cả đánh giá</button>
                                             @auth
                                                 @if($currentId)
-                                                    <button type="submit" class="w-full px-3 py-4 mt-4 font-medium text-white bg-red-400 rounded-lg" wire:click.prevent="delete({{ $currentId }})" class="text-sm cursor-pointer">Delete</button>
+                                                    <button type="submit" class="w-full px-3 py-4 mt-4 font-medium text-white bg-red-400 rounded-lg" wire:click.prevent="delete({{ $currentId }})" class="text-sm cursor-pointer">Xoá</button>
                                                 @endif
                                             @endauth
                                         </div>
@@ -100,7 +100,7 @@
                                     Đánh giá: <strong>{{ $comment->rating }}</strong> ⭐
                                     @auth
                                         @if(auth()->user()->id == $comment->user_id )
-                                            - <a wire:click.prevent="delete({{ $comment->id }})" class="text-sm cursor-pointer">Delete</a>
+                                            - <a wire:click.prevent="delete({{ $comment->id }})" class="text-sm cursor-pointer">Xoá</a>
                                         @endif
                                     @endauth
                                 </div>

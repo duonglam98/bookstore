@@ -46,8 +46,6 @@
             </div>
         </div>
 
-        
-        <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="title" class="control-block">Thể loại:</label>
                 <select class="form-control" name="category_id">
@@ -55,7 +53,7 @@
                     <option value="{{ $cate->id }}">{{ $cate->name }}</option>
                     @endforeach
                 </select>
-        </div>
+            </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Mã sách:</strong>
@@ -107,7 +105,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="height: 50px">
                 <button type="submit" class="btn btn-primary" style="background-color: #b0b435">Tạo sách</button>
         </div>
-    </div>
+
      
 </form>
 @endsection

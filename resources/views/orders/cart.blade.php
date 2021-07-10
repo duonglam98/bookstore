@@ -39,6 +39,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
+                        @if ($bookOrders)
                         <table class="table">
                             <thead>
                                 <tr>
@@ -51,12 +52,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($bookOrders)
+                               
                                 @foreach ($bookOrders as $bookOrder)
                                 <tr>
                                     <td class="thumbnail-img">
                                         <a href="#">
-									<img class="img-fluid" src="{{ $bookOrder->image }}" alt="" />
+									<img class="img-fluid" src="{{ $bookOrder->image }}" alt="" style="width: 100px !important;
+                                    height: 102px !important;" />
 								</a>
                                     </td>
                                     <td class="name-pr">
@@ -66,13 +68,14 @@
                                         <p>{{ $bookOrder->price }}</p>
                                     </td>
                                     <td class="quantity-box quantity" >
-                                        <input type="number"  min="1"  class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}" style="width:20%"></td>
+                                        <input type="number"  min="1"  class="c-input-text qty text book-quantity" value="{{ $bookOrder->quantity }}" style="width:20%">
+                                    </td>
                                     <td class="total-pr total-product-price">
                                         <p>{{ $bookOrder->price * $bookOrder->quantity }}</p>
                                     </td>
-                                    <td class="remove-pr ">
+                                    <td class="remove-pr delete-product">
                                         
-									<i class="fas fa-times delete-product"  data-book_order_id="{{ $bookOrder->id }}"></i>
+									<i class="fas fa-times "  data-book_order_id="{{ $bookOrder->id }}"></i>
 							
                                     </td>
                                 </tr>
@@ -80,11 +83,11 @@
                                 
                             </tbody>
                         </table>
-                            @else
-                               
-                                <h2 style="text-align: center">Giỏ hàng trống!</h2>
-                                
-                            @endif
+                        @else
+                            
+                            <h2 style="text-align: center">Giỏ hàng trống!</h2>
+                            
+                        @endif
                     </div>
                 </div>
             </div>
@@ -92,12 +95,12 @@
             <div class="row my-5">
                 <div class="col-lg-6 col-sm-6">
                     <div class="coupon-box">
-                        <div class="input-group input-group-sm">
+                        {{-- <div class="input-group input-group-sm">
                             <input class="form-control" placeholder="Nhập mã giảm giá" aria-label="Coupon code" type="text">
                             <div class="input-group-append">
                                 <button class="btn btn-theme" type="button">Kiểm tra mã giảm giá</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 {{-- <div class="col-lg-6 col-sm-6">
@@ -134,7 +137,14 @@
                         </div>
                         <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box t"><a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Xác nhận giỏ hàng</a> </div>
+                <div class="col-12 d-flex shopping-box t">
+                
+                    {{-- <button href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout" disabled="true">Xác nhận giỏ hàng</button> --}}
+
+                    
+                    <a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Xác nhận giỏ hàng</a>
+                    {{-- @endif --}}
+                </div>
             </div>
 
         </div>
@@ -153,8 +163,11 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        // dd('ok');
         $('.delete-product').click(function(event) {
+            
             event.preventDefault();
+            
             var bookElement = $(this).parent().parent();
             var bookOrderId = $(this).data('book_order_id');
             var url = '/orders/' + bookOrderId;

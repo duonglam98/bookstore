@@ -40,26 +40,7 @@ class OrderController extends Controller
         return view('orders.cart', $data);
     }
 
-    public function checkOutCart() {
-        $currentUserId = auth()->id();
-        $order = Order::where('user_id', $currentUserId)
-            ->where('status', 1)
-            ->first();
-
-        $bookOrders = null;
-
-        if ($order) {
-            $bookOrders = BookOrder::where('order_id', $order->id)->get();
-        }
-
-        $categories = Category::get();
-        $data = [
-            'category' => $categories,
-            'user' => auth()->user(),
-            'bookOrders' => $bookOrders,
-        ];
-        return view ('orders.checkOut', $data);
-    }
+    
 
     /*
      * Show the form for creating a new resource.
@@ -83,24 +64,8 @@ class OrderController extends Controller
             'book_id',
             'image',
             'quantity',
-            // 'user_name' => 'required',
-            // 'phone' => 'required',
-            // 'address' => 'required',
+           
         ]);
-
-        // $input = $request->all();
-
-        // $userName = User::find($input['name'])->name;
-        // $phone = User::find($input['phone'])->phone;
-        // $address = User::find($input['address'])->address;
-        // // dd($userName);
-
-        // $input['user_name'] = $userName;
-        // $input['phone'] = $phone;
-        // $input['address'] = $address;
-
-
-        // Order::create($input);
 
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
@@ -262,25 +227,45 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
+        
+        $input = $request->all();
+        // dd($input);
+       
         $currentUser = auth()->user();
         $order = $currentUser->orders()->where('status', 1)->first();
+        $orderId = $order->id;
+        //sử dụng quan hệ relationship
+        $bookOrders = BookOrder::where('order_id', $orderId)->get();
+        // dd($bookOrders->toArray(), $orderId);
+        $totalPrice = 0;
+        foreach($bookOrders as $bookOrder) {
+            $totalPrice += $bookOrder->quantity * $bookOrder->price;
+            
+        }
 
+        // dd($totalPrice);
+        // $totalPrice->save();
         try {
+            $order->total_price = $totalPrice;
+            $order->user_name = $input['user_name'];
+            $order->phone = $input['phone'];
+            $order->address = $input['address'];
             // $order->status = 2;
             // $order->save();
 
             // Send mail to user
-            \Mail::to($currentUser->email)->send(new \App\Mail\OrderShipped($order));
+            // \Mail::to($currentUser->email)->send(new \App\Mail\OrderShipped($order));
 
+           
             $result =[
                 'status' => true,
-                'msg' => 'Order Success! Thankyou!',
+                'msg' => 'Đặt hàng thành công, cảm ơn bạn!',
             ];
         } catch (\Throwable $th) {
             \Log::error($th);
             $result = [
                 'status' => false,
-                'msg' => 'Something wrent wrong!',
+                'msg' => 'Lỗi đặt hàng!',
             ];
         }
 
@@ -294,30 +279,45 @@ class OrderController extends Controller
      * @param  int  $bookOrderId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($bookOrderId)
+    public function destroy($id)
     {
-        $bookOrder = BookOrder::find($bookOrderId);
-        \Log::info($bookOrder);
+        $order = Order::find($id);
+
         try {
-            $bookOrder->delete();
+            $order->delete();
 
-            $result =[
-                'status' => true,
-                'msg' => 'Xóa thành công!',
-            ];
+            return redirect('/books')->with('status', 'Đã Xóa!');
         } catch (\Throwable $th) {
-            \Log::error($th);
-
-            $result = [
-                'status' => false,
-                'msg' => 'Xóa thất bại!',
-            ];
+            return back()->with('status', 'Không thể xóa!');
         }
-
-        return json_encode($result);
     
     }
 
+    public function checkOutCart() {
+        $currentUserId = auth()->id();
+        $order = Order::where('user_id', $currentUserId)
+            ->where('status', 1)
+            ->first();
+        if ($order->books->count() < 1) {
+            return redirect('/'); 
 
-  
+        } 
+
+        // \Log::info($order->books);
+
+        $bookOrders = null;
+
+        if ($order) {
+            $bookOrders = BookOrder::where('order_id', $order->id)->get();
+        } 
+        $categories = Category::get();
+        $data = [
+            'category' => $categories,
+            'user' => auth()->user(),
+            'bookOrders' => $bookOrders,
+        ];
+        return view ('orders.checkOut', $data);
+    }
+
+   
 }

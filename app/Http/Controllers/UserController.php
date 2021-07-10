@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
@@ -33,7 +34,7 @@ class UserController extends Controller
             'category' => $category,
         ];
 
-        return view('users.myAccount', $data);
+        return view('users.accounts.myAccount', $data);
     }
 
     /**
@@ -94,41 +95,25 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
       
-        $inputData = $request->only([
-            'name',
-            'author',
-            'code',
-            'price',
-            'quantity',
-            'description',
-            'images',
-            'reviews',
-            'weight',
-            'NXB',
+       
+    }
 
-        ]);
-
-         //converting image into the string
-         $image = $request->image;
-
-         $image_new_name = time().$image->getClientOriginalName();
- 
-         $image->move('uploads/books',$image_new_name);
-
-        // \Log::info($inputData);
-        try {
-            $book = Book::create(array_merge($inputData, [
-                'user_id' => auth()->id()
-            ]));
-
-            return redirect('/books/' . $book->id);
-        } catch (\Throwable $th) {
-            return back()->with('status', 'Tạo sách thất bại!');
-        }
-
+    public function yourOrder(User $user) {
+        $currentUser = auth()->user();
+        $orders = $currentUser->orders()->get();
+        $category = Category::get();
+       
+        $data = [
+            'user' => auth()->user(),
+            // 'books' => $books,
+            'category' => $category,
+            'orders' => $orders,
+        ];
+        return view('users.accounts.yourOrders', $data)
+        ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -149,22 +134,19 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $users
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $book = Book::find($id);
-        if (!$book) {
-            abort(404);
-        }
-
+        $category = Category::get();
         $data = [
             'user' => auth()->user(),
-            'book' => $book,
+           
+            'category' => $category,
         ];
 
-        return view('books.edit', $data);
+        return view('users.accounts.profile', compact('user'), $data);
     }
 
     /**
@@ -174,29 +156,48 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $inputData = $request->all();
-        $book = Book::find($id);
-
-        try {
-            $book->update([
-                'name' => $inputData['name'],
-                'code' => $inputData['code'],
-                'author' => $inputData['author'],
-                'price' => $inputData['price'],
-                'quantity' => $inputData['quantity'],
-                'description' => $inputData['description'],
-                'images' => $inputData['images'],
-                'weight' => $inputData['weight'],
-                'NXB' => $inputData['NXB'],
+        $$request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'oldpassword' => 'required',
+            'newpassword' => 'required',
             ]);
-
-            return redirect('/books/' . $book->id);
-        } catch (\Throwable $th) {
-            return back()->with('status', 'Cập nhật sách thất bại');;
+        
+           $hashedPassword = Auth::user()->password;
+     
+           if (\Hash::check($request->oldpassword , $hashedPassword )) {
+     
+             if (!\Hash::check($request->newpassword , $hashedPassword)) {
+     
+                  $users =User::find(Auth::user()->id);
+                  $users->password = bcrypt($request->newpassword);
+                  User::where( 'id' , Auth::user()->id)->update( array( 'password' =>  $users->password));
+                  
+                  session()->flash('message','Mật khẩu cập nhật thành công');
+                  return redirect()->back();
+                }
+     
+                else{
+                      session()->flash('message','Không thể cập nhật mật khẩu');
+                      return redirect()->back();
+                    }
+     
+               }
+     
+              else{
+                   session()->flash('message','old password doesnt matched ');
+                   return redirect()->back();
+                 }
+                
+                $input = $request->all();
+                $category->save($input);
+                return redirect('/users/accounts/' . $user->id . '/edit');
+                 
         }
-    }
 
     /**
      * Remove the specified resource from storage.

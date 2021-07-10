@@ -5,7 +5,6 @@
 @section('content_header')
     <h1>Chỉnh sửa sách</h1>
 @stop
-
 @section('content')
     
     <div class="row">
@@ -62,7 +61,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Mã sách:</strong>
-                <input type="text" name="code" class="form-control" placeholder="Mã sách" value="{{ $book->code }}">
+                <input type="text" name="code" class="form-control" placeholder="Mã sách: BOOK_" value="{{ $book->code }}">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -117,6 +116,6 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-
+@stop
 @section('js')
     <script> console.log('Hi!'); </script>

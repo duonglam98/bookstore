@@ -1,18 +1,21 @@
 @extends('adminlte::page')
 
-@section('title', 'Chỉnh sửa sách')
+@section('title', 'Chỉnh sửa đơn hàng')
 
 @section('content_header')
-    <h1>Chỉnh sửa sách</h1>
+    <h1>Chỉnh sửa đơn hàng</h1>
 @stop
 
 @section('content')
     
     <div class="row">
         <div class="col-lg-12 margin-tb">
-           
             <div class="pull-right">
-                <a class="btn btn-primary" style="background-color: #b0b435" href="{{ route('admin.books.index') }}"> Back</a>
+                <a class="btn btn-primary" style="background-color: #b0b435" href="{{ route('admin.orders.index') }}"> Trở về</a>
+            </div>
+            <div class="pull-right">
+                <h5>Trạng thái đơn hàng:</h5>
+                <p>1. Đơn hàng được tạo   |   2. Đơn hàng đã xác nhận và chờ xử lý   |   3. Đơn hàng đã hoàn thành   |   4. Đơn hàng đã huỷ</p>
             </div>
         </div>
     </div>
@@ -27,8 +30,9 @@
             </ul>
         </div>
     @endif
-    
-    <form action="{{ route('admin.books.update',$book->id) }}" method="POST" enctype="multipart/form-data"> 
+    {{-- {{ $order->id }}  --}}
+    <form action="{{ route('admin.orders.update',$order->id) }}" method="POST" enctype="multipart/form-data">
+        
         @csrf
         @method('PUT')
     
@@ -36,79 +40,38 @@
         
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <strong>Tên sách:</strong>
-                <input type="text" name="name" class="form-control" placeholder="Tên sách" value="{{ $book->name }}">
+                <strong>Tên khách hàng:</strong>
+                <input type="text" name="user_name" class="form-control" placeholder="Tên khách hàng" value="{{ $order->user_name }}">
             </div>
         </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <strong>Tác giả:</strong>
-                <input type="text" name="author" class="form-control" placeholder="Nhập tên tác giả" value="{{ $book->author }}">
+                <strong>Số điện thoại:</strong>
+                <input type="text" name="phone" class="form-control" placeholder="Tên khách hàng" value="{{ $order->phone }}">
             </div>
         </div>
 
-        
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <label for="title" class="control-block">Thể loại:</label>
-                <select class="form-control" name="category">
-                    @foreach($category as $cate)
-                    <option value="{{ $cate->name }}">{{ $cate->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Mã sách:</strong>
-                <input type="text" name="code" class="form-control" placeholder="Mã sách" value="{{ $book->code }}">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Giá sách:</strong>
-                <input type="number" name="price" class="form-control" placeholder="Nhập giá sách" value="{{ $book->price }}">
+                <strong>Địa chỉ:</strong>
+                <input type="text" name="address" class="form-control" placeholder="Tên khách hàng" value="{{ $order->address }}">
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Số lượng:</strong>
-                <input type="number" name="quantity" class="form-control" placeholder="Nhập số lượng sách" value="{{ $book->quantity }}">
-            </div>
-        </div>
+        <div class="form-group">
+            <label for="title" class="control-block">Trạng thái đơn hàng:</label>
+            <select class="form-control" name="status" value="{{ $order->status }}">
+                <option value="{{ $order->status = 1 }}">1. Đơn hàng được tạo  </option>
+                <option value="{{ $order->status = 2 }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
+                <option value="{{ $order->status = 3 }}">3. Đơn hàng đã hoàn thành</option>
+                <option value="{{ $order->status = 4 }}">4. Đơn hàng đã huỷ</option>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Mô tả:</strong>
-                <textarea class="form-control" style="height:150px" name="description" placeholder="Mô tả sách" value="{{ $book->description }}"></textarea>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Hình ảnh:</strong>
-                <input type="file" name="image" class="form-control" placeholder="image" value="{{ $book->image }}">
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Trọng lượng:</strong>
-                <textarea class="form-control" name="weight" placeholder="Nhập trọng lượng sách" value="{{ $book->weight }}"></textarea>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Nhà xuất bản:</strong>
-                <textarea class="form-control" name="NXB" placeholder="Nhập tên nhà xuất bản" value="{{ $book->NXB }}"></textarea>
-            </div>
+            </select>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="height: 50px">
-                <button type="submit" class="btn btn-primary" style="background-color: #b0b435">Cập nhật sách</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #b0b435">Cập nhật đơn hàng</button>
         </div>
     </div>
      

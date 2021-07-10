@@ -9,11 +9,10 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <p>Chào mừng đến trang quản lý đơn hàng dành cho Admin</p>           
-            </div>
+            
             <div class="pull-right">
-                <a class="btn btn-success" style="background-color: #b0b435" href="{{ route('admin.books.create') }}"> Thêm sách mới</a>
+                <h5>Trạng thái đơn hàng:</h5>
+                <p>1. Đơn hàng được tạo   |   2. Đơn hàng đã xác nhận và chờ xử lý   |   3. Đơn hàng đã hoàn thành   |   4. Đơn hàng đã huỷ</p>
             </div>
         </div>
     </div>
@@ -27,28 +26,28 @@
     <table class="table table-bordered">
         <tr>
             <th>STT</th>
-            <th>Hình Ảnh</th>
-            <th>Tên sách</th>
-            <th>Thể loại</th>
-            <th>Số lượng</th>
-            <th>Giá tiền</th>
+            <th>ID đơn hàng</th>
+            <th>Mã đơn hàng</th>
+            <th>Tên khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái đơn hàng</th>
+            <th>Ngày đặt</th>
             <th width="280px">Tuỳ chỉnh</th>
         </tr>
-        @foreach ($books as $book)
+        @foreach ($orders as $order)
         <tr>
             <td>{{ ++$i }}</td>
-            <td><img src="/image/{{ $book->image }}" width="70px" height="70px"></td>
-            <td>{{ $book->name }}</td>
-            <td>{{ $book->category }}</td>
-            <td>{{ $book->quantity }}</td>
-            <td>{{ $book->price }}</td>
+            <td>{{ $order->id }}</td>
+            <td>{{ $order->code }}</td>
+            <td>{{ $order->user_name }}</td>
+            <td>{{ $order->total_price }}</td>
+            <td>{{ $order->status }}</td>
+            <td>{{ $order->created_at }}</td>
             
             <td>
-                <form action="{{ route('books.destroy',$book->id) }}" method="POST">
-     
-                    <a class="btn btn-info" href="{{ route('admin.books.show',$book->id) }}">Xem</a>
-      
-                    <a class="btn btn-primary" href="{{ route('admin.books.edit',$book->id) }}">Sửa</a>
+                <form action="{{ route('orders.destroy', $order->id) }}" method="POST">
+                    <a class="btn btn-info" href="{{ route('admin.orders.show',$order->id) }}">Xem</a>
+                    <a class="btn btn-primary" href="{{ route('admin.orders.edit',$order->id) }}">Sửa</a>
      
                     @csrf
                     @method('DELETE')
@@ -60,7 +59,7 @@
         @endforeach
     </table>
     
-    {!! $books->links() !!}
+    {!! $orders->links() !!}
         
 @endsection
 {{-- @endsection --}}

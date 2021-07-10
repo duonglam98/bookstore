@@ -48,6 +48,7 @@
 }
 
 html {
+  height: 1080px;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;

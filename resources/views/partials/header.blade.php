@@ -11,14 +11,14 @@
                     </select>
                 </div> --}}
                 <div class="right-phone-box">
-                    <p>Call US :- <a href="#"> +84 033 969 8977</a></p>
+                    <p>Phone : <a href="#"> +84 033 969 8977</a></p>
                 </div>
                 <div class="our-link">
                     <ul>
 
                         @auth
                         @if ($user->name != 'Admin')
-                        <a href="{{ route('users.index') }}" class="acc"><i class="fa fa-user"></i>
+                        <a href="{{ route('users.accounts.index') }}" class="acc"><i class="fa fa-user"></i>
                             {{ $user->name }}
                         </a>
                            
@@ -119,7 +119,7 @@
                             <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> Danh mục <i class="fas fa-caret-down"></i></a> 
                             <ul class="dropdown-menu " >
                                 @foreach ($category as $cate)
-                                    <li value="{{ $cate->id }}"><a href="{{ route('books.index') . '?category=' . $cate->subName  }}" >{{ $cate->name }}</a></li>                                
+                                    <li value="{{ $cate->id }}"><a href="{{ route('books.index') . '?category=' . $cate->sub_name  }}" >{{ $cate->name }}</a></li>                                
 								@endforeach
                             </ul>
                         </li>
@@ -138,13 +138,15 @@
                             <div class="input-group">
                                 <li class="search">
                                     
+
+
                                     <div class="dropdown">
                                        <i class="fa fa-search" onclick="myFunction()" class="dropbtn" 
                                        style="position: absolute; top: -6px; right: 6px; "></i>
                                         <div id="myDropdown" class="dropdown-content" style=" margin-left: -257px; margin-top:24px">
                                           <input style="border: 4px solid #b0b435;" type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" name="search">
-                                          <a href="{{ route('books.index') . '?category=' . $cate->subName  }}">Tìm tên tác giả</a>
-                                          <a href="#">Tìm tên Nhà xuất bản</a>
+                                          {{-- <a href="{{ route('books.index') . '?category=' . $cate->subName  }}">Tìm tên tác giả</a>
+                                          <a href="#">Tìm tên Nhà xuất bản</a> --}}
                                           
                                         </div>
                                       </div>

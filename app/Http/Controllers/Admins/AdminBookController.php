@@ -118,7 +118,15 @@ class AdminBookController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'author' => 'required',
+            'category_id' => 'required',
             'code' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'weight' => 'required',
+            'NXB' => 'required',
         ]);
   
         $input = $request->all();
@@ -135,7 +143,7 @@ class AdminBookController extends Controller
         $book->update($input);
     
         return redirect()->route('admin.books.index')
-                        ->with('Thành công','Thêm sách thành công!');
+                        ->with('Thành công','Cập nhật  sách thành công!');
     }
   
     /**

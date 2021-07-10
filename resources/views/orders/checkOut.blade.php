@@ -37,9 +37,7 @@
     <div class="cart-box-main">
         <div class="container">
             
-            <form action="{{ route('orders.payment') }}" method="POST">
-                @csrf
-
+           
                 @if (session('status'))
                     <div class="alert alert-danger">
                         {{ session('status') }}
@@ -60,7 +58,8 @@
                             <div class="title-left">
                                 <h3>Thông tin thanh toán</h3>
                             </div>
-                            <form class="needs-validation" novalidate>
+                            {{-- <f/orm action="{{ route('orders.payment') }}" method="POST"> --}}
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-6 mb-6">
                                         <label for="firstName">Họ và tên *</label>
@@ -80,6 +79,7 @@
                                     <input type="text" class="form-control" name="address" placeholder="Nhập địa chỉ nhận hàng..." required>
                                     <div class="invalid-feedback"> Vui lòng nhập địa chỉ giao hàng. </div>
                                 </div>
+
                                 {{-- <div class="mb-3">
                                     <label for="address2">Địa chỉ 2 *</label>
                                     <input type="text" class="form-control" id="address2" placeholder=""> </div> --}}
@@ -124,8 +124,6 @@
                                     </div>
                                 
                                 </div>
-                            
-                            </form> 
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-6 mb-3">
@@ -150,11 +148,20 @@
                                         <h3>Giỏ hàng đã xác nhận</h3>
                                     </div>
                                     <div class="rounded p-2 bg-light">
+                                        @foreach ($bookOrders as $bookOrder)
                                         <div class="media mb-2 border-bottom">
-                                            <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
-                                                <div class="small text-muted">Price: $80.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $80.00</div>
+                                            <div class="media-body"> <a href=""> {{ $bookOrder->book->name }}</a>
+                                                <div class="small text-muted">
+                                                    <span>Giá: {{ $bookOrder->price }}</span> 
+                                                    <span class="mx-2">|</span>
+                                                    <span class="total-price1"> {{ $bookOrder->quantity }}</span>
+                                                    <span class="mx-2">|</span>
+                                                    <span class="total-pr total-product-price"> Tạm tính: <span class="abc">{{ $bookOrder->price * $bookOrder->quantity }}</span></span>
+                                                </div>
                                             </div>
                                         </div>
+                                        @endforeach
+                                        
                                     
                                     </div>
                                 </div>
@@ -164,14 +171,14 @@
                                     <div class="title-left">
                                         <h3>Hoá đơn của bạn</h3>
                                     </div>
-                                    <div class="d-flex">
+                                    {{-- <div class="d-flex">
                                         <div class="font-weight-bold">Sản phẩm</div>
                                         <div class="ml-auto font-weight-bold">Tổng tiền</div>
-                                    </div>
-                                    <hr class="my-1">
+                                    </div> --}}
+                                    {{-- <hr class="my-1"> --}}
                                     <div class="d-flex">
                                         <h4>Tạm tính</h4>
-                                        <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                        <div class="ml-auto font-weight-bold total-price"> </div>
                                     </div>
                                     {{-- <div class="d-flex">
                                         <h4>Mã gia,r</h4>
@@ -193,27 +200,28 @@
                                     <hr>
                                     <div class="d-flex gr-total">
                                         <h5>Tổng cộng</h5>
-                                        <div class="ml-auto h5"> $ 388 </div>
+                                        <div class="ml-auto h5 total-price">  </div>
                                     </div>
                                     <hr> </div>
                             </div>
                             <div class="col-12 d-flex shopping-box"> 
-                                <button class="ml-auto btn hvr-hover cart-checkout" type="submit"> Đặt hàng </button>  
-                                {{-- <a class="ml-auto btn hvr-hover cart-checkout" >Đặt hàng</a> --}}
+                                                           
+                                <button class="ml-auto btn hvr-hover cart-checkout" > Đặt hàng </button>  
+
+                               
                             </div> 
                         </div>
-                    
+                   
                     </div>
                 </div>
-            </form>
+            {{-- </form> --}}
         </div>
     </div>
     <!-- End Cart -->
-
-
 @endsection
+
 @section('style')
-@section('script')
+{{-- @section('script')
 <script>
     $(document).ready(function() {
         $.ajaxSetup({
@@ -234,8 +242,129 @@
                 error: function () {
                     alert('Something went wrong!');
                 }
+        });
+
+            calculatePrice();
+        function calculatePrice()
+        {
+            var totalPrice = 0;
+            $('.total-product-price').each(function() {
+                var price = parseInt($(this).text().replace('$', ''));
+                totalPrice += price;
+            });
+            $('.total-price').text(totalPrice);
+            var totalQuantity = 0;
+            $('.book-quantity').each(function() {
+                totalQuantity += parseInt($(this).val());
+            });
+            $('#cart-number').text(totalQuantity);
+        }
+    });
+</script>
+@endsection --}}
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.delete-product').click(function(event) {
+            event.preventDefault();
+            var bookElement = $(this).parent().parent();
+            var bookOrderId = $(this).data('book_order_id');
+            var url = '/orders/' + bookOrderId;
+            $.ajax(url, {
+                type: 'DELETE',
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    if (resultObj.status) {
+                        alert(resultObj.msg);
+                        bookElement.remove();
+                    } else {
+                        alert(resultObj.msg);
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi ở nút xoá!');
+                }
+            });
+        });
+       
+        $('.qty').addClass('update-quantity');
+        $('.update-quantity').click(function(event) {
+            // console.log('ok')
+            event.preventDefault();
+            var quantity = parseInt($(this).parent().find('input').val());
+            var totalBookPrice = $(this).closest('tr').find('.total-product-price');
+            var bookOrderId = $(this).closest('tr').find('.delete-product').data('book_order_id');
+            var url = 'orders/' + bookOrderId;
+            $.ajax(url, {
+                type: 'PUT',
+                data: {
+                    quantity: quantity,
+                },
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    if (!resultObj.status) {
+                        alert(resultObj.msg);
+                        location.reload();
+                    }
+                    totalBookPrice.text(resultObj.price);
+                    calculatePrice();
+                },
+                error: function () {
+                    alert('Lỗi cập nhật số lượng sách!');
+                }
+            });
+        });
+
+        $('.cart-checkout').click(function(event) {
+            
+            event.preventDefault();
+            console.log('ok');
+            var url = '/orders/checkout';
+
+            $.ajax(url, {
+                data :{
+                    user_name: $('input[name="user_name"]').val(),
+                    phone: $('input[name="phone"]').val(),
+                    address: $('input[name="address"]').val(),
+
+                },
+                type: 'POST',
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    alert(resultObj.msg);
+                    location.reload();
+                },
+                error: function () {
+                    alert('Lỗi class cart-checkout!');
+                }
+            });
+        });
+        calculatePrice();
+        function calculatePrice()
+        {
+            var totalPrice = 0;
+            $('.abc').each(function() {
+                console.log($(this).text());
+                var price = parseInt($(this).text());
+                totalPrice += price;
+            });
+
+            console.log(totalPrice);
+            $('.total-price').text(totalPrice);
+            var totalQuantity = 0;
+            $('.book-quantity').each(function() {
+                totalQuantity += parseInt($(this).val());
             });
             
+            $('#cart-number').text(totalQuantity);
+        }
     });
 </script>
 @endsection

@@ -189,7 +189,7 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => 'home',
-    'logout_url' => 'logout',
+    // 'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
@@ -252,34 +252,16 @@ return [
             'icon'        => 'far fa-fw fa-file',
             
         ],
-        [
-            'text' => 'Cài đặt tài khoản',
-            'url'   => 'admin/settings',
-            'icon'  => 'fas fa-cog',
-            'submenu' => [
-                [
-                    'text' => 'Hồ sơ',
-                    'url'  => '',
-                    'icon' => 'fas fa-fw fa-user',
-                ],
-                [
-                    'text' => 'Đổi mật khẩu',
-                    'url'  => 'admin/settings',
-                    'icon' => 'fas fa-fw fa-lock',
-                ],
-        
-            ]
-    
-        ],
+
         
         [
-            'text'    => 'Danh Mục',
+            'text'    => 'Quản lý danh Mục',
             'icon'    => 'fa fa-list-alt ',
             'submenu' => [
                 [
                     'text' => 'DM Người Dùng',
                     'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
+                    'url'  => 'admin/users',
                 ],
                 [
                     'text'    => 'DM Thể Loại',
@@ -299,7 +281,7 @@ return [
         
         [
             'text' => 'Quản lý đơn hàng',
-            'url'  => '/users/myAccount',
+            'url'  => 'admin/orders',
             'icon' => 'fas fa-shopping-basket',
             
         ],
@@ -308,28 +290,23 @@ return [
             'text'    => 'Thống kê - Báo cáo',
             'icon'    => 'fas fa-chart-bar ', 
             'submenu' => [
+
                 [
-                    'text' => 'Tìm kiếm',
-                    'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
+                    'text' => 'Số liệu thống kê',
+                    'icon' => 'fas fa-circle ',
+                    'url'  => '/admin/statistics/data',
                 ],
 
                 [
-                    'text' => 'Kho sách',
-                    'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
+                    'text' => 'Lượng truy cập',
+                    'icon' => 'fas fa-circle ',
+                    'url'  => '/admin/statistics/online',
                 ],
 
                 [
-                    'text' => 'Đơn hàng',
-                    'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
-                ],
-
-                [
-                    'text' => 'Người dùng',
-                    'icon'    => 'fas fa-circle ',
-                    'url'  => '#',
+                    'text' => 'Khách hàng tiềm năng',
+                    'icon' => 'fas fa-circle ',
+                    'url'  => '/admin/statistics/',
                 ],
                 
               
@@ -337,29 +314,14 @@ return [
         ],
 
         [
-            'text' => 'Quản lý phản hồi',
+            'text' => 'Hộp thư đến',
             'url'  => 'admin/settings',
-            'icon' => 'fas fa-headphones',
+            'icon' => 'far fa-envelope',
             'label'       => 4,
             'label_color' => 'success',
         ],
 
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
+       
     ],
 
     /*

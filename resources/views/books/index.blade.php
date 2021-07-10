@@ -1,6 +1,6 @@
 @extends('layouts.myapp')
 
-@section('title', 'Home Page')
+@section('title', 'Trang chủ')
 
 @section('content')
 
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
-                        <img class="img-fluid" src="/bookstore/images/548f6d82cfef32b288e1dfb8fb7dd562.jpg" alt="548f6d82cfef32b288e1dfb8fb7dd562.jpg" />
+                        <img class="img-fluid" src="/image/20210627031952.jpg" alt="548f6d82cfef32b288e1dfb8fb7dd562.jpg" />
                         <a class="btn hvr-hover" href="">Từ điển</a>
                     </div>
                 </div>
@@ -111,12 +111,15 @@
                                 <p class="sale">Sale</p>
                             </div>
                             {{-- <a href="#">{{ $book->images }}</a> --}}
+                         
                             <img src="/image/{{ $book->image }}" class="img-fluid" style="height: 350px !important">
                             <div class="mask-icon">
-                               
-                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
+                                <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">
 
+                                Thêm giỏ hàng
+                            </a>
                             </div>
+                        
                         </div>
                         <div class="why-text">
                             <h4><a href="{{ route('books.detail', ['id' => $book->id])  }}">{{ $book->name }}</a></h4>
@@ -146,7 +149,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
+                    <div class="blog-box" style="height: 703px !important">
                         <div class="blog-img">
                             <img class="img-fluid" src="/bookstore/images/moi-lan-vap-nga-la-mot-lan-truong-thanh.jpg" alt="moi-lan-vap-nga-la-mot-lan-truong-thanh.jpg" />
                         </div>
@@ -164,7 +167,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
+                    <div class="blog-box" style="height: 703px !important">
                         <div class="blog-img">
                             <img class="img-fluid" src="/bookstore/images/cb0ebb11383b6b375992ab1f03582fed.jpg" alt="cb0ebb11383b6b375992ab1f03582fed.jpg" />
                         </div>
@@ -182,7 +185,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
+                    <div class="blog-box" style="height: 703px !important">
                         <div class="blog-img">
                             <img class="img-fluid" src="/bookstore/images/f2760035b59ed6a21cfbad589376e12a.jpg" alt="f2760035b59ed6a21cfbad589376e12a.jpg" />
                         </div>
@@ -204,11 +207,6 @@
     </div>
     <!-- End Blog  -->
 
-
-    
-
-
-  
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 
@@ -228,7 +226,9 @@
             event.preventDefault();
             var book_id = $(this).data('book_id'); // data-book_id="value"
             var quantity = 1;
-            var image = "/image/{{ $book->image }}";
+            var image = $(this).parent().parent().find('img').attr('src');             
+            console.log(image);
+            // return ;
 
             var url = '/orders';
 

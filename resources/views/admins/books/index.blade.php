@@ -44,7 +44,7 @@
             <td>{{ $book->price }}</td>
             
             <td>
-                <form action="{{ route('books.destroy',$book->id) }}" method="POST">
+                <form action="{{ route('books.destroy', $book->id) }}" method="POST">
      
                     <a class="btn btn-info" href="{{ route('admin.books.show',$book->id) }}">Xem</a>
       
