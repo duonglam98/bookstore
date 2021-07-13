@@ -11,7 +11,8 @@
         <div class="col-lg-12 margin-tb">
             
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('admin.categories.create') }}"> Thêm thể loại mới</a>
+                <a class="btn btn-success" href="{{ route('admin.categories.create') }}" style="background-color: #b0b435"> Thêm thể loại mới</a>
+                
             </div>
         </div>
     </div>
@@ -20,11 +21,15 @@
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
+
+        {{-- <x-adminlte-alert theme="success" title="Success">
+            <p>{{ $message }}</p>
+        </x-adminlte-alert> --}}
     @endif
      
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
+            <th>STT</th>
             <th>Name</th>
             <th width="280px">Action</th>
         </tr>

@@ -33,16 +33,16 @@ class BookController extends Controller
         if ($categorySubName) {
             $categoryId = $category->where('sub_name', $categorySubName)->first()->id;
             // dd($categoryId);
-            $books = Book::where('category_id', $categoryId)->latest()->paginate(5);
+            $books = Book::where('category_id', $categoryId)->latest()->paginate(8);
             $data = [
                 'user' => $user,
                 'books' => $books,
                 'category' => $category,
             ];
             return view('books.categories.index', compact('category'), $data)
-                ->with('i', (request()->input('page', 1) - 1) * 5);
+                ->with('i', (request()->input('page', 1) - 1) * 8);
         } else {
-            $books = Book::latest()->paginate(5);
+            $books = Book::latest()->paginate(8);
 
         }
 
@@ -57,7 +57,7 @@ class BookController extends Controller
         ];
     
         return view('books.index', compact('books'), $data)
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 8);
     }
 
     /**

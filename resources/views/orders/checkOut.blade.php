@@ -154,7 +154,7 @@
                                                 <div class="small text-muted">
                                                     <span>Giá: {{ $bookOrder->price }}</span> 
                                                     <span class="mx-2">|</span>
-                                                    <span class="total-price1"> {{ $bookOrder->quantity }}</span>
+                                                    <span class="total-price1 book-quantity" > {{ $bookOrder->quantity }}</span>
                                                     <span class="mx-2">|</span>
                                                     <span class="total-pr total-product-price"> Tạm tính: <span class="abc">{{ $bookOrder->price * $bookOrder->quantity }}</span></span>
                                                 </div>
@@ -180,19 +180,9 @@
                                         <h4>Tạm tính</h4>
                                         <div class="ml-auto font-weight-bold total-price"> </div>
                                     </div>
-                                    {{-- <div class="d-flex">
-                                        <h4>Mã gia,r</h4>
-                                        <div class="ml-auto font-weight-bold"> $ 40 </div>
-                                    </div> --}}
+                                    
                                     <hr class="my-1">
-                                    {{-- <div class="d-flex">
-                                        <h4>Coupon Discount</h4>
-                                        <div class="ml-auto font-weight-bold"> $ 10 </div>
-                                    </div> --}}
-                                    {{-- <div class="d-flex">
-                                        <h4>Tax</h4>
-                                        <div class="ml-auto font-weight-bold"> $ 2 </div>
-                                    </div> --}}
+                                    
                                     <div class="d-flex">
                                         <h4>Phí giao hàng</h4>
                                         <div class="ml-auto font-weight-bold"> Free </div>
@@ -205,7 +195,9 @@
                                     <hr> </div>
                             </div>
                             <div class="col-12 d-flex shopping-box"> 
-                                                           
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div> 
                                 <button class="ml-auto btn hvr-hover cart-checkout" > Đặt hàng </button>  
 
                                
@@ -221,47 +213,6 @@
 @endsection
 
 @section('style')
-{{-- @section('script')
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.cart-checkout').click(function(event) {
-            event.preventDefault();
-            var url = '/orders/checkout';
-            $.ajax(url, {
-                // type: 'POST',
-                success: function (result) {
-                    var resultObj = JSON.parse(result);
-                    alert(resultObj.msg);
-                    location.reload();
-                },
-                error: function () {
-                    alert('Something went wrong!');
-                }
-        });
-
-            calculatePrice();
-        function calculatePrice()
-        {
-            var totalPrice = 0;
-            $('.total-product-price').each(function() {
-                var price = parseInt($(this).text().replace('$', ''));
-                totalPrice += price;
-            });
-            $('.total-price').text(totalPrice);
-            var totalQuantity = 0;
-            $('.book-quantity').each(function() {
-                totalQuantity += parseInt($(this).val());
-            });
-            $('#cart-number').text(totalQuantity);
-        }
-    });
-</script>
-@endsection --}}
 
 @section('script')
 <script>
@@ -339,7 +290,8 @@
                 success: function (result) {
                     var resultObj = JSON.parse(result);
                     alert(resultObj.msg);
-                    location.reload();
+                    // location.reload();
+                    window.history.go(-2);
                 },
                 error: function () {
                     alert('Lỗi class cart-checkout!');
@@ -356,12 +308,16 @@
                 totalPrice += price;
             });
 
-            console.log(totalPrice);
+            // console.log(totalPrice);
             $('.total-price').text(totalPrice);
+
             var totalQuantity = 0;
-            $('.book-quantity').each(function() {
-                totalQuantity += parseInt($(this).val());
+            $('.total-price1').each(function() {
+                var quantity = parseInt($(this).text());
+                totalQuantity += quantity;
             });
+
+            // console.log(totalQuantity);
             
             $('#cart-number').text(totalQuantity);
         }

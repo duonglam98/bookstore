@@ -16,7 +16,7 @@
     </div>
 </div>
      
-@if ($errors->any())
+{{-- @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Lỗi!</strong> Xảy ra vấn đề với dữ liệu nhập vào.<br><br>
         <ul>
@@ -25,7 +25,13 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif --}}
+
+@if ($message = Session::get('Lỗi'))
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
      
 <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
     @csrf

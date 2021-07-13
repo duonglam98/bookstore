@@ -61,12 +61,30 @@
 
         <div class="form-group">
             <label for="title" class="control-block">Trạng thái đơn hàng:</label>
-            <select class="form-control" name="status" value="{{ $order->status }}">
-                <option value="{{ $order->status = 1 }}">1. Đơn hàng được tạo  </option>
-                <option value="{{ $order->status = 2 }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
-                <option value="{{ $order->status = 3 }}">3. Đơn hàng đã hoàn thành</option>
-                <option value="{{ $order->status = 4 }}">4. Đơn hàng đã huỷ</option>
+            <select class="form-control" name="status" value="{{ old('status', $order->status) }}">
+                @if ($order->status == 1)
+                <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
 
+                @elseif ($order->status == 2)
+                <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
+
+                @elseif ($order->status == 3)
+                <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
+
+                @elseif ($order->status == 4)
+                <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
+
+                @else
+                <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
+                <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
+                <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
+                <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
+                @endif
+               
+                <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
+                <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
+                <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
+                <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
             </select>
         </div>
 

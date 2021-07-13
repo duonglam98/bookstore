@@ -89,14 +89,40 @@ class AdminOrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'user_name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'status' => 'required',
+            'user_name',
+            'phone',
+            'address',
+            'status' ,
         ]);
   
         $input = $request->all();
 
+        $currentUser = auth()->user();
+        $orderStatus = $currentUser->orders()->where('status', 3)->first();
+       
+        $bookOrderId = $orderStatus->id;
+
+        //sử dụng quan hệ relationship
+        $bookOrders = BookOrder::where('book_id', $bookOrderId)->get();
+        $bookId = Book::where('id', $bookOrderId )->get();
+        $desQuantity = 0;
+        if($orderStatus) {
+            foreach ($bookId as $bookQ) {
+                foreach ($bookOrders as $bookOrder){
+                    // dd()
+                    $desQuantity = $bookQ->quantity - $bookOrder->quantity;
+                    
+                }
+
+                $bookQ->quantity = $desQuantity;
+                // dd($bookQ);
+                $bookQ->save();
+            }
+            
+        }
+        
+    
+        
         $order->update($input);
     
         return redirect()->route('admin.orders.index')

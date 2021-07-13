@@ -70,10 +70,10 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail')
 // start orders
 Route::middleware(['auth'])->group(function () {
     Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.payment');
-    Route::get('/orders/CheckOut', [OrderController::class, 'checkOutCart'])->name('orders.checkOut');
+    Route::get('/orders/pre-payment', [OrderController::class, 'checkOutCart'])->name('orders.checkOut');
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/cart', [OrderController::class, 'index'])->name('orders.cart');
-    Route::delete('/orders/{book_orders_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::delete('/orders/{book_order_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::put('/orders/{book_orders_id}', [OrderController::class, 'update'])->name('orders.update');
     Route::get('orders/sendMail', [OrderController::class, 'sendMail'])->name('orders.sendMail');    
 });
@@ -94,6 +94,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
     ]);
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    // Route::get('/admin', [AdminController::class, 'countOrder']);
+
 
     //Quản lý thể loại
     Route::resource('admin/categories', AdminCategoryController::class)
@@ -129,6 +131,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'index' => 'admin.statistics.index',
         
     ]);
+
+    // Route::resource('admin/')
 
 
 
@@ -169,6 +173,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::get('/search', [BookController::class, 'search']);
 
 
-
+Route::get('notifications/get', [AdminController::class, 'getNotificationsData'] )
+    ->name('notifications.get');
 
 

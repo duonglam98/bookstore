@@ -15,8 +15,13 @@
                 </div>
                 <div class="our-link">
                     <ul>
-
                         @auth
+                        <a href="{{ route('users.accounts.index') }}" class="acc"><i class="fa fa-user"></i>
+                            {{ $user->name }}
+                        </a>
+                        @endauth
+
+                        {{-- @auth
                         @if ($user->name != 'Admin')
                         <a href="{{ route('users.accounts.index') }}" class="acc"><i class="fa fa-user"></i>
                             {{ $user->name }}
@@ -28,10 +33,10 @@
                         </a>
 
                         @endif
-                        @endauth
+                        @endauth --}}
 
                         @guest
-                        <li><a href="#"><i class="fa fa-user s_color"></i> Tài khoản</a></li>
+                        <li><a href="{{ route('register') }}"><i class="fa fa-user s_color"></i> Tài khoản</a></li>
                         @endguest
                         {{-- <li><a href="#"><i class="fas fa-location-arrow"></i> Our location</a></li> --}}
                         <li><a href="{{ route('users.contact') }}"><i class="fas fa-headset"></i> Tư vấn</a></li>
@@ -138,8 +143,6 @@
                             <div class="input-group">
                                 <li class="search">
                                     
-
-
                                     <div class="dropdown">
                                        <i class="fa fa-search" onclick="myFunction()" class="dropbtn" 
                                        style="position: absolute; top: -6px; right: 6px; "></i>

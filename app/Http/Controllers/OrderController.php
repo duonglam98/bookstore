@@ -195,7 +195,7 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $bookOrderId
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $bookOrderId)
@@ -225,6 +225,37 @@ class OrderController extends Controller
         return json_encode($result);
     }
 
+    
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $bookOrderId
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($bookOrderId)
+    {
+        $bookOrder = BookOrder::find($bookOrderId);
+        
+        try {
+            $bookOrder->delete();
+
+            $result =[
+                'status' => true,
+                'msg' => 'Xoá thành công!',
+            ];
+        } catch (\Throwable $th) {
+            \Log::error($th);
+
+            $result = [
+                'status' => false,
+                'msg' => 'Xoá thất bại!',
+            ];
+        }
+
+        return json_encode($result);
+    }
     public function checkout(Request $request)
     {
         
@@ -250,11 +281,11 @@ class OrderController extends Controller
             $order->user_name = $input['user_name'];
             $order->phone = $input['phone'];
             $order->address = $input['address'];
-            // $order->status = 2;
-            // $order->save();
+            $order->status = 2;
+            $order->save();
 
             // Send mail to user
-            // \Mail::to($currentUser->email)->send(new \App\Mail\OrderShipped($order));
+            \Mail::to($currentUser->email)->send(new \App\Mail\OrderShipped($order));
 
            
             $result =[
@@ -271,40 +302,17 @@ class OrderController extends Controller
 
         return json_encode($result);
     }
-    
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $bookOrderId
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $order = Order::find($id);
-
-        try {
-            $order->delete();
-
-            return redirect('/books')->with('status', 'Đã Xóa!');
-        } catch (\Throwable $th) {
-            return back()->with('status', 'Không thể xóa!');
-        }
-    
-    }
 
     public function checkOutCart() {
         $currentUserId = auth()->id();
         $order = Order::where('user_id', $currentUserId)
             ->where('status', 1)
             ->first();
-        if ($order->books->count() < 1) {
-            return redirect('/'); 
-
-        } 
-
-        // \Log::info($order->books);
-
+            if ($order->books->count() < 1) {
+                return redirect()->route('books.index'); 
+    
+            }
+        
         $bookOrders = null;
 
         if ($order) {
@@ -316,7 +324,12 @@ class OrderController extends Controller
             'user' => auth()->user(),
             'bookOrders' => $bookOrders,
         ];
+        if ($order->books->count() < 1) {
+            return view('books.index'); 
+
+        } else{
         return view ('orders.checkOut', $data);
+    }
     }
 
    

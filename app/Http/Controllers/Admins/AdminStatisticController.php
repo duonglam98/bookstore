@@ -7,27 +7,49 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class AdminStatisticController extends Controller
 {
-     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admins.statistics.userOnline');
-    }
+     
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, BookOrder $book_orders)
     {
+        //Tổng số sản phẩm trong kho
+        $totalQuantityBook = Book::sum('quantity');
 
-        return view ('admins.statistics.data');
+        //Tổng số sản phẩm đã bán
+        $currentUser = auth()->user();
+        $orderBought = $currentUser->orders()->where('status', 3)->count();
+
+        //Sản phẩm bán chạy
+        $bookSales = DB::table('book_orders') ->selectRaw('book_id, COUNT(*) as count') ->groupBy('book_id') ->orderBy('count', 'desc')->limit(3) ->get();
+        // dd( $bookSales);
+        $bookCountSales = Book::get();
+    
+        // foreach ($bookSales as $bookSale) {
+        //     foreach ($bookCountSales as $bookCountSale) {
+        //         if($bookSale->book_id == $bookCountSale->id) {
+        //             dd( $bookSale->book_id == $bookCountSale->id);
+        //             $countId = $bookSale->book_id;
+        //             $countName = $bookCountSale->name;
+        //             $countBuy = $bookSale->count;
+        //             // dd( $bookSale->count);
+
+        //         }
+
+        //     }
+            
+        // }
+        return view ('admins.statistics.data', compact('totalQuantityBook', 'orderBought', 'bookCountSales', 'bookSales'));
+
+       
+        
+        
     }
 
    

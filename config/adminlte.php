@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/',
     // 'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -234,6 +234,20 @@ return [
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
+        ],
+
+        [
+            'type'         => 'navbar-notification',
+            'id'           => 'my-notification',
+            'icon'         => 'fas fa-bell',
+            'url'          => 'notifications/show',
+            'topnav_right' => true,
+            'dropdown_mode'   => true,
+            'dropdown_flabel' => 'All notifications',
+            'update_cfg'   => [
+                'url' => 'notifications/get',
+                'period' => 30,
+            ],
         ],
 
         // Sidebar items:
@@ -297,17 +311,17 @@ return [
                     'url'  => '/admin/statistics/data',
                 ],
 
-                [
-                    'text' => 'Lượng truy cập',
-                    'icon' => 'fas fa-circle ',
-                    'url'  => '/admin/statistics/online',
-                ],
+                // [
+                //     'text' => 'Lượng truy cập',
+                //     'icon' => 'fas fa-circle ',
+                //     'url'  => '/admin/statistics/online',
+                // ],
 
-                [
-                    'text' => 'Khách hàng tiềm năng',
-                    'icon' => 'fas fa-circle ',
-                    'url'  => '/admin/statistics/',
-                ],
+                // [
+                //     'text' => 'Khách hàng tiềm năng',
+                //     'icon' => 'fas fa-circle ',
+                //     'url'  => '/admin/statistics/',
+                // ],
                 
               
             ],
@@ -359,6 +373,47 @@ return [
     */
 
     'plugins' => [
+        'DateRangePicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.css',
+                ],
+            ],
+        ],
+
+        'TempusDominusBs4' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ],
+        ],
         'Datatables' => [
             'active' => false,
             'files' => [

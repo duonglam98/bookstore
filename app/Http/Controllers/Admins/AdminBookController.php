@@ -77,11 +77,23 @@ class AdminBookController extends Controller
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
-    
-        Book::create($input);
+
+        if (Book::where('name', $request->name)->exists()) {
+            return redirect()->route('admin.books.create')
+                        ->with('Lỗi','Tên sách bị trùng!');
+        }
+         else if (Book::where('code', $request->code)->exists()) {
+            return redirect()->route('admin.books.create')
+                        ->with('Lỗi','Mã sách bị trùng!');
+        }
+        else {
+            Book::create($input);
      
-        return redirect()->route('admin.books.index')
-                        ->with('Thành công','Đã thêm sách mới!');
+            return redirect()->route('admin.books.index')
+                            ->with('Thành công','Đã thêm sách mới!');
+        }
+    
+       
     }
      
     /**

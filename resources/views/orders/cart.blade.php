@@ -73,9 +73,9 @@
                                     <td class="total-pr total-product-price">
                                         <p>{{ $bookOrder->price * $bookOrder->quantity }}</p>
                                     </td>
-                                    <td class="remove-pr delete-product">
+                                    <td class="remove-pr ">
                                         
-									<i class="fas fa-times "  data-book_order_id="{{ $bookOrder->id }}"></i>
+									<i class="fas fa-times delete-product"  data-book_order_id="{{ $bookOrder->id }}"></i>
 							
                                     </td>
                                 </tr>
@@ -141,9 +141,8 @@
                 
                     {{-- <button href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout" disabled="true">Xác nhận giỏ hàng</button> --}}
 
-                    
                     <a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Xác nhận giỏ hàng</a>
-                    {{-- @endif --}}
+                   
                 </div>
             </div>
 
@@ -163,14 +162,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        // dd('ok');
+
         $('.delete-product').click(function(event) {
-            
             event.preventDefault();
-            
             var bookElement = $(this).parent().parent();
             var bookOrderId = $(this).data('book_order_id');
             var url = '/orders/' + bookOrderId;
+            console.log(url);
             $.ajax(url, {
                 type: 'DELETE',
                 success: function (result) {
@@ -215,21 +213,7 @@
                 }
             });
         });
-        // $('.cart-checkout').click(function(event) {
-        //     event.preventDefault();
-        //     var url = '/orders/checkout';
-        //     $.ajax(url, {
-        //         type: 'POST',
-        //         success: function (result) {
-        //             var resultObj = JSON.parse(result);
-        //             alert(resultObj.msg);
-        //             location.reload();
-        //         },
-        //         error: function () {
-        //             alert('Có lỗi xảy ra cart!');
-        //         }
-        //     });
-        // });
+
         calculatePrice();
         function calculatePrice()
         {
