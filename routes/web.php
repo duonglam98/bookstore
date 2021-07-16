@@ -37,7 +37,7 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     $user = Auth::user();
     // $user = auth()->user();
-    $books = Book::latest()->paginate(5);
+    $books = Book::latest()->paginate(8);
     $category = Category::get();
     $data = [
         'user' => $user,

@@ -23,7 +23,7 @@
                 <div class="col-lg-12">
                     <h2>Xem chi tiết</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Books</a></li>
+                        <li class="breadcrumb-item"><a href="#">NSND</a></li>
                         <li class="breadcrumb-item active">Chi tiết sách </li>
                     </ul>
                 </div>

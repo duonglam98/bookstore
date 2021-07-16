@@ -1,7 +1,10 @@
 <div>
     {{-- Close your eyes. Count to one. That is how long forever feels. --}}
     <div>
-        <section class="w-full px-8 pt-4 pb-10 xl:px-8">
+        <section class="w-full px-8 pt-4 pb-10 xl:px-8" style="width: 50%;
+       
+    }
+    ">
             <div class="max-w-5xl mx-auto">
                 <div class="flex flex-col items-center md:flex-row">
     
@@ -51,7 +54,9 @@
                                             </div>
                                         </div>
                                         <div class="block">
-                                            <button type="submit" class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">Tất cả đánh giá</button>
+                                            <button type="submit" class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg" style="background-color: #b0b435">
+                                                Đánh giá
+                                            </button>
                                             @auth
                                                 @if($currentId)
                                                     <button type="submit" class="w-full px-3 py-4 mt-4 font-medium text-white bg-red-400 rounded-lg" wire:click.prevent="delete({{ $currentId }})" class="text-sm cursor-pointer">Xoá</button>
@@ -78,40 +83,48 @@
         </section>
         <section class="relative block pt-20 pb-24 overflow-hidden text-left bg-white">
             <div class="w-full px-20 mx-auto text-left md:px-10 max-w-7xl xl:px-16">
-                <div class="box-border flex flex-col flex-wrap justify-center -mx-4 text-indigo-900">
+                <div class="box-border flex flex-col flex-wrap justify-center -mx-4 text-indigo-900" style="height: 20px">
                     <div class="relative w-full mb-12 leading-6 text-left xl:flex-grow-0 xl:flex-shrink-0">
-                        <h2 class="box-border mx-0 mt-0 font-sans text-4xl font-bold text-center text-indigo-900" style="background-color: #b0b435; font-size:30px">
-                            Đánh giá
+                        <h2 class="box-border mx-0 mt-0 font-sans text-4xl font-bold text-indigo-900" style=" font-size:30px">
+                            Tất cả đánh giá
                         </h2>
+                        <hr>
                     </div>
                 </div>
                 <div class="box-border flex grid flex-wrap justify-center gap-10 -mx-4 text-center text-indigo-900 lg:gap-16 lg:justify-start lg:text-left">
                     @forelse ($comments as $comment)
                         <div class="flex col-span-1">
-                            <div class="relative flex-shrink-0 w-20 h-20 text-left">
-                                <a href="{{ '@' . $comment->user->name }}">
-                                </a>
-                            </div>
+                            
+                                {{-- <a href="{{ $comment->user->name }}">
+                                    {{ $comment->user->name }}
+                                </a> --}}
+                                
+                            
                             <div class="relative px-4 mb-16 leading-6 text-left">
-                                <div class="box-border text-lg font-medium text-gray-600">
-                                    {{ $comment->comment }}
-                                </div>
                                 <div class="box-border mt-5 text-lg font-semibold text-indigo-900 uppercase">
-                                    Đánh giá: <strong>{{ $comment->rating }}</strong> ⭐
+                                    <p>{{ '@' . $comment->user->name }}</p>
+                                    ⭐ <strong>{{ $comment->rating }}</strong> 
                                     @auth
                                         @if(auth()->user()->id == $comment->user_id )
                                             - <a wire:click.prevent="delete({{ $comment->id }})" class="text-sm cursor-pointer">Xoá</a>
                                         @endif
                                     @endauth
                                 </div>
-                                <div class="box-border text-left text-gray-700" style="quotes: auto;">
+                                <div class="box-border text-lg font-medium text-gray-600">
+                                    <i class="far fa-comments"></i> {{ $comment->comment }}
+                                </div>
+                                
+                                {{-- <div class="box-border text-left text-gray-700" style="quotes: auto;">
                                     <a href="{{ '@' . $comment->user->username }}">
                                         {{  $comment->user->name }}
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
+                           
                         </div>
+                        <hr>
                     @empty
+                   
                     <div class="flex col-span-1">
                         <div class="relative px-4 mb-16 leading-6 text-left">
                             <div class="box-border text-lg font-medium text-gray-600">
@@ -122,6 +135,7 @@
                     @endforelse
     
                 </div>
+                
         </section>
         
     </div>

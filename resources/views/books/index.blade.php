@@ -9,7 +9,9 @@
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
-                <img src="/bookstore/images/mat-biec-Nguyen-Nhat-Anh.jpg" alt="">
+                <a>
+                    <img src="/bookstore/images/mat-biec-Nguyen-Nhat-Anh.jpg" alt="">
+                </a>
                 {{-- <div class="container">
                     <div class="row">
                         <div class="col-md-12">
