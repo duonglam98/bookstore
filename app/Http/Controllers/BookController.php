@@ -40,25 +40,29 @@ class BookController extends Controller
                 'category' => $category,
             ];
             return view('books.categories.index', compact('category'), $data)
-                ->with('i', (request()->input('page', 1) - 1) * 8);
+                ->with((request()->input('page', 1) - 1) * 8);
         } else {
             $books = Book::latest()->paginate(8);
 
         }
 
-
-        // dd($books);
+        $bookSlides = Book::offset(0)->limit(1)->get();
+        $nameCategories = Category::offset(0)->limit(1)->get();
 
         $data = [
-            // 'user' => auth()->user(),
             'user' => $user,
             'books' => $books,
             'category' => $category,
+            'bookSlides' => $bookSlides,
+            'nameCategories' => $nameCategories,
         ];
+
+
     
         return view('books.index', compact('books'), $data)
-            ->with('i', (request()->input('page', 1) - 1) * 8);
+            ->with((request()->input('page', 1) - 1) * 8);
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -8,6 +8,7 @@ use App\Models\BookOrder;
 use App\Models\Order;
 use App\Models\Category;
 use App\Mail\OrderShipped;
+use App\Models\User;
 
 use Mail;
 
@@ -32,6 +33,7 @@ class OrderController extends Controller
             $bookOrders = BookOrder::where('order_id', $order->id)->get();
         }
 
+        
         $data = [
             'user' => auth()->user(),
             'bookOrders' => $bookOrders,
@@ -318,11 +320,16 @@ class OrderController extends Controller
         if ($order) {
             $bookOrders = BookOrder::where('order_id', $order->id)->get();
         } 
+
         $categories = Category::get();
+        $addresses = User::where('id', $currentUserId)->get();
+        // dd($addresses);
+
         $data = [
             'category' => $categories,
             'user' => auth()->user(),
             'bookOrders' => $bookOrders,
+            'addresses' => $addresses,
         ];
         if ($order->books->count() < 1) {
             return view('books.index'); 

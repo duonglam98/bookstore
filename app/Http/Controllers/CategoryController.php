@@ -98,10 +98,7 @@ class CategoryController extends Controller
         {
             return redirect('/')->with('status', 'SubName không tồn tại!');
         }
-        // $user = Auth::user();
-        // $books = Book::latest()->paginate(5);
-        // $category = Category::get();
-        // return view('books.categories.index', ['cate' => Category::fin])->withCategory($book);
+      
     } 
     
 

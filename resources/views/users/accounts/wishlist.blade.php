@@ -26,92 +26,54 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
+                       
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Images</th>
-                                    <th>Product Name</th>
-                                    <th>Unit Price </th>
-                                    <th>Stock</th>
-                                    <th>Add Item</th>
-                                    <th>Remove</th>
+                                    <th>Hình ảnh</th>
+                                    <th style="text-align: center;">Tên sách</th>
+                                    <th>Giá </th>
+                                    <th style="text-align: center;">Số lượng trong kho</th>
+                                    <th style="width: 31%; text-align: center;">Thêm vào giỏ hàng</th>
+                                    <th style="text-align: center;">Xoá</th>
                                 </tr>
                             </thead>
+                            @if (Auth::user()->wishlist->count() )
+                            @foreach ($wishlists as $wishlist)
                             <tbody>
+                                
                                 <tr>
                                     <td class="thumbnail-img">
                                         <a href="#">
-									<img class="img-fluid" src="/bookstore/images/img-pro-01.jpg" alt="" />
+									<img class="img-fluid" src="{{ $wishlist->image }}" alt="" />
 								</a>
                                     </td>
                                     <td class="name-pr">
                                         <a href="#">
-									Lorem ipsum dolor sit amet
+									{{ $wishlist->name }}
 								</a>
                                     </td>
                                     <td class="price-pr">
-                                        <p>$ 80.0</p>
+                                        <p>{{ $wishlist->price }}</p>
                                     </td>
-                                    <td class="quantity-box">In Stock</td>
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                    <td class="quantity-box" style="text-align: center;">
+                                        {{ $wishlist->quantity }}
                                     </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="/bookstore/images/img-pro-02.jpg" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 60.0</p>
-                                    </td>
-                                    <td class="quantity-box">In Stock</td>
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                    <td class="add-pr" style="text-align: center;">
+                                        <a class="btn hvr-hover add-to-card" href="#" data-book_id="{{ $wishlist->book_id }}">Thêm giỏ hàng</a>
                                     </td>
                                     <td class="remove-pr">
                                         <a href="#">
-									<i class="fas fa-times"></i>
+									<i class="fas fa-times delete-product"  data-book_wish_id="{{ $wishlist->id }}"></i>
 								</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="/bookstore/images/img-pro-03.jpg" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 30.0</p>
-                                    </td>
-                                    <td class="quantity-box">In Stock</td>
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
+                            @endforeach
+                            @endif
                         </table>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -119,94 +81,73 @@
     </div>
     <!-- End Wishlist -->
 
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-01.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/bookstore/images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Instagram Feed  -->
-
 @endsection
 
 @section('style')
- 
+@section('script')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.delete-product').click(function(event) {
+            event.preventDefault();
+            var bookElement = $(this).parent().parent().parent().parent()
+            ;           
+            var bookWishId = $(this).data('book_wish_id');
+            var url = '/users/account/' + bookWishId;
+            console.log(bookElement);
+            $.ajax(url, {
+                type: 'DELETE',
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    if (resultObj.status) {
+                        alert(resultObj.msg);
+                        bookElement.remove();
+                    } else {
+                        alert(resultObj.msg);
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi ở nút xoá!');
+                }
+            });
+        });
+       
+        $('.add-to-card').click(function(event) {
+            event.preventDefault();
+            var book_id = $(this).data('book_id'); // data-book_id="value"
+            var quantity = 1;
+            var image = $(this).parent().parent().find('img').attr('src');             
+            console.log(image);
+            // return ;
+
+            var url = '/orders';
+
+            $.ajax(url, {
+                type: 'POST',
+                data: {
+                    book_id: book_id,
+                    quantity: quantity,
+                    image: image,
+                },
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    alert(resultObj.msg);
+                    $('#cart-number').text(resultObj.quantity);
+                },
+                error: function () {
+                    alert('Vui lòng đăng nhập để thêm giỏ hàng!');
+                }
+            });
+        });
+
+
+    });
+</script>
+@endsection
+

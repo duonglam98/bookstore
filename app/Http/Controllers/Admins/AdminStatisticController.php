@@ -28,23 +28,10 @@ class AdminStatisticController extends Controller
 
         //Sản phẩm bán chạy
         $bookSales = DB::table('book_orders') ->selectRaw('book_id, COUNT(*) as count') ->groupBy('book_id') ->orderBy('count', 'desc')->limit(3) ->get();
-        // dd( $bookSales);
+  
         $bookCountSales = Book::get();
     
-        // foreach ($bookSales as $bookSale) {
-        //     foreach ($bookCountSales as $bookCountSale) {
-        //         if($bookSale->book_id == $bookCountSale->id) {
-        //             dd( $bookSale->book_id == $bookCountSale->id);
-        //             $countId = $bookSale->book_id;
-        //             $countName = $bookCountSale->name;
-        //             $countBuy = $bookSale->count;
-        //             // dd( $bookSale->count);
-
-        //         }
-
-        //     }
-            
-        // }
+        
         return view ('admins.statistics.data', compact('totalQuantityBook', 'orderBought', 'bookCountSales', 'bookSales'));
 
        

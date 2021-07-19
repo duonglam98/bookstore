@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WishlistController;
 
 use App\Http\Controllers\Admins\AdminController;
 use App\Http\Controllers\Admins\AdminBookController;
@@ -132,7 +133,10 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         
     ]);
 
-    // Route::resource('admin/')
+    //Thong bao admin
+    Route::get('notifications/get', [AdminController::class, 'getNotificationsData'] )
+    ->name('notifications.get');
+
 
 
 
@@ -172,8 +176,11 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 //Search
 Route::get('/search', [BookController::class, 'search']);
 
+//wishlist
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users/account/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/users', [WishlistController::class, 'store']);
+    Route::delete('/users/account/{book_wish_id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
-Route::get('notifications/get', [AdminController::class, 'getNotificationsData'] )
-    ->name('notifications.get');
-
+});
 

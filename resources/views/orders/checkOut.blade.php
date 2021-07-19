@@ -58,28 +58,31 @@
                             <div class="title-left">
                                 <h3>Thông tin thanh toán</h3>
                             </div>
-                            {{-- <f/orm action="{{ route('orders.payment') }}" method="POST"> --}}
-                                @csrf
+                            @foreach ($addresses as $address)
+                                
+                            @endforeach
                                 <div class="row">
                                     <div class="col-md-6 mb-6">
                                         <label for="firstName">Họ và tên *</label>
-                                        <input type="text" class="form-control" name="user_name" placeholder="Nhập họ và tên..." value="" required>
+                                        <input type="text" class="form-control" name="user_name" placeholder="Nhập họ và tên..." value="{{ $address->name }}" required>
                                         <div class="invalid-feedback"> Họ và tên là bắt buộc. </div>
                                     </div>
-                                    
                                 </div>
-                                
-                                <div class="mb-3">
-                                    <label for="email">Số điện thoại *</label>
-                                    <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại...">
-                                    <div class="invalid-feedback"> Vui lòng nhập số điện thoại của bạn. </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-6">
+                                        <label for="email">Số điện thoại *</label>
+                                        <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại..." value="{{ $address->phone }}" required>
+                                        <div class="invalid-feedback"> Vui lòng nhập số điện thoại của bạn. </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="address">Địa chỉ *</label>
-                                    <input type="text" class="form-control" name="address" placeholder="Nhập địa chỉ nhận hàng..." required>
-                                    <div class="invalid-feedback"> Vui lòng nhập địa chỉ giao hàng. </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-6">
+                                        <label for="address">Địa chỉ *</label>
+                                        <input type="text" class="form-control" name="address" placeholder="Nhập địa chỉ nhận hàng..." value="{{ $address->address }}" required>
+                                        <div class="invalid-feedback"> Vui lòng nhập địa chỉ giao hàng. </div>
+                                    </div>
                                 </div>
-
+                        
                                 {{-- <div class="mb-3">
                                     <label for="address2">Địa chỉ 2 *</label>
                                     <input type="text" class="form-control" id="address2" placeholder=""> </div> --}}
@@ -206,7 +209,6 @@
                    
                     </div>
                 </div>
-            {{-- </form> --}}
         </div>
     </div>
     <!-- End Cart -->

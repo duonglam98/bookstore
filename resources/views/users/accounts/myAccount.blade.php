@@ -100,7 +100,7 @@
                         <div class="account-box">
                             <div class="service-box">
                                 <div class="service-icon">
-                                    <a href="{{ route('users.accounts.wishList') }}"> <i class="fa fa-credit-card"></i> </a>
+                                    <a href="{{ route('wishlist.index') }}"> <i class="fa fa-credit-card"></i> </a>
                                 </div>
                                 <div class="service-desc">
                                     <h4>Danh sách yêu thích</h4>

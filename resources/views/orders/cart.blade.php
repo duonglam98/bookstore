@@ -75,7 +75,7 @@
                                     </td>
                                     <td class="remove-pr ">
                                         
-									<i class="fas fa-times delete-product"  data-book_order_id="{{ $bookOrder->id }}"></i>
+									<i class="fas fa-times delete-product" data-book_order_id="{{ $bookOrder->id }}"></i>
 							
                                     </td>
                                 </tr>
@@ -186,6 +186,7 @@
                 }
             });
         });
+
         $('.qty').addClass('update-quantity');
         $('.update-quantity').click(function(event) {
             // console.log('ok')

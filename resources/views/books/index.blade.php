@@ -6,52 +6,62 @@
 
 
     <!-- Start Slider -->
+    
     <div id="slides-shop" class="cover-slides">
+       
+        @foreach ($bookSlides as $bookSlide)
         <ul class="slides-container">
+            
             <li class="text-center">
-                <a>
-                    <img src="/bookstore/images/mat-biec-Nguyen-Nhat-Anh.jpg" alt="">
-                </a>
-                {{-- <div class="container">
+               <img src="/bookstore/images/mat-biec-Nguyen-Nhat-Anh.jpg" alt="">
+               
+                <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {{-- <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1> --}}
+                            {{-- <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p> --}}
+                            <p><a class="btn hvr-hover" href="{{ route('books.detail', ['id' => $bookSlide->id = 3])  }}">Xem ngay</a></p>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </li>
             <li class="text-center">
+                
                 <img src="/bookstore/images/AWilliams_Book_WebBanner.jpg" alt="">
-                {{-- <div class="container">
+               
+                <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {{-- <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1> --}}
+                            {{-- <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p> --}}
+                            <p><a class="btn hvr-hover" href="{{ route('books.detail', ['id' => $bookSlide->id = 6])}}" >Xem ngay</a></p>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </li>
             <li class="text-center">
+                
                 <img src="/bookstore/images/jj-01_rztw.jpg" alt="">
-                {{-- <div class="container">
+                <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {{-- <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1> --}}
+                            {{-- <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p> --}}
+                            <p><a class="btn hvr-hover" href="{{ route('books.detail', ['id' => $bookSlide->id = 7])  }}">Shop New</a></p>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </li>
+            
         </ul>
+        @endforeach
+        
         <div class="slides-navigation">
             <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
     </div>
+   
     <!-- End Slider -->
 
     <!-- Start Categories  -->
@@ -66,26 +76,28 @@
             </div>
 
             <div class="row">
+               @foreach ($nameCategories as $nameCategory)
                
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/bookstore/images/nhung-tac-pham-van-hoc-viet-nam-hay-1.jpg" alt="nhung-tac-pham-van-hoc-viet-nam-hay-1.jpg" />
-                        <a class="btn hvr-hover" href="">Văn học trong nước</a>
+                        <a class="btn hvr-hover" href="{{ route('books.index') . '?category=' . $nameCategory->sub_name = 'vanhoctrongnuoc'  }}">Văn học trong nước</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/bookstore/images/944d306e21cb271e83f18648a8a21aa9.jpg" alt="944d306e21cb271e83f18648a8a21aa9.jpg" />
-                        <a class="btn hvr-hover" href="">Văn học nước ngoài</a>
+                        <a class="btn hvr-hover" href="{{ route('books.index') . '?category=' . $nameCategory->sub_name = 'vanhocnuocngoai'  }}">Văn học nước ngoài</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid" src="/image/20210627031952.jpg" alt="548f6d82cfef32b288e1dfb8fb7dd562.jpg" />
-                        <a class="btn hvr-hover" href="">Từ điển</a>
+                        <a class="btn hvr-hover" href="{{ route('books.index') . '?category=' . $nameCategory->sub_name = 'tudien'  }}">Từ điển</a>
                     </div>
                 </div>
-               
+                   
+                @endforeach
             </div>
         </div>
     </div>
@@ -116,6 +128,12 @@
                          
                             <img src="/image/{{ $book->image }}" class="img-fluid" style="height: 350px !important">
                             <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="" class="add-to-wishlist" data-original-title="Thêm vào yêu thích" data-book_id="{{ $book->id }}">
+                                        <i class="far fa-heart "></i>
+                                    </a>
+                                </li>
+                                </ul>
                                 <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">
 
                                 Thêm giỏ hàng
@@ -139,7 +157,7 @@
     <!-- End Products  -->
 
     <!-- Start Blog  -->
-    <div class="latest-blog">
+    {{-- <div class="latest-blog">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -206,7 +224,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Blog  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
@@ -223,6 +241,35 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('.add-to-wishlist').click(function(event) {
+            event.preventDefault();
+            var book_id = $(this).data('book_id'); // data-book_id="value"
+            var image = $(this).parent().parent().parent().parent().parent().find('img').attr('src');             
+            console.log(book_id);
+            console.log(book_id);
+            // return ;
+
+            var url = '/users';
+
+            $.ajax(url, {
+                type: 'POST',
+                data: {
+                    book_id: book_id,
+                    image: image,
+                },
+                
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    alert(resultObj.msg);
+                    
+                },
+                error: function () {
+                    alert('Vui lòng đăng nhập để thêm danh sách yêu thích!');
+                }
+            });
+        });
+
 
         $('.add-to-card').click(function(event) {
             event.preventDefault();

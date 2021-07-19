@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use app\Models\Wishlist;
 
 class User extends Authenticatable
 {
@@ -73,5 +74,10 @@ class User extends Authenticatable
     public function book_orders() { 
         return $this->hasMany(BookOrder::class); 
     }
+
+    public function wishlist(){ 
+        return $this->hasMany(Wishlist::class); 
+    }
+
 }
 

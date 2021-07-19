@@ -109,7 +109,7 @@
 
 						<div class="add-to-btn">
 							<div class="add-comp">
-								<a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Thêm vào danh sách yêu thích</a>
+								<a class="btn hvr-hover add-to-wishlist" href="#" data-book_id="{{ $book->id }}"><i class="fas fa-heart "></i> Thêm vào danh sách yêu thích</a>
 								{{-- <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a> --}}
 							</div>
 							<div class="share-bar">
@@ -405,6 +405,36 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+
+        $('.add-to-wishlist').click(function(event) {
+            event.preventDefault();
+            var book_id = $(this).data('book_id'); // data-book_id="value"
+            var image = $(this).parent().parent().parent().parent().parent().find('img').attr('src');             
+            console.log(book_id);
+            console.log(book_id);
+            // return ;
+
+            var url = '/users';
+
+            $.ajax(url, {
+                type: 'POST',
+                data: {
+                    book_id: book_id,
+                    image: image,
+                },
+                
+                success: function (result) {
+                    var resultObj = JSON.parse(result);
+                    alert(resultObj.msg);
+                    
+                },
+                error: function () {
+                    alert('Vui lòng đăng nhập để thêm danh sách yêu thích!');
+                }
+            });
+        });
+
 
         $('.add-to-card').click(function(event) {
             event.preventDefault();
