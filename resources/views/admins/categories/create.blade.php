@@ -2,9 +2,9 @@
 
 @section('title', 'Thêm thể loại sách')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Thêm thể loại mới</h1>
-@stop
+@stop --}}
 
 @section('content')
 <div class="row">

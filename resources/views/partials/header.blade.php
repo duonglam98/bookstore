@@ -148,8 +148,6 @@
                                        style="position: absolute; top: -6px; right: 6px; "></i>
                                         <div id="myDropdown" class="dropdown-content" style=" margin-left: -257px; margin-top:24px">
                                           <input style="border: 4px solid #b0b435;" type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" name="search">
-                                          {{-- <a href="{{ route('books.index') . '?category=' . $cate->subName  }}">Tìm tên tác giả</a>
-                                          <a href="#">Tìm tên Nhà xuất bản</a> --}}
                                           
                                         </div>
                                       </div>

@@ -156,48 +156,71 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $bookOrderId)
     {
-        $$request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'oldpassword' => 'required',
-            'newpassword' => 'required',
-            ]);
-        
-           $hashedPassword = Auth::user()->password;
-     
-           if (\Hash::check($request->oldpassword , $hashedPassword )) {
-     
-             if (!\Hash::check($request->newpassword , $hashedPassword)) {
-     
-                  $users =User::find(Auth::user()->id);
-                  $users->password = bcrypt($request->newpassword);
-                  User::where( 'id' , Auth::user()->id)->update( array( 'password' =>  $users->password));
-                  
-                  session()->flash('message','Mật khẩu cập nhật thành công');
-                  return redirect()->back();
-                }
-     
-                else{
-                      session()->flash('message','Không thể cập nhật mật khẩu');
-                      return redirect()->back();
-                    }
-     
-               }
-     
-              else{
-                   session()->flash('message','old password doesnt matched ');
-                   return redirect()->back();
-                 }
+        $statusCancel = $request->status;
+        $currentUser = auth()->user();
+        $currentOrder = Order::find($bookOrderId);
+        try {
+            $currentOrder->status = $statusCancel;
+            $currentOrder->save();
+
+            \Log::info('update success');
+            $result =[
+                'status' => true,
+                'msg' => 'Đã huỷ đơn hàng',
                 
-                $input = $request->all();
-                $category->save($input);
-                return redirect('/users/accounts/' . $user->id . '/edit');
-                 
+            ];
+        } catch (\Throwable $th) {
+            \Log::error($th);
+            $result = [
+                'status' => false,
+                'msg' => 'Có lỗi phát sinh!',
+            ];
         }
+
+        return json_encode($result);
+
+        // $$request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required',
+        //     'phone' => 'required',
+        //     'address' => 'required',
+        //     'oldpassword' => 'required',
+        //     'newpassword' => 'required',
+        //     ]);
+        
+        //    $hashedPassword = Auth::user()->password;
+     
+        //    if (\Hash::check($request->oldpassword , $hashedPassword )) {
+     
+        //      if (!\Hash::check($request->newpassword , $hashedPassword)) {
+     
+        //           $users =User::find(Auth::user()->id);
+        //           $users->password = bcrypt($request->newpassword);
+        //           User::where( 'id' , Auth::user()->id)->update( array( 'password' =>  $users->password));
+                  
+        //           session()->flash('message','Mật khẩu cập nhật thành công');
+        //           return redirect()->back();
+        //         }
+     
+        //         else{
+        //               session()->flash('message','Không thể cập nhật mật khẩu');
+        //               return redirect()->back();
+        //             }
+     
+        //        }
+     
+        //       else{
+        //            session()->flash('message','old password doesnt matched ');
+        //            return redirect()->back();
+        //          }
+                
+        //         $input = $request->all();
+        //         $category->save($input);
+        //         return redirect('/users/accounts/' . $user->id . '/edit');
+                 
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -207,15 +230,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
-
-        try {
-            $book->delete();
-
-            return redirect('/books')->with('status', 'Đã Xóa!');
-        } catch (\Throwable $th) {
-            return back()->with('status', 'Không thể xóa!');
-        }
+        //
     }
 }
 

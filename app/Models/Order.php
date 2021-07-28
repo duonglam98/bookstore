@@ -25,4 +25,6 @@ class Order extends Model
     {
         return $this->belongsToMany(Book::class, 'book_orders');
     }
+
+    
 }

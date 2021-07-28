@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class AdminBookController extends Controller
 {
@@ -20,11 +21,11 @@ class AdminBookController extends Controller
      */
     public function index()
     {
-        $books = Book::latest()->paginate(10);
+        $books = Book::latest()->paginate(6);
         $category = Category::get();
     
         return view('admins.books.index', compact('books', 'category'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+            ->with('i', (request()->input('page', 1) - 1) * 6);
     }
    
     /**
@@ -170,5 +171,62 @@ class AdminBookController extends Controller
      
         return redirect()->route('admin.books.index')
                         ->with('Thành công','Đã xoá sách!');
+    }
+
+    function action(Request $request)
+    {
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      if($query != '')
+      {
+       $data = DB::table('books')
+         ->where('name', 'like', '%'.$query.'%')
+         ->orWhere('category', 'like', '%'.$query.'%')
+         ->orWhere('quantity', 'like', '%'.$query.'%')
+         ->orWhere('price', 'like', '%'.$query.'%')
+         ->orderBy('id', 'desc')
+         ->get();
+         
+      }
+      else
+      {
+       $data = DB::table('books')
+         ->orderBy('id', 'desc')
+         ->get();
+      }
+      $total_row = $data->count();
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $output .= '
+        <tr>
+         <td></td>
+         <td>'.$row->name.'</td>
+         <td>'.$row->category.'</td>
+         <td>'.$row->quantity.'</td>
+         <td>'.$row->price.'</td>
+         
+        </tr>
+        ';
+       }
+      }
+      else
+      {
+       $output = '
+       <tr>
+        <td align="center" colspan="5">Không có dữ liệu được tìm thấy!</td>
+       </tr>
+       ';
+      }
+      $data = array(
+       'table_data'  => $output,
+       'total_data'  => $total_row
+      );
+
+      echo json_encode($data);
+     }
     }
 }

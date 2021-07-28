@@ -2,16 +2,16 @@
 
 @section('title', 'Quản lý thể loại')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Quản lý thể loại</h1>
-@stop
+@stop --}}
 
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('admin.categories.create') }}" style="background-color: #b0b435"> Thêm thể loại mới</a>
+                <a class="btn btn-success" href="{{ route('admin.categories.create') }}" style="background-color: #b0b435"><i class="fas fa-plus-square"></i> Thêm thể loại mới</a>
                 
             </div>
         </div>
@@ -42,12 +42,12 @@
             <td>
                 <form action="{{ route('categories.destroy',$category->id) }}" method="POST">
            
-                    <a class="btn btn-primary" href="{{ route('admin.categories.edit',$category->id) }}">Sửa</a>
+                    <a class="btn btn-primary" href="{{ route('admin.categories.edit',$category->id) }}"><i class="fas fa-edit"></i></a>
      
                     @csrf
                     @method('DELETE')
         
-                    <button type="submit" class="btn btn-danger">Xoá</button>
+                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>

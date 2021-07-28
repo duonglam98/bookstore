@@ -2,9 +2,9 @@
 
 @section('title', 'Quản lý người dùng')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Quản lý người dùng</h1>
-@stop
+@stop --}}
 
 @section('content')
     {{-- <div class="row">
@@ -52,12 +52,12 @@
             <td></td>
             <td>
                 <form action="{{ route('users.destroy', $user->id) }}" method="POST">      
-                    <a class="btn btn-primary" href="{{ route('admin.users.edit',$user->id) }}">Sửa</a>
+                    <a class="btn btn-primary" href="{{ route('admin.users.edit',$user->id) }}"><i class="fas fa-edit"></i></a>
      
                     @csrf
                     @method('DELETE')
         
-                    <button type="submit" class="btn btn-danger">Xoá</button>
+                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>

@@ -37,13 +37,16 @@ use Illuminate\Support\Str;
 
 Route::get('/', function () {
     $user = Auth::user();
-    // $user = auth()->user();
     $books = Book::latest()->paginate(8);
     $category = Category::get();
+    $bookSlides = Book::offset(0)->limit(1)->get();
+    $nameCategories = Category::offset(0)->limit(1)->get();
     $data = [
         'user' => $user,
         'books' => $books,
         'category' => $category,
+        'bookSlides' => $bookSlides,
+        'nameCategories' => $nameCategories,
     ];
     return view('/books/index', $data);
 });
@@ -62,12 +65,6 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.detail')
 // end books
 
 //-------------------------------------------------------------------------------------------------------------------
-//start category
-// Route::get('books/categories/{id}', [CategoryController::class, 'show'])->name('books.categories');
-// Route::get('books/categories/{subName}', [CategoryController::class, 'viewBook'])->name('books.categories');
-//end category
-
-//-------------------------------------------------------------------------------------------------------------------
 // start orders
 Route::middleware(['auth'])->group(function () {
     Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.payment');
@@ -79,6 +76,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('orders/sendMail', [OrderController::class, 'sendMail'])->name('orders.sendMail');    
 });
 // end orders
+
+//-----------------------------------------------------------------------------------------------------------
+// order of users
+Route::resource('users', UserController::class)->except([
+    'create', 'store'
+]);
 
 //-------------------------------------------------------------------------------------------------------------------
 // start admin
@@ -109,6 +112,7 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'update' => 'admin.categories.update'
     ]);
 
+    //Quản lý user
     Route::resource('/admin/users', AdminUserController::class)->names([
         'index' => 'admin.users.index',
         'create' => 'admin.users.create',
@@ -118,6 +122,7 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'update' => 'admin.users.update'
     ]);
 
+    //Quản lý đơn hàng
     Route::resource('/admin/orders', AdminOrderController::class)->names([
         'index' => 'admin.orders.index',
         'create' => 'admin.orders.create',
@@ -128,12 +133,17 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         // 'destroy' => 'admin.orders.destroy',
     ]);
 
+    //Lọc
+    Route::get('admin/orders/filter', ['status'=>'AdminOrderController@index', 'as'=>'admins.orders.index']);
+    Route::get('/filter', [AdminOrderController::class, 'filter']);
+
+    //Thống kê
     Route::resource('/admin/statistics/data', AdminStatisticController::class)->names([
         'index' => 'admin.statistics.index',
         
     ]);
 
-    //Thong bao admin
+    //Thông báo admin
     Route::get('notifications/get', [AdminController::class, 'getNotificationsData'] )
     ->name('notifications.get');
 
@@ -144,14 +154,12 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
 });
 //end admin
 
-
-
 //-------------------------------------------------------------------------------------------------------------------
 // start Users
 Route::middleware(['auth'])->group(function () {
     Route::get('/users/accounts/myAccount', [UserController::class, 'index'])->name('users.accounts.index');
     Route::get('/users/accounts/yourOrder', [UserController::class, 'yourOrder'])->name('users.accounts.yourOrder');
-    Route::get('/users/accounts/myWishList', [UserController::class, 'wishList'])->name('users.accounts.wishList');
+    // Route::get('/users/accounts/myWishList', [UserController::class, 'wishList'])->name('users.accounts.wishList');
 
     Route::resource('/users/accounts/', UserController::class)->names([
         'edit' => 'users.accounts.profile',
@@ -164,13 +172,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/users/contactUs', [UserController::class, 'contactUs'])->name('users.contact');
 Route::get('/users/about', [UserController::class, 'aboutUs'])->name('users.about');
 // end Users
-
-//--------------------------------------------------------------------------------------------------------------------
-//file-manager
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
-
 
 //-------------------------------------------------------------------------------------------------------------------
 //Search

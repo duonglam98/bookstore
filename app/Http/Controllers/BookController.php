@@ -56,8 +56,6 @@ class BookController extends Controller
             'bookSlides' => $bookSlides,
             'nameCategories' => $nameCategories,
         ];
-
-
     
         return view('books.index', compact('books'), $data)
             ->with((request()->input('page', 1) - 1) * 8);
@@ -208,28 +206,28 @@ class BookController extends Controller
     }
 
     public function search(Request $request)
-{
-    $user = Auth::user();
-    $category = Category::get();
+    {
+        $user = Auth::user();
+        $category = Category::get();
 
-    $data = [
-        'user' => $user,
-        'category' => $category,
-    ];
-    $key = trim($request->get('search'));
+        $data = [
+            'user' => $user,
+            'category' => $category,
+        ];
+        $key = trim($request->get('search'));
 
-    $books = Book::query()
-        ->where('name', 'like', "%{$key}%")
-        ->orWhere('author', 'like', "%{$key}%")
-        ->orWhere('NXB', 'like', "%{$key}%")
-        ->get();
+        $books = Book::query()
+            ->where('name', 'like', "%{$key}%")
+            ->orWhere('author', 'like', "%{$key}%")
+            ->orWhere('NXB', 'like', "%{$key}%")
+            ->get();
 
-    return view('books.search', [
-        'key' => $key,
-        'books' => $books,
-        
-    ], $data);
-}
+        return view('books.search', [
+            'key' => $key,
+            'books' => $books,
+            
+        ], $data);
+    }
 
 }
 

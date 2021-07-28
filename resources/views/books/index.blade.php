@@ -117,12 +117,13 @@
            
 
             <div class="row special-list">
+                @if($books)
                 @foreach ($books as $book)
                 <div class="col-lg-3 col-md-6 special-grid best-seller">
                     <div class="products-single fix">
                         <div class="box-img-hover">
                             <div class="type-lb">
-                                <p class="sale">Sale</p>
+                                {{-- <p class="sale">Sale</p> --}}
                             </div>
                             {{-- <a href="#">{{ $book->images }}</a> --}}
                          
@@ -147,12 +148,21 @@
                         </div>
                     </div>
                 </div>
-
                 @endforeach
+                @else
+                <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    Không có sản phẩm nào
+                </div>
+                @endif
+
+                
             </div>
             
         </div>
-        {{-- {{ $books->links() }} --}}
+        <div class="row">
+            {{ $books->links() }}
+        </div>
+        
     </div>
     <!-- End Products  -->
 

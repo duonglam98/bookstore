@@ -15,11 +15,11 @@
         {{-- <x-adminlte-info-box title="Tổng số đơn hàng" text="4" icon="fas fa-cart-arrow-down text-dark" theme="gradient-teal" url="#" url-text="View details"/> --}}
         {{-- Themes --}}
         <x-adminlte-small-box title="Tổng số đơn hàng" text="{{ $count_order }}" icon="fas fa-cart-arrow-down text-dark"
-        theme="teal" url="#" url-text="Xem chi tiết"/>
+        theme="teal" url="/admin/orders" url-text="Xem chi tiết"/>
 
     </div>
     <div class="col-3">
-        <x-adminlte-info-box title="Tổng doanh thu" text="{{ $totalRevenue }}" icon="fas fa-table text-dark" theme="gradient-teal" />
+        <x-adminlte-info-box title="Tổng doanh thu" text="{{ $orderPrices }}.00" icon="fas fa-table text-dark" theme="gradient-teal" />
 
     </div>
     <div class="col-3">

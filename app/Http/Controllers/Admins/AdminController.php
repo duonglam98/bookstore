@@ -49,29 +49,11 @@ class AdminController extends Controller
 
         //Tổng doanh thu
         $currentUser = auth()->user();
-        $order = $currentUser->orders()->where('status', 3)->first();
-        // dd($order);
-        $orderId = $order->id;
-        $bookOrders = Order::where('id', $orderId)->get();
-        if($order == null) {
-        
-       
-        
-        
-            $totalRevenue = 0;
-            
-        }
-        else {
-            $totalRevenue = 0;
-            foreach($bookOrders as $bookOrder) {
-                $totalRevenue += $bookOrder->total_price;
-                
-            }
-           
-        }
-       
+        $order = $currentUser->orders()->where('status', 3)->get();
+        $orderPrices = Order::sum('total_price');
+ 
 
-        return view('admins.index', compact('orders', 'order', 'userAuth', 'totalRevenue', 'dem'))->with(['count_order' => $count_Order]);
+        return view('admins.index', compact('orders', 'order', 'userAuth', 'orderPrices', 'dem'))->with(['count_order' => $count_Order]);
     }
 
     /**

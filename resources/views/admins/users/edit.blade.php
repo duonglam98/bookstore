@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Chỉnh sửa sách')
+@section('title', 'Chỉnh sửa thông tin người dùng')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Chỉnh sửa thông tin người dùng</h1>
-@stop
+@stop --}}
 
 @section('content')
 <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data"> 

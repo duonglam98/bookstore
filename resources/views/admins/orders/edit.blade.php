@@ -2,9 +2,9 @@
 
 @section('title', 'Chỉnh sửa đơn hàng')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Chỉnh sửa đơn hàng</h1>
-@stop
+@stop --}}
 
 @section('content')
     

@@ -1,18 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Xem sách')
+@section('title', 'Xem chi tiết sách')
 
 @section('content_header')
-    <h1>Quản lý sách</h1>
+    <h1>Xem chi tiết sách</h1>
 @stop
-
-@section('content')
     
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2> Chi tiết về sách</h2>
+            <h2> Chi tiết sách</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('admin.books.index') }}"> Back</a>
@@ -35,8 +33,8 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Hình ảnh:</strong>
-            <img src="bookstore/images/{{ $book->images }}" width="500px">
+            <strong>Hình ảnh:</strong><br>
+            <img src="/image/{{ $book->image }}" width="500px">
         </div>
     </div>
    
@@ -52,9 +50,5 @@
             {{ $book->price }}
         </div>
     </div>
-
-    
 </div>
-        
-@endsection
 @endsection

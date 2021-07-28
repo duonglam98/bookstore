@@ -76,20 +76,20 @@ class WishlistController extends Controller
             ]);
         }
 
-        // Tạo order
+        // Tạo dsyt
         $currentUserId = auth()->id();
         $wishData = [
             'user_id' => $currentUserId,
         ];
 
-        // kiểm tra người dùng hiện thời có đơn hàng mới
+        // kiểm tra người dùng hiện thời có dsyt
         $currentWish = Wishlist::where('user_id', $currentUserId)
             ->where('status', 1)
             ->first();
         
-        if ($currentWish) {
+        if (!$currentWish) {
             try {
-                // $currentWish = Wishlist::create($wishData);
+                // $currentsWish = Wishlist::create($wishData);
                 
                 // Tạo wishlist
                 $bookWishData = [

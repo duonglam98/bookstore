@@ -327,13 +327,13 @@ return [
             ],
         ],
 
-        [
-            'text' => 'Hộp thư đến',
-            'url'  => 'admin/settings',
-            'icon' => 'far fa-envelope',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
+        // [
+        //     'text' => 'Hộp thư đến',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'far fa-envelope',
+        //     'label'       => 4,
+        //     'label_color' => 'success',
+        // ],
 
        
     ],
@@ -392,6 +392,7 @@ return [
                     'location' => 'vendor/daterangepicker/daterangepicker.css',
                 ],
             ],
+        ],
         ],
 
         'TempusDominusBs4' => [
@@ -484,7 +485,7 @@ return [
                 ],
             ],
         ],
-    ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------

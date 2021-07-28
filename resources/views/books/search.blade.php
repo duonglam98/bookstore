@@ -4,17 +4,18 @@
 
 @section('content')
 <div class="products-box">
+    
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="title-all text-center">
-                    <h1>Gợi ý cho bạn</h1>
+                    <h1>Kết quả tìm kiếm</h1>
                 </div>
             </div>
         </div>
        
-
         <div class="row special-list">
+            @if ($books)
             @foreach ($books as $book)
             <div class="col-lg-3 col-md-6 special-grid best-seller">
                 <div class="products-single fix">
@@ -36,11 +37,18 @@
                     </div>
                 </div>
             </div>
-
             @endforeach
+            @else
+        <div class="text-center">
+            <h3>Không có kết quả nào phù hợp!</h3>
         </div>
-        
+    @endif
+        </div>
     </div>
+    
+        
+        
+    
     {{-- {{ $books->links() }} --}}
 </div>
 @endsection

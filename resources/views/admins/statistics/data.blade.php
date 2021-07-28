@@ -27,7 +27,7 @@
             </tr>
         </table>
 
-        <h3>Sản phẩm bán chạy</h3>
+        {{-- <h3>Sản phẩm bán chạy</h3>
         <table class="table table-bordered">
             <tr>
                 <th>ID sách</th>
@@ -46,7 +46,7 @@
                 @endforeach
             @endforeach
             
-        </table>
+        </table> --}}
     </div>
     
                 
