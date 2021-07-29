@@ -121,7 +121,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('users.about') }}">Giới Thiệu</a></li>
 
                         <li class="dropdown">
-                            <a href="#" class="nav-link arrow  dropdown-toggle " data-toggle="dropdown"> Danh mục <i class="fas fa-caret-down"></i></a> 
+                            <a href="#" class="nav-link arrow dropdown-toggle" data-toggle="dropdown"> Danh mục <i class="fas fa-caret-down"></i></a> 
                             <ul class="dropdown-menu " >
                                 @foreach ($category as $cate)
                                     <li value="{{ $cate->id }}"><a href="{{ route('books.index') . '?category=' . $cate->sub_name  }}" >{{ $cate->name }}</a></li>                                

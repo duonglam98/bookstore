@@ -85,6 +85,8 @@ Route::resource('users', UserController::class)->except([
 
 //-------------------------------------------------------------------------------------------------------------------
 // start admin
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
     //Quản lý sách
     Route::resource('admin/books', AdminBookController::class)
@@ -95,9 +97,10 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'show' => 'admin.books.show',
         'store' => 'admin.books.store',
         'update' => 'admin.books.update'
+        // 'update' => 'admin.books.update'
     ]);
-
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('admin/books/search/{key}', [AdminBookController::class, 'search'])->name('products.search');
+    
     // Route::get('/admin', [AdminController::class, 'countOrder']);
 
 

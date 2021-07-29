@@ -19,11 +19,11 @@ class AdminBookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $books = Book::latest()->paginate(6);
         $category = Category::get();
-    
+        
         return view('admins.books.index', compact('books', 'category'))
             ->with('i', (request()->input('page', 1) - 1) * 6);
     }
@@ -165,68 +165,35 @@ class AdminBookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy($bookId)
     {
-        $book->delete();
-     
-        return redirect()->route('admin.books.index')
-                        ->with('Thành công','Đã xoá sách!');
+        // \Log::error('abc');
+        $book = Book::find($bookId);
+        
+        try {
+            // $book->delete();
+
+            $result = [
+                'status' => true,
+                'msg' => 'Delete Success!',
+                // 'data' => $books
+            ];
+        } catch (\Throwable $th) {
+            \Log::error($th);
+
+            $result = [
+                'status' => false,
+                'msg' => 'Delete Failed!',
+            ];
+        }
+
+        return json_encode($result);
     }
 
-    function action(Request $request)
+    public function search($key)
     {
-     if($request->ajax())
-     {
-      $output = '';
-      $query = $request->get('query');
-      if($query != '')
-      {
-       $data = DB::table('books')
-         ->where('name', 'like', '%'.$query.'%')
-         ->orWhere('category', 'like', '%'.$query.'%')
-         ->orWhere('quantity', 'like', '%'.$query.'%')
-         ->orWhere('price', 'like', '%'.$query.'%')
-         ->orderBy('id', 'desc')
-         ->get();
-         
-      }
-      else
-      {
-       $data = DB::table('books')
-         ->orderBy('id', 'desc')
-         ->get();
-      }
-      $total_row = $data->count();
-      if($total_row > 0)
-      {
-       foreach($data as $row)
-       {
-        $output .= '
-        <tr>
-         <td></td>
-         <td>'.$row->name.'</td>
-         <td>'.$row->category.'</td>
-         <td>'.$row->quantity.'</td>
-         <td>'.$row->price.'</td>
-         
-        </tr>
-        ';
-       }
-      }
-      else
-      {
-       $output = '
-       <tr>
-        <td align="center" colspan="5">Không có dữ liệu được tìm thấy!</td>
-       </tr>
-       ';
-      }
-      $data = array(
-       'table_data'  => $output,
-       'total_data'  => $total_row
-      );
-
-      echo json_encode($data);
-     }
+        \Log::info('ok');
+        $books = Book::where('name', 'like', "%$key%")->get()->toArray();
+        return response()->json($books);
     }
 }

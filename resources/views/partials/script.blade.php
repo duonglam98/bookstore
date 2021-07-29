@@ -15,5 +15,5 @@
 <script src="/bookstore/js/contact-form-script.js"></script>
 <script src="/bookstore/js/custom.js"></script>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 @yield('script')
