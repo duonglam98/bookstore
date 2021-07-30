@@ -73,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/cart', [OrderController::class, 'index'])->name('orders.cart');
     Route::delete('/orders/{book_order_id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::put('/orders/{book_orders_id}', [OrderController::class, 'update'])->name('orders.update');
-    Route::get('orders/sendMail', [OrderController::class, 'sendMail'])->name('orders.sendMail');    
+    Route::get('orders/sendMail', [OrderController::class, 'sendMail'])->name('orders.sendMail');
 });
 // end orders
 
@@ -88,6 +88,8 @@ Route::resource('users', UserController::class)->except([
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
+    Route::get('admin/books/search', [AdminBookController::class, 'search'])->name('products.search');
+
     //Quản lý sách
     Route::resource('admin/books', AdminBookController::class)
     ->names([
@@ -99,8 +101,7 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         'update' => 'admin.books.update'
         // 'update' => 'admin.books.update'
     ]);
-    Route::get('admin/books/search/{key}', [AdminBookController::class, 'search'])->name('products.search');
-    
+
     // Route::get('/admin', [AdminController::class, 'countOrder']);
 
 
@@ -143,7 +144,7 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
     //Thống kê
     Route::resource('/admin/statistics/data', AdminStatisticController::class)->names([
         'index' => 'admin.statistics.index',
-        
+
     ]);
 
     //Thông báo admin

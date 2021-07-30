@@ -17,7 +17,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-     
+
     <div class="row">
         <div class="form-group">
             <input type="text" name="search" placeholder="Tìm kiếm sách" id="search" class="float-right">           </div>
@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody id="book-table">
-           
+
             @foreach ($books as $book)
 
             <tr>
@@ -47,32 +47,32 @@
                 <td>{{ $book->category }}</td>
                 <td>{{ $book->quantity }}</td>
                 <td>{{ $book->price }}</td>
-                
+
                 <td>
                     <a class="btn btn-info" href="{{ route('admin.books.show',$book->id) }}"><i class="fas fa-eye"></i></a>
 
                     <a class="btn btn-primary" href="{{ route('admin.books.edit',$book->id) }}"><i class="fas fa-edit"></i></a>
-                    
+
                     <a class="btn btn-danger delete-book" data-book_id="{{ $book->id }}"><i class="far fa-trash-alt"></i></a>
-                
+
                 </td>
             </tr>
             @endforeach
         </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row paginate-box">
         {!! $books->links() !!}
     </div>
     <div class="row text-center">
         <div class="footer-copyright" style="margin-left: 25%">
             <p class="footer-company" style="margin-top: 40px;">Đã đăng kí bản quyền &copy; 2021 <a href="#">NHANDANBOOK</a> Thiết kế bởi :
                 <a href="https://html.design/">Nhà sách Nhân Dân</a>
-            </p> 
+            </p>
         </div>
     </div>
-    
-    </div>       
+
+    </div>
 @endsection
 
 @section('style')
@@ -106,10 +106,10 @@
                         if (resultObj.status) {
                             alert(resultObj.msg);
                             bookElement.remove();
-                           
+
                         } else {
                             alert(resultObj.msg);
-                            
+
                         }
                         location.reload();
                     },
@@ -121,40 +121,48 @@
 
 
             $('#search').keyup(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                var keyWord = $(this).val();
+
+                var url = '/admin/books/search?keyword=' + keyWord;
+                console.log(keyWord);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(result) {
+                        displayBook(result);
+                    },
+                    error: function() {
+                        location.reload();
+                    }
+                });
             });
-            var keyWord = $(this).val();
-            var url = '/books/search/' + keyWord;
-            console.log(keyWord);
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(result) {
-                    displayBook(result);
-                },
-                error: function() {
-                    // location.reload();
-                }
-            });
-        });
-        function displayBook(books) {
-            $('#book-table').html('');
-            $.each(books, function(index, book) {
-                var row = '<tr>'
-                        + '<td>{{' ($books->perPage() * ($books->currentPage() - 1)) + ($loop->index + 1) '}}</td>'
-                        + '<td><img src="/image/{{' $book->image '}}" width="70px" height="70px"></td>'
-                        + '<td>{{' $book->name '}}</td>'
-                        + '<td>{{' $book->category '}}</td>'
-                        + '<td>{{' $book->quantity '}}</td>'
-                        + '<td>{{' $book->price '}}</td>'
-                        // 
-                    + '</tr>';
-                $('#book-table').append(row);
-            });
-        }
+
+            function displayBook(books) {
+
+                $('#book-table').html('');
+                $('.paginate-box').html('');
+
+                $.each(books, function(index, book) {
+                    var stt = index + 1;
+                    var row = '<tr>'
+                            + '<td>' + stt + '</td>'
+                            + '<td><img src="/image/' + book.image + '" width="70px" height="70px"></td>'
+                            + '<td>' + book.name + '</td>'
+                            + '<td>' + book.category + '</td>'
+                            + '<td>' + book.quantity + '</td>'
+                            + '<td>' + book.price + '</td>'
+                            + '<td>'
+                                + '<a class="btn btn-info" href="/admin/books/' + book.id + '"><i class="fas fa-eye"></i></a> '
+
+                                + '<a class="btn btn-primary" href="/admin/books/' + book.id + '/edit"><i class="fas fa-edit"></i></a> '
+
+                                + '<a class="btn btn-danger delete-book" data-book_id="' + book.id + '"><i class="far fa-trash-alt"></i></a>'
+                            + '</td>';
+                        + '</tr>';
+                    $('#book-table').append(row);
+                });
+            }
     });
 </script>
 @endsection
