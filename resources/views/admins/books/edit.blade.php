@@ -35,14 +35,14 @@
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 <strong>Tên sách:</strong>
-                <input type="text" name="name" class="form-control" placeholder="Tên sách" value="{{ $book->name }}">
+                <input type="text" name="name" class="form-control" placeholder="Tên sách" value="{{ old('name', $book->name ) }}">
             </div>
         </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 <strong>Tác giả:</strong>
-                <input type="text" name="author" class="form-control" placeholder="Nhập tên tác giả" value="{{ $book->author }}">
+                <input type="text" name="author" class="form-control" placeholder="Nhập tên tác giả" value="{{ old('author', $book->author ) }}">
             </div>
         </div>
      </div>
@@ -51,9 +51,9 @@
         <div class="col-3">
             <div class="form-group">
                 <label for="title" class="control-block">Thể loại:</label>
-                <select class="form-control" name="category">
+                <select class="form-control" name="category_id">
                     @foreach($category as $cate)
-                    <option value="{{ $cate->name }}">{{ $cate->name }}</option>
+                    <option value="{{ $cate->id }}">{{ $cate->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,20 +61,20 @@
         <div class="col-3" style="margin-top: 8px">
             <div class="form-group">
                 <strong>Mã sách:</strong>
-                <input type="text" name="code" class="form-control" placeholder="Mã sách: BOOK_" value="{{ $book->code }}">
+                <input type="text" name="code" class="form-control" placeholder="Mã sách: BOOK_" value="{{ old('code', $book->code ) }}">
             </div>
         </div>
         <div class="col-3" style="margin-top: 8px">
             <div class="form-group">
                 <strong>Giá sách:</strong>
-                <input type="number" name="price" class="form-control" placeholder="Nhập giá sách" value="{{ $book->price }}">
+                <input type="number" name="price" class="form-control" placeholder="Nhập giá sách" value="{{ old('price', $book->price ) }}">
             </div>
         </div>
 
         <div class="col-3" style="margin-top: 8px">
             <div class="form-group">
                 <strong>Số lượng:</strong>
-                <input type="number" name="quantity" class="form-control" placeholder="Nhập số lượng sách" value="{{ $book->quantity }}">
+                <input type="number" name="quantity" class="form-control" placeholder="Nhập số lượng sách" value="{{ old('quantity', $book->quantity ) }}">
             </div>
         </div>
     </div>
@@ -82,28 +82,28 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Mô tả:</strong>
-            <textarea class="form-control" style="height:150px" name="description" placeholder="Mô tả sách" value="{{ $book->description }}"></textarea>
+            <textarea class="form-control" style="height:150px" name="description" placeholder="Mô tả sách" value="{{ old('description', $book->description ) }}"></textarea>
         </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Hình ảnh:</strong>
-            <input type="file" name="image" class="form-control" placeholder="image" value="{{ $book->image }}">
+            <input type="file" name="image" class="form-control" placeholder="image" value="{{ old('image', $book->image ) }}">
         </div>
     </div>
     <div class="row">
         <div class="col-3">
             <div class="form-group">
                 <strong>Trọng lượng:</strong>
-                <input class="form-control" name="weight" placeholder="Nhập trọng lượng sách" value="{{ $book->weight }}">
+                <input class="form-control" name="weight" placeholder="Nhập trọng lượng sách" value="{{ old('weight', $book->weight ) }}">
             </div>
         </div>
 
         <div class="col-3">
             <div class="form-group">
                 <strong>Nhà xuất bản:</strong>
-                <input class="form-control" name="NXB" placeholder="Nhập tên nhà xuất bản" value="{{ $book->NXB }}">
+                <input class="form-control" name="NXB" placeholder="Nhập tên nhà xuất bản" value="{{ old('NXB', $book->NXB ) }}">
             </div>
         </div>
 

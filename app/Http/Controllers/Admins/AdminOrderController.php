@@ -155,11 +155,33 @@ class AdminOrderController extends Controller
     
         return redirect()->route('admin.orders.index')
                         ->with('Thành công','Cập nhật thông tin đơn hàng thành công!');
+       
+
     }
 
-    public function checkout(Request $request)
+    public function updateStatus(Request $request, $orderId)
     {
-        
+        $status = $request->status;
+
+        $bookOrder = Order::find($orderId);
+
+        try {
+            $bookOrder->status = $status;
+            $bookOrder->save();
+            // \Log::info($bookOrder->status);
+            $result =[
+                'status' => true,
+                'msg' => 'Cập nhật trang thái đơn hàng thành công!',
+            ];
+        } catch (\Throwable $th) {
+            \Log::error($th);
+            $result = [
+                'status' => false,
+                'msg' => 'Lỗi cập nhật trạng thái đơn hàng!',
+            ];
+        }
+
+        return json_encode($result);
     }
     
 
@@ -169,36 +191,40 @@ class AdminOrderController extends Controller
      * @param  int  $bookOrder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($orderId)
     {
-        $order->delete();
-     
-        return redirect()->route('admin.orders.index')
-                        ->with('Thành công','Đã xoá đơn hàng!');
+        $order = Order::find($orderId);
+
+        try {
+            $order->delete();
+
+            $result = [
+                'status' => true,
+                'msg' => 'Đã xoá đơn hàng!',
+                // 'data' => $books
+            ];
+        } catch (\Throwable $th) {
+            \Log::error($th);
+
+            $result = [
+                'status' => false,
+                'msg' => 'Lỗi xoá đơn hàng!',
+            ];
+        }
+
+        return json_encode($result);
 
     
     }
 
-    public function filter(Request $request)
+    public function search(Request $request)
     {
-        $user = Auth::user();
-        $data = [
-            'user' => $user,
-            
-        ];
-        $key = trim($request->get('search'));
-        $orders = Order::latest()->paginate(5);
-        $books = Order::query()
-            ->where('code', 'like', "%{$key}%")
-            ->orWhere('user_name', 'like', "%{$key}%")
-            ->orWhere('total_price', 'like', "%{$key}%")
-            ->get();
+        $keyWord = $request->keyWord;
 
-        return view('admins.orders.index', [
-            'key' => $key,
-            'books' => $books,
-            'orders' => $orders,
-        ], $data)->with('i', (request()->input('page', 1) - 1) * 5);;
+        $orders = Order::where('user_name', 'like', "%$keyWord%")->get()->toArray();
+       \Log::info($orders);
+
+        return response()->json($orders);
     }
    
 }

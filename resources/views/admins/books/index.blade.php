@@ -61,7 +61,7 @@
         </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row paginate-box">
         {!! $books->links() !!}
     </div>
     <div class="row text-center">
@@ -119,42 +119,42 @@
                 });
             });
 
-
             $('#search').keyup(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                var keyWord = $(this).val();
+                var url = '/admin/books/search?keyword=' + keyWord;
+                console.log(keyWord);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(result) {
+                        displayBook(result);
+                    },
+                    error: function() {
+                        location.reload();
+                    }
+                });
             });
-            var keyWord = $(this).val();
-            var url = '/books/search/' + keyWord;
-            console.log(keyWord);
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(result) {
-                    displayBook(result);
-                },
-                error: function() {
-                    // location.reload();
+            function displayBook(books) {
+                    $('#book-table').html('');
+                    $('.paginate-box').html('');
+                    $.each(books, function(index, book) {
+                        var stt = index + 1;
+                        var row = '<tr>'
+                                + '<td>' + stt + '</td>'
+                                + '<td><img src="/image/' + book.image + '" width="70px" height="70px"></td>'
+                                + '<td>' + book.name + '</td>'
+                                + '<td>' + book.category + '</td>'
+                                + '<td>' + book.quantity + '</td>'
+                                + '<td>' + book.price + '</td>'
+                                + '<td>'
+                                    + '<a class="btn btn-info" href="/admin/books/' + book.id + '"><i class="fas fa-eye"></i></a> '
+                                    + '<a class="btn btn-primary" href="/admin/books/' + book.id + '/edit"><i class="fas fa-edit"></i></a> '
+                                    + '<a class="btn btn-danger delete-book" data-book_id="' + book.id + '"><i class="far fa-trash-alt"></i></a>'
+                                + '</td>';
+                            + '</tr>';
+                        $('#book-table').append(row);
+                    });
                 }
-            });
         });
-        function displayBook(books) {
-            $('#book-table').html('');
-            $.each(books, function(index, book) {
-                var row = '<tr>'
-                        + '<td>{{' ($books->perPage() * ($books->currentPage() - 1)) + ($loop->index + 1) '}}</td>'
-                        + '<td><img src="/image/{{' $book->image '}}" width="70px" height="70px"></td>'
-                        + '<td>{{' $book->name '}}</td>'
-                        + '<td>{{' $book->category '}}</td>'
-                        + '<td>{{' $book->quantity '}}</td>'
-                        + '<td>{{' $book->price '}}</td>'
-                        // 
-                    + '</tr>';
-                $('#book-table').append(row);
-            });
-        }
-    });
 </script>
 @endsection

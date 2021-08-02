@@ -23,11 +23,11 @@ class AdminBookController extends Controller
     {
         $books = Book::latest()->paginate(6);
         $category = Category::get();
-        
+
         return view('admins.books.index', compact('books', 'category'))
             ->with('i', (request()->input('page', 1) - 1) * 6);
     }
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,12 +37,12 @@ class AdminBookController extends Controller
 
     {
          $category = Category::get();
-   
+
         return view('admins.books.create', [
             'category' => $category
         ]);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -52,7 +52,7 @@ class AdminBookController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            
+
             'name' => 'required',
             'author' => 'required',
             'category_id' => 'required',
@@ -64,14 +64,14 @@ class AdminBookController extends Controller
             'weight' => 'required',
             'NXB' => 'required',
         ]);
-  
+
         $input = $request->all();
         // dd($input);
         $categoryName = Category::find($input['category_id'])->name;
 
         // dd($categoryName);
         $input['category'] = $categoryName;
-        
+
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -89,14 +89,14 @@ class AdminBookController extends Controller
         }
         else {
             Book::create($input);
-     
+
             return redirect()->route('admin.books.index')
                             ->with('Thành công','Đã thêm sách mới!');
         }
-    
-       
+
+
     }
-     
+
     /**
      * Display the specified resource.
      *
@@ -107,7 +107,7 @@ class AdminBookController extends Controller
     {
         return view('admins.books.show',compact('book'));
     }
-     
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -119,7 +119,7 @@ class AdminBookController extends Controller
         $category = Category::get();
         return view('admins.books.edit',compact('book', 'category'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -132,18 +132,20 @@ class AdminBookController extends Controller
         $request->validate([
             'name' => 'required',
             'author' => 'required',
-            'category_id' => 'required',
+            'category_id'=> 'required' ,
             'code' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            'description' => 'required',
+            'description',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'weight' => 'required',
             'NXB' => 'required',
         ]);
-  
         $input = $request->all();
-  
+        $categoryName = Category::find($input['category_id'])->name;
+        $input['category'] = $categoryName;
+        
+
         if ($image = $request->file('images')) {
             $destinationPath = '/bookstore/images/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -152,13 +154,13 @@ class AdminBookController extends Controller
         }else{
             unset($input['image']);
         }
-          
+
         $book->update($input);
-    
+
         return redirect()->route('admin.books.index')
                         ->with('Thành công','Cập nhật  sách thành công!');
     }
-  
+
     /**
      * Remove the specified resource from storage.
      *
@@ -169,9 +171,9 @@ class AdminBookController extends Controller
     {
         // \Log::error('abc');
         $book = Book::find($bookId);
-        
+
         try {
-            // $book->delete();
+            $book->delete();
 
             $result = [
                 'status' => true,
@@ -190,10 +192,12 @@ class AdminBookController extends Controller
         return json_encode($result);
     }
 
-    public function search($key)
+    public function search(Request $request)
     {
-        \Log::info('ok');
-        $books = Book::where('name', 'like', "%$key%")->get()->toArray();
+        $keyword = $request->keyword;
+
+        $books = Book::where('name', 'like', "%$keyword%")->get()->toArray();
+
         return response()->json($books);
     }
 }

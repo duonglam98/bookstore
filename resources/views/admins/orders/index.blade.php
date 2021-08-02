@@ -10,55 +10,32 @@
 <div class="container">
     <div class="row">
         <div class="col-3">
-            <form class="card-body" action="/filter" method="GET" role="search">
-                {{ csrf_field() }}
-                <input type="text" placeholder="Tìm kiếm.." id="myInput" onkeyup="filterFunction()" name="search"><span style="border: 1px solid black; padding:4px" ><i class="fas fa-search" ></i></span>
-                
-            </form>
+            <input type="text" placeholder="Tìm theo tên khách hàng..." id="search" name="search">
         </div>
 
         <div class="col-3">
-            <div class="form-group" style="margin-top: 17px">
-                <form action="" method="GET">
-                    <select id='status' class="form-control" style="width: 200px">
-                        <option value="1">1. Đơn hàng được tạo  </option>
-                        <option value="2">2. Đơn hàng đã xác nhận và chờ xử lý</option>
-                        <option value="3">3. Đơn hàng đã hoàn thành</option>
-                        <option value="4">4. Đơn hàng đã huỷ</option>
-                    </select>
-                    {{-- <button class="btn btn-primary" type="submit" style="background-color: #b0b435 !important">Lọc</button> --}}
-                </form>
+            <div class="form-group" >
+                <select id='status' class="form-control" style="width: 200px">
+                    <option value="1">1. Đơn hàng được tạo  </option>
+                    <option value="2">2. Đơn hàng đã xác nhận và chờ xử lý</option>
+                    <option value="3">3. Đơn hàng đã hoàn thành</option>
+                    <option value="4">4. Đơn hàng đã huỷ</option>
+                </select>
+               
             </div>
         </div>
-        <script type="text/javascript">
-            $(function () {
-                
-                var table = $('.data-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                    url: "{{ route('admins.orders.index') }}",
-                    data: function (d) {
-                            d.status = $('#status').val(),
-                            d.search = $('input[type="search"]').val()
-                        }
-                    },
-                    columns: [
-                    //   {data: 'id', name: 'id'},
-                        {data: 'code', name: 'code'},
-                        {data: 'user_name', name: 'user_name'},
-                        {data: 'total_price', name: 'total_price'},
-                        {data: 'status', name: 'status'},
-                    ]
-                });
-            
-                $('#status').change(function(){
-                    table.draw();
-                });
-                
-            });
-            </script>
+
+        <div class="col-3">
+            <div class="input-append date form_datetime">
+                <input size="16" type="text" value="" readonly>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+             
+             
+         </div>
+         
     </div>
+</div>
 
     <div class="row">
         @if ($message = Session::get('Thành công'))
@@ -81,20 +58,17 @@
                         <th width="193px">Tuỳ chỉnh</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="order-table">
                     
                     @foreach ($orders as $order)
                     <tr>
-                        <td>{{ ++$i }}</td>
+                        <td>{{ ($orders->perPage() * ($orders->currentPage() - 1)) + ($loop->index + 1) }}</td>
                         <td>{{ $order->code }}</td>
                         <td>{{ $order->user_name }}</td>
                         <td>{{ $order->total_price }}</td>
-                        <form action="{{ route('admin.orders.update',$order->id) }}" method="POST" enctype="multipart/form-data">
-            
-                            @csrf
-                            @method('PUT')
                         <td>
-                            <select class="form-control" name="status" value="{{ old('status', $order->status) }}">
+                            <select class="form-control" name="status" value="{{ $order->status }}">
+                                {{-- check status khi get về --}}
                                 @if ($order->status == 1)
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
                 
@@ -109,9 +83,6 @@
                 
                                 @else
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
-                                <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
-                                <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
-                                <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
                                 @endif
                             
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
@@ -119,27 +90,20 @@
                                 <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
                                 <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
                             </select>
-                            <button type="submit" class="btn btn-success"><i class="fas fa-sync-alt"></i></button>
-                        </form>
+                            <a class="btn btn-success update-status" data-book_order_id="{{ $order->id }}"><i class="fas fa-sync-alt"></i></a>
                         </td>
                         <td>{{ $order->created_at }}</td>
                         
                         <td>
-                            <form action="{{ route('orders.destroy', $order->id) }}" method="POST">
-                                <a class="btn btn-info" href="{{ route('admin.orders.show',$order->id) }}"><i class="fas fa-eye"></i></a>
-                                <a class="btn btn-primary" href="{{ route('admin.orders.edit',$order->id) }}"><i class="fas fa-edit"></i></a>
-                
-                                @csrf
-                                @method('DELETE')
-                    
-                                <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                            </form>
-
+                            <a class="btn btn-info" href="{{ route('admin.orders.show',$order->id) }}"><i class="fas fa-eye"></i></a>
+                            <a class="btn btn-primary" href="{{ route('admin.orders.edit',$order->id) }}"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-danger delete-order" data-order_id="{{ $order->id }}"><i class="far fa-trash-alt"></i></a>
+                        
                         </td>
                     </tr>
                     @endforeach
                 </table>
-                <div class="row">
+                <div class="row paginate-box">
                     {!! $orders->links() !!}
                 </div>
             </div>
@@ -158,3 +122,146 @@
 
 @endsection
 @section('plugins.DateRangePicker', true)
+
+@section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+        
+            $('.delete-order').click(function(event) {
+                console.log('ok')
+                event.preventDefault();
+                var bookElement = $(this).closest('tr');
+                var orderId = $(this).data('order_id');
+                var url = '/admin/orders/' + orderId;
+                console.log(url);
+                $.ajax(url, {
+                    type: 'DELETE',
+                    success: function (result) {
+                        var resultObj = JSON.parse(result);
+                        if (resultObj.status) {
+                            alert(resultObj.msg);
+                            bookElement.remove();
+                           
+                        } else {
+                            alert(resultObj.msg);
+                            
+                        }
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Có lỗi ở nút xoá!');
+                    }
+                });
+            });
+
+            $('.update-status').click(function(event) {
+                console.log('ok');
+                event.preventDefault();
+                var status = parseInt($(this).parent().find('select').val());
+                var orderId = $(this).closest('tr').find('.update-status').data('book_order_id');
+                var url = '/admin/orders/' + orderId;
+                console.log(status);
+                $.ajax(url, {
+                    type: 'PUT',
+                    data: {
+                        status: status,
+                    },
+                    success: function (result) {
+                        var resultObj = JSON.parse(result);
+                        if (resultObj.status) {
+                            alert(resultObj.msg);
+                            // location.reload();
+                        }
+                        
+                    },
+                    error: function () {
+                        alert('Lỗi cập nhật trạng thái đơn hàng!');
+                    }
+                });
+            });
+
+            $('#search').keyup(function() {
+                var keyWord = $(this).val();
+                var url = '/admin/orders/search?keyword=' + keyWord;
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(result) {
+                        displayOrder(result);
+                    },
+                    error: function() {
+                        location.reload();
+                        // alert('Lỗi cập nhật trạng thái đơn hàng!');
+                    }
+                });
+            });
+            
+            function displayOrder(orders) {
+                $('#order-table').html('');
+                $('.paginate-box').html('');
+                $.each(orders, function(index, order) {
+                    var stt = index + 1;
+                    var row = '<tr>'
+                                + '<td>' + stt + '</td>'
+                                + '<td>' + order.code + '</td>'
+                                + '<td>' + order.user_name + '</td>'
+                                + '<td>' + order.total_price + '</td>'
+                                
+                                + '<td>'
+                                   + '<select class="form-control" name="status" value="' + order.status + '">'
+                                    
+                                    if (order.status == 1) {
+                                        + '<option value="' + 1 + '">1. Đơn hàng được tạo  </option>'
+
+                                    }
+                                
+                                    else if (order.status == 2) {
+                                        + '<option value="' + 2 + '">2. Đơn hàng đã xác nhận và chờ xử lý</option>'
+
+                                    }
+                                
+                                    else if ( order.status == 3 ) {
+                                        + '<option value="' + 3 + ' ">3. Đơn hàng đã hoàn thành</option>'
+
+                                    }
+                                
+                                    else if (order.status == 4){
+                                        + '<option value="' + 4 + ' ">4. Đơn hàng đã huỷ</option>'
+
+                                    }
+                                    else {
+                                        + '<option value="' + 1 + '">1. Đơn hàng được tạo  </option>'
+
+                                    }
+                                
+                                    + '<option value="' + 1 + ' ">1. Đơn hàng được tạo  </option>'
+                                    + '<option value="' + 2 + ' ">2. Đơn hàng đã xác nhận và chờ xử lý </option>'
+                                    + '<option value="' + 3 + ' ">3. Đơn hàng đã hoàn thành </option>'
+                                    + '<option value="' + 4 + ' ">4. Đơn hàng đã huỷ </option>'
+                                    + '</select>'
+                                    + '<a class="btn btn-success update-status" data-book_order_id="' + order.id + '"><i class="fas fa-sync-alt"></i></a>'
+                                + '</td>'
+                                + '<td>' + order.created_at + '</td>'
+                                + '<td>'
+                                    + '<a class="btn btn-info" href="/admin/orders/' + order.id + '"><i class="fas fa-eye"></i></a> '
+                                    + '<a class="btn btn-primary" href="/admin/orders/' + order.id + '/edit"><i class="fas fa-edit"></i></a> '
+                                    + '<a class="btn btn-danger delete-order" data-order_id="' + order.id + '"><i class="far fa-trash-alt"></i></a>'
+                                + '</td>';
+                            + '</tr>';
+                    $('#order-table').append(row);
+                });
+            }
+        });
+</script>
+@endsection
