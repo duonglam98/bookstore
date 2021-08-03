@@ -21,7 +21,7 @@
                     <option value="3">3. Đơn hàng đã hoàn thành</option>
                     <option value="4">4. Đơn hàng đã huỷ</option>
                 </select>
-               
+
             </div>
         </div>
 
@@ -30,10 +30,10 @@
                 <input size="16" type="text" value="" readonly>
                 <span class="add-on"><i class="icon-th"></i></span>
             </div>
-             
-             
+
+
          </div>
-         
+
     </div>
 </div>
 
@@ -59,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody id="order-table">
-                    
+
                     @foreach ($orders as $order)
                     <tr>
                         <td>{{ ($orders->perPage() * ($orders->currentPage() - 1)) + ($loop->index + 1) }}</td>
@@ -71,20 +71,20 @@
                                 {{-- check status khi get về --}}
                                 @if ($order->status == 1)
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
-                
+
                                 @elseif ($order->status == 2)
                                 <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
-                
+
                                 @elseif ($order->status == 3)
                                 <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
-                
+
                                 @elseif ($order->status == 4)
                                 <option value="{{ old('status',$order->status = 4) }}">4. Đơn hàng đã huỷ</option>
-                
+
                                 @else
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
                                 @endif
-                            
+
                                 <option value="{{ old('status',$order->status = 1) }}">1. Đơn hàng được tạo  </option>
                                 <option value="{{ old('status',$order->status = 2) }}">2. Đơn hàng đã xác nhận và chờ xử lý</option>
                                 <option value="{{ old('status',$order->status = 3) }}">3. Đơn hàng đã hoàn thành</option>
@@ -93,12 +93,12 @@
                             <a class="btn btn-success update-status" data-book_order_id="{{ $order->id }}"><i class="fas fa-sync-alt"></i></a>
                         </td>
                         <td>{{ $order->created_at }}</td>
-                        
+
                         <td>
                             <a class="btn btn-info" href="{{ route('admin.orders.show',$order->id) }}"><i class="fas fa-eye"></i></a>
                             <a class="btn btn-primary" href="{{ route('admin.orders.edit',$order->id) }}"><i class="fas fa-edit"></i></a>
                             <a class="btn btn-danger delete-order" data-order_id="{{ $order->id }}"><i class="far fa-trash-alt"></i></a>
-                        
+
                         </td>
                     </tr>
                     @endforeach
@@ -108,17 +108,17 @@
                 </div>
             </div>
 
-           
+
         </div>
-    
+
         <div class="row text-center">
             <div class="footer-copyright" style="margin-left: 25%">
                 <p class="footer-company" style="margin-top: 40px;">Đã đăng kí bản quyền &copy; 2021 <a href="#">NHANDANBOOK</a> Thiết kế bởi :
                     <a href="https://html.design/">Nhà sách Nhân Dân</a>
-                </p> 
+                </p>
             </div>
         </div>
-</div>   
+</div>
 
 @endsection
 @section('plugins.DateRangePicker', true)
@@ -136,7 +136,7 @@
                 }
             });
 
-        
+
             $('.delete-order').click(function(event) {
                 console.log('ok')
                 event.preventDefault();
@@ -151,10 +151,10 @@
                         if (resultObj.status) {
                             alert(resultObj.msg);
                             bookElement.remove();
-                           
+
                         } else {
                             alert(resultObj.msg);
-                            
+
                         }
                         location.reload();
                     },
@@ -182,7 +182,7 @@
                             alert(resultObj.msg);
                             // location.reload();
                         }
-                        
+
                     },
                     error: function () {
                         alert('Lỗi cập nhật trạng thái đơn hàng!');
@@ -206,36 +206,55 @@
                     }
                 });
             });
-            
+
             function displayOrder(orders) {
                 $('#order-table').html('');
                 $('.paginate-box').html('');
                 $.each(orders, function(index, order) {
+                    var option = '';
+                    var selected = '';
+                    var list = [
+                        '1. Đơn hàng được tạo',
+                        '2. Đơn hàng đã xác nhận và chờ xử lý',
+                        '3. Đơn hàng đã hoàn thành',
+                        '4. Đơn hàng đã huỷ',
+                    ];
+
+                    for (var i = 0; i < list.length; i++) {
+                        var value = i + 1;
+
+                        selected = (value == order.status) ? 'selected' : '';
+
+                        option += '<option value="' + value + '" ' + selected + '>';
+                        option += list[i];
+                        option += '</option>';
+                    }
+
                     var stt = index + 1;
                     var row = '<tr>'
                                 + '<td>' + stt + '</td>'
                                 + '<td>' + order.code + '</td>'
                                 + '<td>' + order.user_name + '</td>'
                                 + '<td>' + order.total_price + '</td>'
-                                
+
                                 + '<td>'
                                    + '<select class="form-control" name="status" value="' + order.status + '">'
-                                    
+
                                     if (order.status == 1) {
                                         + '<option value="' + 1 + '">1. Đơn hàng được tạo  </option>'
 
                                     }
-                                
+
                                     else if (order.status == 2) {
                                         + '<option value="' + 2 + '">2. Đơn hàng đã xác nhận và chờ xử lý</option>'
 
                                     }
-                                
+
                                     else if ( order.status == 3 ) {
                                         + '<option value="' + 3 + ' ">3. Đơn hàng đã hoàn thành</option>'
 
                                     }
-                                
+
                                     else if (order.status == 4){
                                         + '<option value="' + 4 + ' ">4. Đơn hàng đã huỷ</option>'
 
@@ -244,7 +263,7 @@
                                         + '<option value="' + 1 + '">1. Đơn hàng được tạo  </option>'
 
                                     }
-                                
+
                                     + '<option value="' + 1 + ' ">1. Đơn hàng được tạo  </option>'
                                     + '<option value="' + 2 + ' ">2. Đơn hàng đã xác nhận và chờ xử lý </option>'
                                     + '<option value="' + 3 + ' ">3. Đơn hàng đã hoàn thành </option>'
