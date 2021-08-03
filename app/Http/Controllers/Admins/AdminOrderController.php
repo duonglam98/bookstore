@@ -20,7 +20,7 @@ class AdminOrderController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $orders = Order::latest()->paginate(5);
         if ($request->ajax()) {
             $data = Order::select('*');
@@ -54,11 +54,11 @@ class AdminOrderController extends Controller
                     ->rawColumns(['status'])
                     ->make(true);
         }
-        
+
         return view('admins.orders.index',compact('orders'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-        
+
 
     // public function checkOutCart() {
     //     return view ('orders.checkOut');
@@ -81,7 +81,7 @@ class AdminOrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -123,12 +123,12 @@ class AdminOrderController extends Controller
             'address',
             'status' ,
         ]);
-  
+
         $input = $request->all();
 
         $currentUser = auth()->user();
         $orderStatus = $currentUser->orders()->where('status', 3)->first();
-       
+
         $bookOrderId = $orderStatus->id;
 
         //sử dụng quan hệ relationship
@@ -140,22 +140,22 @@ class AdminOrderController extends Controller
                 foreach ($bookOrders as $bookOrder){
                     // dd()
                     $desQuantity = $bookQ->quantity - $bookOrder->quantity;
-                    
+
                 }
 
                 $bookQ->quantity = $desQuantity;
                 // dd($bookQ);
                 $bookQ->save();
             }
-            
+
         }
 
-        
+
         $order->update($input);
-    
+
         return redirect()->route('admin.orders.index')
                         ->with('Thành công','Cập nhật thông tin đơn hàng thành công!');
-       
+
 
     }
 
@@ -183,7 +183,7 @@ class AdminOrderController extends Controller
 
         return json_encode($result);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -214,17 +214,17 @@ class AdminOrderController extends Controller
 
         return json_encode($result);
 
-    
+
     }
 
     public function search(Request $request)
     {
-        $keyWord = $request->keyWord;
+        $keyWord = $request->keyword;
 
         $orders = Order::where('user_name', 'like', "%$keyWord%")->get()->toArray();
        \Log::info($orders);
 
         return response()->json($orders);
     }
-   
+
 }
