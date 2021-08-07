@@ -197,7 +197,7 @@ class AdminBookController extends Controller
         $keyword = $request->keyword;
 
         $books = Book::where('name', 'like', "%$keyword%")->get()->toArray();
-
+        \Log::info($keyword);
         return response()->json($books);
     }
 }

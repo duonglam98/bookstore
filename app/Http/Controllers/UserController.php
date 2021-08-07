@@ -63,7 +63,7 @@ class UserController extends Controller
     public function aboutUs()
     {
         $category = Category::get();
-        $books = Book::paginate(1);
+        $books = Book::paginate(5);
         $data = [
             'user' => auth()->user(),
             'books' => $books,

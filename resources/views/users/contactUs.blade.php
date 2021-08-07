@@ -23,7 +23,7 @@
                 <div class="col-lg-12">
                     <h2>LIÊN HỆ</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">BOOKS</a></li>
+                        <li class="breadcrumb-item"><a href="#">NSND</a></li>
                         <li class="breadcrumb-item active"> LIÊN HỆ VỚI CHÚNG TÔI </li>
                     </ul>
                 </div>

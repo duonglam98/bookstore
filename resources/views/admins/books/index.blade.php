@@ -91,7 +91,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            console.log('ok');
+            
             $('.delete-book').click(function(event) {
                 console.log('ok')
                 event.preventDefault();

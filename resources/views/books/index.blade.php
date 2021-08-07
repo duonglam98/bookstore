@@ -3,8 +3,6 @@
 @section('title', 'Trang chủ')
 
 @section('content')
-
-
     <!-- Start Slider -->
     
     <div id="slides-shop" class="cover-slides">
@@ -47,7 +45,7 @@
                         <div class="col-md-12">
                             {{-- <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1> --}}
                             {{-- <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p> --}}
-                            <p><a class="btn hvr-hover" href="{{ route('books.detail', ['id' => $bookSlide->id = 7])  }}">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="{{ route('books.detail', ['id' => $bookSlide->id = 7])  }}">Xem ngay</a></p>
                         </div>
                     </div>
                 </div>
@@ -142,7 +140,7 @@
                             </div>
                         
                         </div>
-                        <div class="why-text">
+                        <div class="why-text" style="height: 106px !important">
                             <h4><a href="{{ route('books.detail', ['id' => $book->id])  }}">{{ $book->name }}</a></h4>
                             <h5> {{ $book->price }} vnđ</h5>
                         </div>
@@ -157,12 +155,12 @@
 
                 
             </div>
+            <div class="row">
+                {{ $books->links() }}
+            </div>
             
         </div>
-        <div class="row">
-            {{ $books->links() }}
-        </div>
-        
+       
     </div>
     <!-- End Products  -->
 

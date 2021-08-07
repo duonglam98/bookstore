@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- Start Top Search -->
-    <div class="top-search">
+    {{-- <div class="top-search">
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -13,7 +13,7 @@
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Top Search -->
 
     <!-- Start All Title Box -->
@@ -127,6 +127,8 @@
             <div class="row my-5">
                 <div class="col-1"></div>
                 <div class="col-10">
+                    <h3><b>Nhà xuất bản/Công ty phát hành: </b></h3>
+                    <p>{{ $book->NXB }}</p><br>
                     <h3><b>Mô tả ngắn: </b></h3>
                     <p>{{ $book->description }}</p>
                 </div>

@@ -314,6 +314,27 @@ class OrderController extends Controller
                 return redirect()->route('books.index'); 
     
             }
+        //     else {
+        //         $category = Category::get();
+        // $currentUserId = auth()->id();
+        // $order = Order::where('user_id', $currentUserId)
+        //     ->where('status', 1)
+        //     ->first();
+
+        $bookOrders = null;
+
+        if ($order) {
+            $bookOrders = BookOrder::where('order_id', $order->id)->get();
+        }
+
+        
+        // $data = [
+        //     'user' => auth()->user(),
+        //     'bookOrders' => $bookOrders,
+        //     'category' => $category,
+        // ];
+        // return view('orders.cart', $data);
+        //     }
         
         $bookOrders = null;
 

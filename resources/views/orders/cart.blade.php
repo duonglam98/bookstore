@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <h2>Giỏ hàng</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Books</a></li>
+                        <li class="breadcrumb-item"><a href="#">NSND</a></li>
                         <li class="breadcrumb-item active">Giỏ hàng</li>
                     </ul>
                 </div>
@@ -138,11 +138,11 @@
                         <hr> </div>
                 </div>
                 <div class="col-12 d-flex shopping-box t">
-                
-                    {{-- <button href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout" disabled="true">Xác nhận giỏ hàng</button> --}}
-
-                    <a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout">Xác nhận giỏ hàng</a>
-                   
+                    @if (!$bookOrders)
+                    <a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout" hidden>Xác nhận giỏ hàng</a>
+                    @else 
+                    <a href="{{ route('orders.checkOut') }}" class="ml-auto btn hvr-hover cart-checkout" >Xác nhận giỏ hàng</a>
+                    @endif
                 </div>
             </div>
 
@@ -178,8 +178,9 @@
                         bookElement.remove();
                     } else {
                         alert(resultObj.msg);
-                        location.reload();
+                        
                     }
+                    location.reload();
                 },
                 error: function () {
                     alert('Có lỗi ở nút xoá!');

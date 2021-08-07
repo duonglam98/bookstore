@@ -89,7 +89,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
 
-    Route::get('admin/books/search', [AdminBookController::class, 'search'])->name('products.search');
+    Route::get('admin/books/search', [AdminBookController::class, 'search'])->name('books.search');
 
     //Quản lý sách
     Route::resource('admin/books', AdminBookController::class)
@@ -129,6 +129,9 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
 
     //Quản lý đơn hàng
     Route::get('admin/orders/search', [AdminOrderController::class, 'search'])->name('orders.search');
+    Route::get('admin/orders/search-status', [AdminOrderController::class, 'searchStatus'])->name('orders.search');
+    Route::get('admin/orders/date', [AdminOrderController::class, 'date'])->name('orders.date');
+
     Route::put('admin/orders/{book_order_id}', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
     Route::resource('/admin/orders', AdminOrderController::class)->names([
@@ -177,8 +180,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/users/accounts/profile/{id}', [UserController::class, 'update'])->name('users.accounts.update');
 
 });
-Route::get('/users/contactUs', [UserController::class, 'contactUs'])->name('users.contact');
-Route::get('/users/about', [UserController::class, 'aboutUs'])->name('users.about');
+
+Route::get('/contactUs', [UserController::class, 'contactUs'])->name('users.contact');
+Route::get('/aboutUs', [UserController::class, 'aboutUs'])->name('users.about');
 // end Users
 
 //-------------------------------------------------------------------------------------------------------------------

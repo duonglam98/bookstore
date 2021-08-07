@@ -1,8 +1,6 @@
 @extends('layouts.myapp')
 
-
 @section('title', 'Danh mục')
-
 
 @section('content')
     <!-- Start All Title Box -->
@@ -11,10 +9,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     {{-- <h2>{{ $category->name }}</h2> --}}
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Books</a></li>
-                    {{-- <li class="breadcrumb-item active">{{ $category->name }}</li>  --}}
-                    </ul>
+                    {{-- <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">NSND</a></li>
+                    <li class="breadcrumb-item active">{{ $category->name }}</li> 
+                    </ul> --}}
                 </div>
             </div>
         </div>
@@ -27,7 +25,7 @@
             <div class="row">
                 <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
                     <div class="right-product-box">
-                        <div class="product-item-filter row">
+                        {{-- <div class="product-item-filter row">
                             <div class="col-12 col-sm-8 text-center text-sm-left">
                                 <div class="toolbar-sorter-right">
                                     <span>Sắp xếp: </span>
@@ -39,7 +37,7 @@
 									<option value="4">Bán chạy nhất</option>
 								</select>
                                 </div>
-                                {{-- <p>Showing all 4 results</p> --}}
+                                <p>Showing all 4 results</p> 
                             </div>
                             <div class="col-12 col-sm-4 text-center text-sm-right">
                                 <ul class="nav nav-tabs ml-auto">
@@ -51,7 +49,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="product-categorie-box">
                             <div class="tab-content">
@@ -77,7 +75,7 @@
                                                         <a class="btn hvr-hover add-to-card cart" data-fancybox-close="" href="" data-book_id="{{ $book->id }}">Thêm giỏ hàng</a>
                                                     </div>
                                                 </div>
-                                                <div class="why-text">
+                                                <div class="why-text" style="height: 106px !important">
                                                     <h4><a href="{{ route('books.detail', ['id' => $book->id])  }}">{{ $book->name }}</a></h4>
                                                     <h5> {{ $book->price }}</h5>
                                                 </div>
@@ -89,20 +87,18 @@
                                     </div>
                                     {{-- @endif --}}
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="list-view">
+                               <div role="tabpanel" class="tab-pane fade" id="list-view">
                                     <div class="list-view-box">
-                                        <div class="row">
+                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
-                                                        <div class="type-lb">
-                                                            <p class="new">New</p>
-                                                        </div>
+                                                        
                                                         <img src="/image/{{ $book->image }}" class="img-fluid" style="height: 300px !important">
                                                         <div class="mask-icon">
                                                             <ul>
-                                                                {{-- <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li> --}}
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                                 <li><a href="#" data-toggle="tooltip" data-placement="right" title="Thêm vào danh sách yêu thích"><i class="far fa-heart"></i></a></li>
                                                             </ul>
 
@@ -110,7 +106,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                            {{-- <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
                                                 <div class="why-text full-width" style="height: 300px !important">
                                                     <h4><a href="{{ route('books.detail', ['id' => $book->id])  }}">{{ $book->name }}</a></h4>
                                                     <h5> {{ $book->price }}</h5>
@@ -119,11 +115,11 @@
                                                     <p>{{ $book->description }}</p>
                                                     <a class="btn hvr-hover" href="#">Thêm giỏ hàng</a>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -138,7 +134,7 @@
                             <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
                                 
                                 @foreach ($category as $cate)
-                                    <a href="{{ route('books.index') . '?category=' . $cate->sub_name  }}" class="list-group-item list-group-item-action"> {{ $cate->name }}  <small class="text-muted"> </small></a>
+                                    <a value="{{ $cate->id }}" href="{{ route('books.index') . '?category=' . $cate->sub_name  }}" class="list-group-item list-group-item-action"> {{ $cate->name }}  <small class="text-muted"> </small></a>
                                 @endforeach
                                 
                             </div>
@@ -154,8 +150,8 @@
 
 @endsection
 
-
 @section('style')
+
 @section('script')
 <script>
     $(document).ready(function() {

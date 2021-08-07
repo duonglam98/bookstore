@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admins;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookOrder;
@@ -22,47 +24,45 @@ class AdminOrderController extends Controller
     {
         
         $orders = Order::latest()->paginate(5);
-        if ($request->ajax()) {
-            $data = Order::select('*');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('status', function($row){
-                         if($row->status == 1){
-                            return '<span class="badge badge-primary">1. Đơn hàng được tạo</span>';
-                         }else if($row->status == 2){
-                            return '<span class="badge badge-danger">2. Đơn hàng đã xác nhận và chờ xử lý</span>';
-                         }else if($row->status == 3){
-                            return '<span class="badge badge-danger">3. Đơn hàng đã hoàn thành</span>';
-                         }else {
-                            return '<span class="badge badge-danger">4. Đơn hàng đã huỷ</span>';
-                         }
-                    })
-                    ->filter(function ($instance) use ($request) {
-                        if ($request->get('status') == '1' || $request->get('status') == '2'
-                        || $request->get('status') == '3' || $request->get('status') == '4') {
-                            $instance->where('status', $request->get('status'));
-                        }
-                        if (!empty($request->get('search'))) {
-                             $instance->where(function($w) use($request){
-                                $search = $request->get('search');
-                                $w->orWhere('code', 'LIKE', "%$search%")
-                                ->orWhere('user_name', 'LIKE', "%$search%")
-                                ->orWhere('total_price', 'LIKE', "%$search%");
-                            });
-                        }
-                    })
-                    ->rawColumns(['status'])
-                    ->make(true);
-        }
+        // if ($request->ajax()) {
+        //     $data = Order::select('*');
+        //     return Datatables::of($data)
+        //             ->addIndexColumn()
+        //             ->addColumn('status', function($row){
+        //                  if($row->status == 1){
+        //                     return '<span class="badge badge-primary">1. Đơn hàng được tạo</span>';
+        //                  }else if($row->status == 2){
+        //                     return '<span class="badge badge-danger">2. Đơn hàng đã xác nhận và chờ xử lý</span>';
+        //                  }else if($row->status == 3){
+        //                     return '<span class="badge badge-danger">3. Đơn hàng đã hoàn thành</span>';
+        //                  }else {
+        //                     return '<span class="badge badge-danger">4. Đơn hàng đã huỷ</span>';
+        //                  }
+        //             })
+        //             ->filter(function ($instance) use ($request) {
+        //                 if ($request->get('status') == '1' || $request->get('status') == '2'
+        //                 || $request->get('status') == '3' || $request->get('status') == '4') {
+        //                     $instance->where('status', $request->get('status'));
+        //                 }
+        //                 if (!empty($request->get('search'))) {
+        //                      $instance->where(function($w) use($request){
+        //                         $search = $request->get('search');
+        //                         $w->orWhere('code', 'LIKE', "%$search%")
+        //                         ->orWhere('user_name', 'LIKE', "%$search%")
+        //                         ->orWhere('total_price', 'LIKE', "%$search%");
+        //                     });
+        //                 }
+        //             })
+        //             ->rawColumns(['status'])
+        //             ->make(true);
+        // }
         
         return view('admins.orders.index',compact('orders'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
         
 
-    // public function checkOutCart() {
-    //     return view ('orders.checkOut');
-    // }
+    
     /*
      * Show the form for creating a new resource.
      *
@@ -219,12 +219,48 @@ class AdminOrderController extends Controller
 
     public function search(Request $request)
     {
-        $keyWord = $request->keyWord;
+        $keyword = $request->keyword;
 
-        $orders = Order::where('user_name', 'like', "%$keyWord%")->get()->toArray();
-       \Log::info($orders);
+        $orders = Order::where('user_name', 'like', "%$keyword%")->get();
+       \Log::info($keyword);
 
         return response()->json($orders);
     }
-   
+
+    public function searchStatus(Request $request)
+    {
+        $keyword = $request->keyword;
+
+        $orders = Order::where('status', 'like', "%$keyword%")->get()->toArray();
+       \Log::info($keyword);
+
+        return response()->json($orders);
+    }
+
+    public function date(Request $request)
+    {
+        $keyword = $request->keyword;
+        $firstDate = substr($keyword, 0, 10);
+        $lastDate = substr($keyword, 11, 23);
+
+        if ($firstDate && $lastDate) {
+
+            $firstDate = Carbon::parse($firstDate);
+            $lastDate = Carbon::parse($lastDate);
+
+            if ($lastDate->greaterThan($firstDate)) {
+                $orders = Order::whereBetween('created_at', [$firstDate, $lastDate])->get();
+            } else {
+                $orders = Order::latest()->get();
+            }
+        } else {
+            $orders = Order::latest()->get();
+        }
+
+        
+       \Log::info($dbDates);
+
+        return response()->json($orders);
+    }
+
 }
